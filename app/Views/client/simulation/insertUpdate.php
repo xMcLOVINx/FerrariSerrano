@@ -204,32 +204,34 @@
 
 						<div class="row step-3 hidden">
 							<div class="form-group col-md-6 col-xs-6">
-								<label class="control-label" for="preco-venda">
-									Preço Venda *
-								</label>
-
-								<input id="preco-venda" name="preco-venda" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$item->precoVenda ?>" required />
-							</div>
-
-							<div class="form-group col-md-6 col-xs-6">
-								<label class="control-label" for="lucro">
+								<label class="control-label" for="lucro-percent">
 									Lucro/Prejuízo (%)
 								</label>
 
-								<input id="lucro" name="lucro" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control percents" maxlength="5" value="<?= @$simulationIndex->lucroDesejadoP ?>" />
+								<input id="lucro-percent" name="lucro-percent" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control percents" maxlength="5" value="<?= @$simulationIndex->lucroDesejadoP ?>" />
+							</div>
+
+							<div class="form-group col-md-6 col-xs-6">
+								<label class="control-label" for="lucro-real">
+									Lucro/Prejuízo (R$)
+								</label>
+
+								<input id="lucro-real" name="lucro-real" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$simulationIndex->lucroDesejadoR ?>" />
 							</div>
 						</div>
 
 						<div class="row">
-							<div class="form-group col-md-6 col-xs-12">
-								<label class="control-label" for="resultado">
-									Resultado (R$)
+							<div class="form-group col-md-6 col-xs-6 step-3 hidden">
+								<label class="control-label" for="preco-venda">
+									Preço Venda
 								</label>
 
-								<input id="resultado" name="resultado" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$item->lucroDesejadoR ?>" />
+								<input id="preco-venda" name="preco-venda" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$item->precoVenda ?>" />
 							</div>
+						</div>
 
-							<div class="form-group col-md-2 col-xs-4" style="margin-top: 1px">
+						<div class="row">
+							<div class="form-group col-md-4 col-xs-4" style="margin-top: 1px">
 								<label class="control-label">&nbsp;</label>
 
 								<button id="simular" class="btn btn-danger col-xs-12" type="button" style="font-weight: bold">
@@ -237,7 +239,7 @@
 								</button>
 							</div>
 
-							<div class="form-group col-md-2 col-xs-4" style="margin-top: 1px">
+							<div class="form-group col-md-4 col-xs-4" style="margin-top: 1px">
 								<label class="control-label">&nbsp;</label>
 
 								<button id="resetar" class="btn btn-danger col-xs-12" type="button" style="font-weight: bold">
@@ -246,7 +248,7 @@
 							</div>
 
 						<?php if ($segments[2] !== "view"): ?>
-							<div class="form-group col-md-2 col-xs-4" style="margin-top: 1px">
+							<div class="form-group col-md-4 col-xs-4" style="margin-top: 1px">
 								<label class="control-label">&nbsp;</label>
 
 								<button id="salvar" class="btn btn-success col-xs-12" type="button" style="font-weight: bold" disabled>

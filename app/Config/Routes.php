@@ -37,7 +37,7 @@ $routes->group('client', ['filter' => 'auth'], function($routes)
 	$routes->get('simulation', 'Client\Simulation::index');
 	$routes->get('simulation/create', 'Client\Simulation::create');
 	$routes->post('simulation/store', 'Client\Simulation::store');
-	$routes->put('simulation/update', 'Client\Simulation::update');
+	$routes->put('simulation/update/(:num)', 'Client\Simulation::update');
 	$routes->get('simulation/view/(:num)', 'Client\Simulation::view');
 });
 
