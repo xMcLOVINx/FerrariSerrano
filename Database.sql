@@ -1,6 +1,7 @@
 DROP DATABASE FerrariSerrano;
 CREATE DATABASE FerrariSerrano;
-USE FerrariSerrano;
+USE FerrariSerrano;
+
 # ================
 # DOS ENDEREÇOS
 CREATE TABLE enderecos (
@@ -12,7 +13,8 @@ CREATE TABLE enderecos (
 	bairro VARCHAR(60) NOT NULL,
 	numero INT(5) NOT NULL,
 	PRIMARY KEY(idEndereco)
-);
+);
+
 INSERT INTO enderecos (cep, cidade, estado, logradouro, bairro, numero) VALUES
 ('17.280-000', 'Pederneiras', 'SP', 'José Ferreira', 'Centro', 343);
 
@@ -25,9 +27,11 @@ CREATE TABLE permissoes (
 	dataCadastro DATE NOT NULL,
 	deletado ENUM('1','0') NOT NULL DEFAULT '0',
 	PRIMARY KEY(idPermissao)
-);
+);
+
 INSERT INTO permissoes (titulo, permissoes, dataCadastro) VALUES
-('Administrador', 'all', CURRENT_DATE);
+('Administrador', 'all', CURRENT_DATE);
+
 # ================
 # DOS USUARIOS
 CREATE TABLE usuarios (
@@ -45,9 +49,11 @@ CREATE TABLE usuarios (
 	dataCadastro DATE NOT NULL,
 	deletado ENUM('1','0') NOT NULL DEFAULT '0',
 	PRIMARY KEY(idUsuario)
-);
+);
+
 INSERT INTO usuarios (idPermissao, idEndereco, nomeCompleto, cpf, cnpj, telefone, email, senha, avatar, dataCadastro) VALUES
-(1, 1, 'Matheus Vinicius', '111.111.111-11', '11.111.111/1111-11', '+55 (55) 5555-55555', 'admin@admin.com', '123456', NULL, CURRENT_DATE);
+(1, 1, 'Matheus Vinicius', '111.111.111-11', '11.111.111/1111-11', '+55 (55) 5555-55555', 'admin@admin.com', '123456', NULL, CURRENT_DATE);
+
 # ================
 # DAS CONFIG
 CREATE TABLE indices (
@@ -64,7 +70,8 @@ CREATE TABLE indices (
 	lucroDesejadoP DECIMAL(4,2) NOT NULL,
 	PRIMARY KEY(idIndice),
 	FOREIGN KEY(idUsuario) REFERENCES usuarios (idUsuario)
-);
+);
+
 # ================
 # DAS COTACOES
 CREATE TABLE simulacoes (
@@ -79,7 +86,8 @@ CREATE TABLE simulacoes (
 	PRIMARY KEY(idSimulacao),
 	FOREIGN KEY(idIndice) REFERENCES indices (idIndice),
 	FOREIGN KEY(idUsuario) REFERENCES usuarios (idUsuario)
-);
+);
+
 CREATE TABLE simulacoes_indices (
 	idSimulacaoIndice INT NOT NULL AUTO_INCREMENT,
 	idSimulacao INT NOT NULL,
@@ -90,7 +98,8 @@ CREATE TABLE simulacoes_indices (
 	lucroDesejadoR DECIMAL(11,2) NOT NULL,
 	lucroDesejadoP DECIMAL(4,2) NOT NULL,
 	PRIMARY KEY(idSimulacaoIndice),
-	FOREIGN KEY(idSimulacao) REFERENCES simulacoes (idSimulacao)
-);
+	FOREIGN KEY(idSimulacao) REFERENCES simulacoes (idSimulacao)
+);
+
 # ================
-# DAS TRIGGERS
+# DAS TRIGGERS
