@@ -16,7 +16,6 @@ class BiTModel extends \CodeIgniter\Model
 		}
 	}
 
-
 	public function get($data = [])
 	{
 		if ($query = $this->getWhere($data)) {
@@ -30,7 +29,6 @@ class BiTModel extends \CodeIgniter\Model
 			return $query;
 		}
 	}
-
 
 	public function edit($data, $where)
 	{
@@ -54,7 +52,6 @@ class BiTModel extends \CodeIgniter\Model
 			}
 		}
 	}
-
 
 	private function cleanData($data)
 	{
