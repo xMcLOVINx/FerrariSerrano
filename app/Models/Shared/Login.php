@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Client;
+namespace App\Models\Shared;
 
 class Login extends \App\Models\BiTModel
 {

@@ -44,7 +44,7 @@
 
 					<div class="text-center m-t-20">
 						<p class="text-muted font-13">
-							<?= $data->razaoSocial ?>
+							<b><?= $data->razaoSocial ?></b>
 						</p>
 
 						<p class="text-muted font-13">
@@ -273,7 +273,7 @@ jQuery(document).ready(function()
 
 	//=========
 
-	$('#telefone').mask('+99 (99) 9999-9999?9');
+	$('#telefone').mask('+55 (99) 9999-9999?9');
 
 	//=========
 

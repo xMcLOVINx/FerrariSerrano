@@ -16,7 +16,7 @@
 					</li>
 
 					<li class="breadcrumb-item">
-						<a href="<?= base_url('vendas') ?>">Vendas</a>
+						<a href="<?= base_url('mensalidades') ?>">Mensalidades</a>
 					</li>
 
 					<li class="breadcrumb-item active">
@@ -33,10 +33,10 @@
 		<div class="col-sm-12">
 			<div class="card-box">
 				<h4 class="m-b-30 header-title">
-					<b>Atualizar Venda</b>
+					<b>Atualizar Mensalidade</b>
 				</h4>
 
-				<form id="wizard-validation-form" action="#" method="post">
+				<form id="wizard-validation-form" method="post">
 					<div>
 						<h3>Detalhes</h3>
 

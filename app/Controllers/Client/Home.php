@@ -9,7 +9,7 @@ class Home extends \App\Controllers\BaseController
 
 	public function __construct()
 	{
-		$this->model = new \App\Models\Client\Login;
+		$this->model = new \App\Models\Shared\Login;
 
 		$this->session = \Config\Services::session();
 		$this->validation = \Config\Services::validation();

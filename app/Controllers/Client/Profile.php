@@ -10,7 +10,7 @@ class Profile extends \App\Controllers\BiTController
 	{
 		parent::__construct();
 
-		$this->model = new \App\Models\Client\Client;
+		$this->model = new \App\Models\Shared\Client;
 	}
 
 

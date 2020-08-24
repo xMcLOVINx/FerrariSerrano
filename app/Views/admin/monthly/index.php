@@ -122,8 +122,10 @@
 					<thead>
 						<tr>
 							<th># ID</th>
+							<th>Cliente</th>
 							<th>Valor</th>
 							<th>Data Cadastro</th>
+							<th class="actions">Parcelas</th>
 							<th class="actions">Situação</th>
 							<th class="actions">
 								<i class="fas fa-cog"></i>
@@ -135,9 +137,13 @@
 						<tr>
 							<td width="60">1</td>
 
+							<td>Antônio Roberto Castro</td>
+
 							<td>R$ 1,00</td>
 
 							<td>16/01/2020</td>
+
+							<td></td>
 
 							<td class="text-center">
 								<span class="label label-table label-primary" data-toggle="tooltip" data-placement="top" title="Novo Item">
@@ -159,9 +165,13 @@
 						<tr>
 							<td width="60">3</td>
 
+							<td></td>
+
 							<td>R$ 4000,00</td>
 
 							<td>12/01/2020</td>
+
+							<td></td>
 
 							<td class="text-center">
 								<span class="label label-table label-danger" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
@@ -183,9 +193,13 @@
 						<tr>
 							<td width="60">11</td>
 
+							<td></td>
+
 							<td>R$ 3000,00</td>
 
 							<td>12/01/2020</td>
+
+							<td></td>
 
 							<td class="text-center">
 								<span class="label label-table label-success" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
@@ -385,7 +399,7 @@ jQuery(document).ready(function()
 
 	//=========
 
-	$('.btn-view').on('click', function(e)
+	$('.btn-view').on('click', function()
 	{
 		Custombox.open({
 			target: '#view-modal',
@@ -393,8 +407,6 @@ jQuery(document).ready(function()
 			overlaySpeed: '100',
 			effect: 'flash'
 		});
-
-		e.preventDefault();
 	});
 });
 </script>

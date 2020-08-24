@@ -10,7 +10,7 @@ class Client extends \App\Controllers\BiTController
 	{
 		parent::__construct();
 
-		$this->model = new \App\Models\Admin\Client;
+		$this->model = new \App\Models\Shared\Client;
 	}
 
 
