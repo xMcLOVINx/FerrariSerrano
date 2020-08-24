@@ -7,8 +7,8 @@ class SimulationIndex extends \App\Models\BiTModel
 
 	protected $allowedFields = [
 		'idSimulacao',
-		'cmv',
 		'markup',
+		'precoEmpate',
 		'comissaoR',
 		'comissaoP',
 		'lucroDesejadoR',

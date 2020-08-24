@@ -32,8 +32,8 @@ class BiTModel extends \CodeIgniter\Model
 
 	public function edit($data, $where)
 	{
-		if ($this->set($data)->where($where)->update()) {
-			return $this->affectedRows();
+		if ($query = $this->set($data)->where($where)->update()) {
+			return $query;
 		}
 	}
 
@@ -50,6 +50,13 @@ class BiTModel extends \CodeIgniter\Model
 				default:
 					return $this->countAllResults();
 			}
+		}
+	}
+
+	public function drop($where = [])
+	{
+		if ($this->where($where)->delete()) {
+			return $this->affectedRows();
 		}
 	}
 

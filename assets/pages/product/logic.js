@@ -20,14 +20,15 @@ var
 // ===========================================
 var
 	sProduct 		= $('#produto'),
-	sPurchasePrice 	= $('#preco-compra'),
-	sTiePrice 		= $('#preco-empate'),
-	sCommissionR 	= $('#comissao-real'),
-	sCommissionP 	= $('#comissao-percent'),
-	sSalePrice 		= $('#preco-venda'),
-	sProfitR 		= $('#lucro-real'),
-	sProfitP 		= $('#lucro-percent'),
+	sPurchasePrice 	= $('#precoCompra'),
+	sTiePrice 		= $('#precoEmpate'),
+	sCommissionR 	= $('#comissaoReal'),
+	sCommissionP 	= $('#comissaoPercent'),
+	sSalePrice 		= $('#precoVenda'),
+	sProfitR 		= $('#lucroReal'),
+	sProfitP 		= $('#lucroPercent'),
 	sMarkup 		= $('#markup'),
+	sType 			= $('#tipo'),
 
 	sIsTheFirst		= true,
 	sTiePriceO 		= 0,
@@ -89,10 +90,9 @@ jQuery(document).ready(function()
 	// ===========================================
 	// LISTEN SIMILAR INDICES AND VALIDATE THEM
 	// ===========================================
-	$('.i-taxes, .i-costs, .s-costs').on('keyup', function() {
+	$('.i-taxes, .i-costs').on('keyup', function() {
 		var field = $(this).hasClass('i-taxes')
-		? '.i-taxes' : $(this).hasClass('i-costs')
-		? '.i-costs' : '.s-costs'
+		? '.i-taxes' : '.i-costs'
 		;
 
 		if (billing.val().length <= 0) {
@@ -166,9 +166,9 @@ jQuery(document).ready(function()
 	// ===========================================
 	// PREVENT NULL VALUES ON FOCUSOUT
 	// ===========================================
-	$('#preco-compra, #comissao-real, #comissao-percent, #lucro-real, #lucro-percent').focusout(function()
-	{
-		if ($(this).val() == "") {
+	$('#precoCompra, #comissaoReal, #comissaoPercent, #lucroReal, #lucroPercent')
+	.focusout(function () {
+		if ($(this).val() == "" || $(this).val() <= 0) {
 			$(this).val('0.00');
 
 			sTiePrice.val(calcTiePrice());
@@ -179,10 +179,50 @@ jQuery(document).ready(function()
 	// ===========================================
 	// LISTEN SIMULATION INDICES AND RE-CALC TIE PRICE
 	// ===========================================
-	$('#preco-compra, #comissao-real, #comissao-percent, #lucro-real, #lucro-percent')
+	$('#precoCompra, #comissaoReal, #comissaoPercent, #lucroReal, #lucroPercent')
 	.on('keyup', function () {
 		sTiePrice.val(calcTiePrice());
 		sSalePrice.val('');
+	});
+
+	// ===========================================
+	// LISTEN SIMILAR INDICES AND VALIDATE THEM
+	// ===========================================
+	$('.s-comission').on('keyup', function() {
+		var field = ".s-comission";
+
+		if (sPurchasePrice.val().length <= 0) {
+			showError('O campo preço de compra deve ser maior que zero!');
+
+			return false;
+		}
+
+		if ($(this).val().length <= 3) {
+			return false;
+		}
+
+		switch ($(this).data('similar')) {
+			case 'percents':
+				var element = $(field + '[data-similar="money"]');
+				var result = (unmask($(this)) * 100 / unmask(sPurchasePrice)).toFixed(2);
+				var resultLength = result.replace(/[^\d]+/g,'');
+
+				if (resultLength.length <= 4) {
+					element.val(result);
+
+					break;
+				} else {
+					return false;
+				}
+
+			case 'money':
+				var element = $(field + '[data-similar="percents"]');
+					element.val((unmask(sPurchasePrice) * unmask($(this)) / 100).toFixed(2));
+
+				break;
+		}
+
+		element.trigger('input').valid();
 	});
 
 	// ===========================================
@@ -225,7 +265,7 @@ jQuery(document).ready(function()
 
 		//==================
 
-		if (sIsTheFirst == true) {
+		if (sIsTheFirst == true && !m_update) {
 			sTiePrice.val(calcTiePrice());
 			sMarkup.val(calcMarkup());
 			sSalePrice.val(calcSalePrice());
@@ -234,20 +274,39 @@ jQuery(document).ready(function()
 			sTiePriceO = unmask(sTiePrice);
 
 			sIsTheFirst = false;
-		} else {
-			var calculed = false;
+		}
 
-			if (
-				(sMarkup.val(calcMarkup())) &&
-				(unmask(sSalePrice) == calcSalePrice()) ||
-				(unmask(sSalePrice) == sSalePriceO) ||
-				(sSalePrice.val() == "")
-			) {
+		if (sIsTheFirst == true && m_update) {
+			sSalePriceO = unmask(sSalePrice);
+			sTiePriceO = unmask(sTiePrice);
+
+			sIsTheFirst = false;
+		}
+
+		var calculed = false;
+
+		if (
+			(sMarkup.val(calcMarkup())) &&
+			(unmask(sSalePrice) == calcSalePrice()) ||
+			(unmask(sSalePrice) == sSalePriceO) ||
+			(sSalePrice.val() == "")
+		) {
+			do {
+				if (
+					m_update &&
+					sType.val() !== '1'
+				) {
+					break;
+				}
+
 				if (
 					(unmask(sProfitR) > 0) ||
 					(unmask(sProfitP) > 0) ||
+					(unmask(sCommissionR) > 0) ||
+					(unmask(sCommissionP) > 0) ||
 					(unmask(sTiePrice) !== sTiePriceO)
 				) { // CALC 1
+					console.log('calc 1');
 					sTiePrice.val(calcTiePrice());
 					sMarkup.val(calcMarkup());
 					sSalePrice.val(
@@ -256,47 +315,52 @@ jQuery(document).ready(function()
 							(unmask(sCommissionR) + unmask(sProfitR)
 						)).toFixed(2)
 					);
+					sType.val('1');
 
 					calculed = true;
 
 					sSalePriceO = unmask(sSalePrice);
 					sTiePriceO = unmask(sTiePrice);
 					sProfitPO = unmask(sProfitP);
+
+					break;
 				}
+			} while (0);
+		}
+
+		if (!calculed) { // CALC 2
+			console.log('calc 2');
+			sMarkup.val(calcMarkup());
+
+			if (unmask(sSalePrice) == 0 || sSalePrice.val() == "") {
+				sSalePrice.val(calcSalePrice());
 			}
 
-			if (!calculed) { // CALC 2
-				sMarkup.val(calcMarkup());
+			var _taxesR = calcTaxesR();
+			var _costsR = calcCostsR();
 
-				if (unmask(sSalePrice) == 0 || sSalePrice.val() == "") {
-					sSalePrice.val(calcSalePrice());
-				}
-
-				var _taxesR = calcTaxesR();
-				var _costsR = calcCostsR();
-
-				if (unmask(sCommissionR) > 0) {
-					var _comissionR = unmask(sCommissionR);
-				} else {
-					var _comissionR = calcCommissionR();
-				}
-
-				var _profitR = excelRound(Number(
-					unmask(sSalePrice) - Number(
-						(unmask(sPurchasePrice)) + 
-						(Number(_taxesR)) + (Number(_costsR)) + 
-						(Number(_comissionR))
-					)
-				));
-
-				sProfitR.val(_profitR.toFixed(2));
-				sProfitP.val(calcProfitP(_profitR).toFixed(2));
+			if (unmask(sCommissionR) > 0) {
+				var _comissionR = unmask(sCommissionR);
+			} else {
+				var _comissionR = calcCommissionR();
 			}
+
+			var _profitR = excelRound(Number(
+				unmask(sSalePrice) - Number(
+					(unmask(sPurchasePrice)) + 
+					(Number(_taxesR)) + (Number(_costsR)) + 
+					(Number(_comissionR))
+				)
+			));
+
+			sProfitR.val(_profitR.toFixed(2));
+			sProfitP.val(calcProfitP(_profitR).toFixed(2));
+			sType.val('2');
 		}
 
 		//==================
 
-		if (unmask(sProfitR) > 0) {
+		if (unmask(sProfitR) > 0 && unmask(sType) !== 2) {
 			var profitPercent = excelRound(Number(
 				100 * unmask(sProfitR) / unmask(sPurchasePrice)
 			)).toFixed(2);
@@ -389,15 +453,17 @@ jQuery(document).ready(function()
 // SUPPLIER FUNCTIONS
 // ===========================================
 function unmask(item) {
-	return Number(item.val().replace(/[^\d|\.\-]+/g,''));
+	return Number(item.val().replace(/[^\d|\.\-]+/g, ''));
 }
 function excelRound(number) {
-    return Math.floor((Math.pow(10, 2)*number)+0.5)*Math.pow(10, -2);
-};
+    return Math.floor((Math.pow(10, 2) * number) + 0.5) * Math.pow(10, -2);
+}
 function calcTiePrice() {
 	return excelRound(
-		(unmask(sPurchasePrice) / (calcMarkup() + (unmask(sProfitP) / 100))) +
-		(unmask(sCommissionR) + unmask(sProfitR))
+		(unmask(sPurchasePrice) / Number(1 - (
+		(unmask(taxesP) / 100) + (unmask(costsP) / 100) +
+		(unmask(sCommissionR) <= 0 ? (unmask(sCommissionP) / 100) : 0)))) +
+		(unmask(sCommissionR))
 	).toFixed(2);
 }
 function calcMarkup() {

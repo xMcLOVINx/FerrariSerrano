@@ -52,25 +52,22 @@ class Simulation extends \App\Controllers\BiTController
 			'idIndice' => $indexResult,
 			'idUsuario' => $this->session->id,
 			'produto' => $this->request->getPost('produto'),
-			'precoCompra' => cleanPrice($this->request->getPost('preco-compra')),
-			'precoVenda' => cleanPrice($this->request->getPost('preco-venda')),
-			'dataCadastro' => date('Y-m-d')
+			'precoCompra' => cleanPrice($this->request->getPost('precoCompra')),
+			'precoVenda' => cleanPrice($this->request->getPost('precoVenda')),
+			'dataCadastro' => date('Y-m-d'),
+			'tipo' => $this->request->getPost('tipo')
 		]);
 
-		if ($result) {
-			$data = [
-				'idSimulacao' => $result,
-				'precoEmpate' => cleanPrice($this->request->getPost('precoEmpate')) ?: 0,
-				'markup' => cleanPrice($this->request->getPost('markup')) ?: 0,
-				'comissaoR' => cleanPrice($this->request->getPost('comissao-real')) ?: 0,
-				'comissaoP' => $this->request->getPost('comissao-percent') ?: 0,
-				'lucroDesejadoR' => $this->request->getPost('resultado') ?: 0,
-				'lucroDesejadoP' => $this->request->getPost('lucro') ?: 0
-			];
-
-			$simulationIndex = new \App\Models\Client\SimulationIndex;
-			$result = $simulationIndex->add($data);
-		}
+		$simulationIndex = new \App\Models\Client\SimulationIndex;
+		$result = $simulationIndex->add([
+			'idSimulacao' => $result,
+			'markup' => cleanPrice($this->request->getPost('markup')),
+			'precoEmpate' => cleanPrice($this->request->getPost('precoEmpate')),
+			'comissaoR' => cleanPrice($this->request->getPost('comissaoReal')),
+			'comissaoP' => cleanPrice($this->request->getPost('comissaoPercent')),
+			'lucroDesejadoR' => cleanPrice($this->request->getPost('lucroReal')),
+			'lucroDesejadoP' => cleanPrice($this->request->getPost('lucroPercent'))
+		]);
 
 		return $this->response->setJSON([
 			'url' => base_url('client/simulation/create'),
@@ -113,7 +110,8 @@ class Simulation extends \App\Controllers\BiTController
 		$result = $this->model->edit(
 			[
 				'produto' => $this->request->getPost('produto') ?: null,
-				'fornecedor' => $this->request->getPost('fornecedor') ?: null
+				'fornecedor' => $this->request->getPost('fornecedor') ?: null,
+				'tipo' => $this->request->getPost('tipo')
 			],
 			['idSimulacao' => $this->request->uri->getSegment(4)]
 		);
@@ -121,12 +119,12 @@ class Simulation extends \App\Controllers\BiTController
 		$simulationIndex = new \App\Models\Client\SimulationIndex;
 		$result = $simulationIndex->edit(
 			[
-				'precoEmpate' => cleanPrice($this->request->getPost('precoEmpate')) ?: 0,
-				'markup' => cleanPrice($this->request->getPost('markup')) ?: 0,
-				'comissaoR' => cleanPrice($this->request->getPost('comissao-real')) ?: 0,
-				'comissaoP' => $this->request->getPost('comissao-percent') ?: 0,
-				'lucroDesejadoR' => $this->request->getPost('resultado') ?: 0,
-				'lucroDesejadoP' => $this->request->getPost('lucro') ?: 0
+				'markup' => cleanPrice($this->request->getPost('markup')),
+				'precoEmpate' => cleanPrice($this->request->getPost('precoEmpate')),
+				'comissaoR' => cleanPrice($this->request->getPost('comissaoReal')),
+				'comissaoP' => cleanPrice($this->request->getPost('comissaoPercent')),
+				'lucroDesejadoR' => cleanPrice($this->request->getPost('lucroReal')),
+				'lucroDesejadoP' => cleanPrice($this->request->getPost('lucroPercent'))
 			],
 			['idSimulacao' => $this->request->uri->getSegment(4)]
 		);

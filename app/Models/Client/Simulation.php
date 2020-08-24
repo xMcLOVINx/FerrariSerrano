@@ -12,6 +12,7 @@ class Simulation extends \App\Models\BiTModel
 		'fornecedor',
 		'precoCompra',
 		'precoVenda',
-		'dataCadastro'
+		'dataCadastro',
+		'tipo'
 	];
 }

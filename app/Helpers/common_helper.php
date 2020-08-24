@@ -9,7 +9,11 @@
 if (!function_exists('cleanPrice')) {
 	function cleanPrice($value)
 	{
-		return (float) str_replace(',', '', $value);
+		if ($value && $value !== '') {
+			return str_replace(',', '', $value);
+		}
+
+		return '0';
 	}
 }
 

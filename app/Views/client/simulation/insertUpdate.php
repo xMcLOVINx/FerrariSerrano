@@ -84,11 +84,11 @@
 							</div>
 
 							<div class="form-group col-md-6 col-xs-6">
-								<label class="control-label" for="i-comissao-percent">
+								<label class="control-label" for="s-i-comissao-percent">
 									Comissão (%)
 								</label>
 
-								<input id="i-comissao-percent" name="i-comissao-percent" type="text" inputmode="numeric" pattern="[0-9]+" class="form-control percents" maxlength="5" data-similar="money" value="<?= @$index->comissaoP ?>" />
+								<input id="i-comissao-percent" name="i-comissaos--percent" type="text" inpus-tmode="numeric" pattern="[0-9]+" class="form-control percents" maxlength="5" data-similar="money" value="<?= @$index->comissaoP ?>" />
 							</div>
 						</div>
 
@@ -166,19 +166,19 @@
 
 						<div class="row">
 							<div class="form-group col-md-6 col-xs-6">
-								<label class="control-label" for="preco-compra">
+								<label class="control-label" for="precoCompra">
 									Preço Compra *
 								</label>
 
-								<input id="preco-compra" name="preco-compra" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$item->precoCompra ?>" required />
+								<input id="precoCompra" name="precoCompra" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$item->precoCompra ?>" required />
 							</div>
 
 							<div class="form-group col-md-6 col-xs-6">
-								<label class="control-label" for="preco-empate">
+								<label class="control-label" for="precoEmpate">
 									Preço de Empate
 								</label>
 
-								<input id="preco-empate" name="preco-empate" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$simulationIndex->precoEmpate ?>" readonly />
+								<input id="precoEmpate" name="precoEmpate" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$simulationIndex->precoEmpate ?>" readonly />
 
 								<input id="markup" name="markup" type="hidden" value="<?= @$simulationIndex->markup ?>" />
 							</div>
@@ -186,48 +186,52 @@
 
 						<div class="row step-3 hidden">
 							<div class="form-group col-md-6 col-xs-6">
-								<label class="control-label" for="comissao-percent">
+								<label class="control-label" for="comissaoPercent">
 									Comissão (%)
 								</label>
 
-								<input id="comissao-percent" name="comissao-percent" type="text" inputmode="numeric" pattern="[0-9]+" class="form-control percents" maxlength="5" value="<?= @$simulationIndex->comissaoP ?>" />
+								<input id="comissaoPercent" name="comissaoPercent" type="text" inputmode="numeric" pattern="[0-9]+" class="form-control percents s-comission" maxlength="5" data-similar="money" value="<?= @$simulationIndex->comissaoP ?>" />
 							</div>
 
 							<div class="form-group col-md-6 col-xs-6">
-								<label class="control-label" for="comissao-real">
+								<label class="control-label" for="comissaoReal">
 									Comissão (R$)
 								</label>
 
-								<input id="comissao-real" name="comissao-real" type="text" inputmode="numeric" pattern="[0-9]+" class="form-control money" value="<?= @$simulationIndex->comissaoR ?>" />
+								<input id="comissaoReal" name="comissaoReal" type="text" inputmode="numeric" pattern="[0-9]+" class="form-control money s-comission" data-similar="percents" value="<?= @$simulationIndex->comissaoR ?>" />
 							</div>
 						</div>
 
 						<div class="row step-3 hidden">
 							<div class="form-group col-md-6 col-xs-6">
-								<label class="control-label" for="lucro-percent">
+								<label class="control-label" for="lucroPercent">
 									Lucro/Prejuízo (%)
 								</label>
 
-								<input id="lucro-percent" name="lucro-percent" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control percents" maxlength="5" value="<?= @$simulationIndex->lucroDesejadoP ?>" />
+								<input id="lucroPercent" name="lucroPercent" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control percents" maxlength="5" value="<?= @$simulationIndex->lucroDesejadoP ?>" />
 							</div>
 
 							<div class="form-group col-md-6 col-xs-6">
-								<label class="control-label" for="lucro-real">
+								<label class="control-label" for="lucroReal">
 									Lucro/Prejuízo (R$)
 								</label>
 
-								<input id="lucro-real" name="lucro-real" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$simulationIndex->lucroDesejadoR ?>" />
+								<input id="lucroReal" name="lucroReal" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$simulationIndex->lucroDesejadoR ?>" />
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="form-group col-md-6 col-xs-6 step-3 hidden">
-								<label class="control-label" for="preco-venda">
+								<label class="control-label" for="precoVenda">
 									Preço Venda
 								</label>
 
-								<input id="preco-venda" name="preco-venda" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$item->precoVenda ?>" />
+								<input id="precoVenda" name="precoVenda" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$item->precoVenda ?>" />
 							</div>
+						</div>
+
+						<div class="row hidden">
+							<input id="tipo" name="tipo" type="hidden" value="<?= @$item->tipo ?>" required />
 						</div>
 
 						<div class="row">

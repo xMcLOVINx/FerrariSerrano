@@ -1,6 +1,6 @@
-DROP DATABASE FerrariSerrano;
-CREATE DATABASE FerrariSerrano;
-USE FerrariSerrano;
+DROP DATABASE ferrariserrano;
+CREATE DATABASE ferrariserrano;
+USE ferrariserrano;
 
 # ================
 # DOS ENDEREÇOS
@@ -83,6 +83,7 @@ CREATE TABLE simulacoes (
 	precoCompra DECIMAL(11,2) NOT NULL,
 	precoVenda DECIMAL(11,2) NOT NULL,
 	dataCadastro DATE NOT NULL,
+	tipo INT(1) NOT NULL DEFAULT '1',
 	PRIMARY KEY(idSimulacao),
 	FOREIGN KEY(idIndice) REFERENCES indices (idIndice),
 	FOREIGN KEY(idUsuario) REFERENCES usuarios (idUsuario)
@@ -91,8 +92,8 @@ CREATE TABLE simulacoes (
 CREATE TABLE simulacoes_indices (
 	idSimulacaoIndice INT NOT NULL AUTO_INCREMENT,
 	idSimulacao INT NOT NULL,
-	cmv DECIMAL(11,2) NOT NULL,
 	markup DECIMAL(3,2) NOT NULL,
+	precoEmpate DECIMAL(11,2) NOT NULL,
 	comissaoR DECIMAL(11,2) NOT NULL,
 	comissaoP DECIMAL(4,2) NOT NULL,
 	lucroDesejadoR DECIMAL(11,2) NOT NULL,
