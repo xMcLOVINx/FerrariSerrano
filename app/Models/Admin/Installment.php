@@ -7,9 +7,9 @@ class Installment extends \App\Models\BiTModel
 
 	protected $allowedFields = [
 		'titulo',
-		'valorParcela',
+		'parcelas',
 		'desconto',
-		'meses',
+		'valorParcela',
 		'dataCadastro'
 	];
 }

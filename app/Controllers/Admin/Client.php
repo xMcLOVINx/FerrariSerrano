@@ -32,7 +32,7 @@ class Client extends \App\Controllers\BiTController
 
 	public function store()
 	{
-		$address = new \App\Controllers\Admin\Address;
+		$address = new \App\Controllers\SShared\Address;
 
 		if ($this->request->getFile('avatar')) {
 			$clientPath = "uploads/clients/";
@@ -76,7 +76,7 @@ class Client extends \App\Controllers\BiTController
 
 	public function edit()
 	{
-		$address = new \App\Models\Admin\Address;
+		$address = new \App\Models\Shared\Address;
 
 		$client = $this->model->getLast(
 			['idUsuario' => $this->request->uri->getSegment(4)]
@@ -94,7 +94,7 @@ class Client extends \App\Controllers\BiTController
 			['idUsuario' => $this->request->uri->getSegment(4)]
 		);
 
-		$address = new \App\Controllers\Admin\Address;
+		$address = new \App\Controllers\Shared\Address;
 		$address->update($this->request, $client->idEndereco);
 
 		$data = [

@@ -103,4 +103,28 @@ CREATE TABLE simulacoes_indices (
 );
 
 # ================
+# DAS CONFIGURAÇÕES
+CREATE TABLE configuracoes (
+	tituloPagina VARCHAR(100) NOT NULL,
+	valorServico DECIMAL(11,2) NOT NULL,
+	dataAtualizacao DATETIME NOT NULL,
+	dataUltimaAtualizacao DATETIME NOT NULL,
+	termosCompromissos LONGTEXT NULL,
+	logoPainel CHAR(65) NULL,
+	logoApp CHAR(65) NULL
+);
+
+# ================
+# DOS PARCELAMENTOS
+CREATE TABLE parcelamentos (
+	idParcelamento INT NOT NULL AUTO_INCREMENT,
+	titulo VARCHAR(45) NOT NULL,
+	parcelas INT(2) NOT NULL,
+	desconto DECIMAL(5,2) NOT NULL,
+	valorParcela DECIMAL(11,2) NOT NULL,
+	dataCadastro DATE NOT NULL,
+	PRIMARY KEY(idParcelamento)
+);
+
+# ================
 # DAS TRIGGERS

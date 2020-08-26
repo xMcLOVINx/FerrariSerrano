@@ -38,7 +38,7 @@ class User extends \App\Controllers\BiTController
 
 	public function store()
 	{
-		$address = new \App\Controllers\Admin\Address;
+		$address = new \App\Controllers\Shared\Address;
 
 		if ($this->request->getFile('avatar')) {
 			$userPath = "uploads/users/";
@@ -85,7 +85,7 @@ class User extends \App\Controllers\BiTController
 	public function edit()
 	{
 		$permission = new \App\Models\Admin\Permission;
-		$address = new \App\Models\Admin\Address;
+		$address = new \App\Models\Shared\Address;
 
 		$user = $this->model->getLast(
 			['idUsuario' => $this->request->uri->getSegment(4)]
@@ -104,7 +104,7 @@ class User extends \App\Controllers\BiTController
 			['idUsuario' => $this->request->uri->getSegment(4)]
 		);
 
-		$address = new \App\Controllers\Admin\Address;
+		$address = new \App\Controllers\Shared\Address;
 		$address->update($this->request, $user->idEndereco);
 
 		$data = [

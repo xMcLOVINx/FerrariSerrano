@@ -1458,6 +1458,12 @@ File: Pages
   text-align: center;
   width: 100%;
 }
+input.price {
+  color: #565656;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+}
 .price-features {
   color: #8a8a8a;
   list-style: none;

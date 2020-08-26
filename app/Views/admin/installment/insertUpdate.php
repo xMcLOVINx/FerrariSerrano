@@ -1,10 +1,11 @@
 
 <link href="<?= base_url('assets/plugins/jquery.steps/css/jquery.steps.css') ?>" rel="stylesheet" />
+<link href="<?= base_url('assets/plugins/jquery-ui/jquery-ui.css') ?>" rel="stylesheet"/>
 
 <div class="container-fluid reset hidden-xs">
 	<div class="row page-breadcrumb v-align">
 		<div class="col-md-5">
-		<?php if ($segments[2] == 'atualizar') { ?>
+		<?php if ($segments[2] == 'update') { ?>
 			<h4>Modificar parcelamento</h4>
 		<?php } else { ?>
 			<h4>Cadastrar parcelamento</h4>
@@ -22,7 +23,7 @@
 						<a href="<?= base_url('installments') ?>">Parcelamentos</a>
 					</li>
 
-				<?php if ($segments[2] == 'atualizar') { ?>
+				<?php if ($segments[2] == 'update') { ?>
 					<li class="breadcrumb-item active">
 						Atualizar
 					</li>
@@ -42,122 +43,62 @@
 		<div class="col-sm-12">
 			<div class="card-box">
 				<h4 class="m-b-30 header-title">
-				<?php if ($segments[2] == 'atualizar') { ?>
-					<b>Modificar Cliente</b>
+				<?php if ($segments[2] == 'update') { ?>
+					<b>Modificar Parcelamento</b>
 				<?php } else { ?>
-					<b>Cadastrar Cliente</b>
+					<b>Cadastrar Parcelamento</b>
 				<?php } ?>
 				</h4>
 
 				<form id="wizard-validation-form" method="post" enctype="multipart/form-data">
 					<div>
 						<h3 class="">
-							<span class="hidden-xs hidden-sm">Dados Empresa</span>
+							<span class="hidden-xs hidden-sm">Detalhes</span>
 						</h3>
 
 						<section>
 							<div class="form-group clearfix">
 								<div class="row">
-									<div class="col-md-6">
-										<label class="control-label" for="razaoSocial">
-											Razão Social *
+									<div class="col-md-8">
+										<label class="control-label" for="titulo">
+											Título *
 										</label>
 
-										<input id="razaoSocial" name="razaoSocial" type="text" class="required form-control" value="<?= @$item->razaoSocial ?>" />
+										<input id="titulo" name="titulo" type="text" class="required form-control" value="<?= @$item->titulo ?>" maxlength="45" minlength="5" />
 									</div>
 
-									<div class="col-md-3">
-										<label class="control-label" for="cnpj">
-											CNPJ *
+									<div class="col-md-4">
+										<label class="control-label" for="valor-servico">
+											Valor Serviço *
 										</label>
 
-										<input id="cnpj" name="cnpj" type="text" class="required form-control" value="<?= @$item->cnpj ?>" />
-									</div>
-
-									<div class="col-md-3">
-										<label class="control-label" for="telefone">
-											Telefone *
-										</label>
-
-										<input id="telefone" name="telefone" type="text" class="required form-control" value="<?= @$item->telefone ?>" />
+										<input id="valor-servico" name="valor-servico" type="text" class="required form-control price" value="1" disabled />
 									</div>
 								</div>
 
 								<div class="row">
-   									<div class="col-md-8">
-										<label class="control-label" for="email">
-											E-mail *
+									<div class="col-md-4">
+										<label class="control-label" for="parcelas">
+											Quantidade Parcelas *
 										</label>
 
-										<input id="email" name="email" type="email" class="required form-control" value="<?= @$item->email ?>" />
+										<input id="parcelas" name="parcelas" type="text" class="required form-control quantity" value="1" />
 									</div>
 
 									<div class="col-md-4">
-										<label class="control-label" for="senha">
-									   		Senha *
+										<label class="control-label" for="desconto">
+											Desconto *
 										</label>
 
-										<input id="senha" name="senha" type="password" class="required form-control" minlength="3" maxlength="20" value="<?= @$item->senha ?>" />
-									</div>
-								</div>
-							</div>
-						</section>
-
-						<h3>Endereço</h3>
-
-						<section>
-							<div class="form-group clearfix">
-								<div class="row">
-									<div class="col-md-4">
-										<label class="control-label" for="cidade">
-											Cidade *
-										</label>
-
-										<input id="cidade" name="cidade" type="text" class="required form-control" value="<?= @$address->cidade ?>" />
+										<input id="desconto" name="desconto" type="text" class="required form-control discount" value="1" />
 									</div>
 
 									<div class="col-md-4">
-										<label class="control-label" for="cep">
-											CEP *
+										<label class="control-label" for="valor-parcela">
+											Valor Parcela *
 										</label>
 
-										<input id="cep" name="cep" type="text" class="required form-control" value="<?= @$address->cep ?>" />
-									</div>
-
-									<div class="col-md-4">
-										<label class="control-label" for="estado">
-											Estado *
-										</label>
-
-										<input id="estado" name="estado" type="text" minlength="2" maxlength="2" class="required form-control" style="text-transform: uppercase" value="<?= @$address->estado ?>" />
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-md-6">
-										<label class="control-label" for="rua">
-											Rua *
-										</label>
-
-										<input id="rua" name="rua" type="text" class="required form-control" value="<?= @$address->logradouro ?>" />
-									</div>
-
-									<div class="col-md-6">
-										<label class="control-label" for="bairro">
-											Bairro *
-										</label>
-
-										<input id="bairro" name="bairro" type="text" class="required form-control" value="<?= @$address->bairro ?>" />
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-md-6">
-										<label class="control-label" for="numero">
-											Número *
-										</label>
-
-										<input id="numero" name="numero" type="number" rangelength="[1,5]" class="required form-control" value="<?= @$address->numero ?>" />
+										<input id="valor-parcela" name="valor-parcela" type="text" class="required form-control price" value="1" disabled />
 									</div>
 								</div>
 							</div>
@@ -192,14 +133,92 @@
 	</div>
 </div>
 
+<script src="<?= base_url('assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/jquery-validation/js/jquery.validate.min.js') ?>"></script>
-<script src="<?= base_url('assets/plugins/jquery-mask/jquery.mask.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/jquery.steps/js/jquery.steps.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/jquery-ui/jquery-ui.js')?>"></script>
 
 <script src="<?= base_url('assets/pages/jquery.wizard-init.js') ?>"></script>
 
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
+	(function($)
+	{
+		$.fn.decimalFormat = function()
+		{
+			this.each( function(i)
+			{
+				$(this).change(function(e)
+				{
+					if(isNaN(parseFloat(this.value))) return;
+					
+					this.value = parseFloat(this.value).toFixed(2);
+				});
+			});
+
+			return this;
+		}
+	})(jQuery);
+
+	$('.discount').TouchSpin({
+		min: 1,
+		max: 100,
+		step: 0.1,
+		boostat: 5,
+		postfix: '%',
+		maxboostedstep: 10,
+		forcestepdivisibility: 'none'
+    }).decimalFormat();
+
+    $('.price').TouchSpin({
+		min: 1,
+		step: 0.1,
+		boostat: 5,
+		decimals: 2,
+		prefix: 'R$',
+		max: 100000000,
+		maxboostedstep: 10,
+		forcestepdivisibility: 'none'
+	}).decimalFormat();
+
+	$('.quantity').TouchSpin({
+		min: 1,
+		boostat: 5
+	});
+
+	//=========
+
+	$('#fornecedor').autocomplete(
+	{
+		source:function(request, response)
+		{
+			$.ajax(
+			{
+				url: '<?=base_url('ajax/fornecedores')?>',
+				type: 'post',
+				dataType: 'json',
+				data: {
+					search: request.term
+				},
+				success:function(data)
+				{
+					response(data.slice(0, 4));
+				}
+			});
+		},
+		select:function(event, ui)
+		{
+			$('#fornecedor').val(ui.item.label);
+			$('#id_fornecedor').val(ui.item.value);
+
+			return false;
+		}
+	});
+
+	//=========
+
 	$('.form-file .input-file').on('change',function(e)
 	{
 		$('label[for=file]').html(
