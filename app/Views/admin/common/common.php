@@ -111,6 +111,25 @@
 								<a href="javascript:void(0);" class="waves-effect">
 									<i class="fas fa-shopping-basket"></i>
 
+									<span> Parcelamentos </span>
+									<span class="menu-arrow"></span>
+								</a>
+
+								<ul class="list-unstyled">
+									<li>
+										<a href="<?= base_url('admin/installments/create') ?>">Adicionar Novo</a>
+									</li>
+
+									<li>
+										<a href="<?= base_url('admin/installments') ?>">Listar Todos</a>
+									</li>
+								</ul>
+							</li>
+
+							<li class="has_sub">
+								<a href="javascript:void(0);" class="waves-effect">
+									<i class="fas fa-shopping-basket"></i>
+
 									<span> Mensalidades </span>
 									<span class="menu-arrow"></span>
 								</a>

@@ -1,0 +1,229 @@
+
+<link href="<?= base_url('assets/plugins/jquery.steps/css/jquery.steps.css') ?>" rel="stylesheet" />
+
+<div class="container-fluid reset hidden-xs">
+	<div class="row page-breadcrumb v-align">
+		<div class="col-md-5">
+		<?php if ($segments[2] == 'atualizar') { ?>
+			<h4>Modificar parcelamento</h4>
+		<?php } else { ?>
+			<h4>Cadastrar parcelamento</h4>
+		<?php } ?>
+		</div>
+
+		<div class="col-md-7 text-right">
+			<div class="d-flex justify-content-end">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="<?= base_url('dashboard') ?>">Inicio do sistema</a>
+					</li>
+
+					<li class="breadcrumb-item">
+						<a href="<?= base_url('installments') ?>">Parcelamentos</a>
+					</li>
+
+				<?php if ($segments[2] == 'atualizar') { ?>
+					<li class="breadcrumb-item active">
+						Atualizar
+					</li>
+				<?php } else { ?>
+					<li class="breadcrumb-item active">
+						Adicionar
+					</li>
+				<?php } ?>
+				</ol>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card-box">
+				<h4 class="m-b-30 header-title">
+				<?php if ($segments[2] == 'atualizar') { ?>
+					<b>Modificar Cliente</b>
+				<?php } else { ?>
+					<b>Cadastrar Cliente</b>
+				<?php } ?>
+				</h4>
+
+				<form id="wizard-validation-form" method="post" enctype="multipart/form-data">
+					<div>
+						<h3 class="">
+							<span class="hidden-xs hidden-sm">Dados Empresa</span>
+						</h3>
+
+						<section>
+							<div class="form-group clearfix">
+								<div class="row">
+									<div class="col-md-6">
+										<label class="control-label" for="razaoSocial">
+											Razão Social *
+										</label>
+
+										<input id="razaoSocial" name="razaoSocial" type="text" class="required form-control" value="<?= @$item->razaoSocial ?>" />
+									</div>
+
+									<div class="col-md-3">
+										<label class="control-label" for="cnpj">
+											CNPJ *
+										</label>
+
+										<input id="cnpj" name="cnpj" type="text" class="required form-control" value="<?= @$item->cnpj ?>" />
+									</div>
+
+									<div class="col-md-3">
+										<label class="control-label" for="telefone">
+											Telefone *
+										</label>
+
+										<input id="telefone" name="telefone" type="text" class="required form-control" value="<?= @$item->telefone ?>" />
+									</div>
+								</div>
+
+								<div class="row">
+   									<div class="col-md-8">
+										<label class="control-label" for="email">
+											E-mail *
+										</label>
+
+										<input id="email" name="email" type="email" class="required form-control" value="<?= @$item->email ?>" />
+									</div>
+
+									<div class="col-md-4">
+										<label class="control-label" for="senha">
+									   		Senha *
+										</label>
+
+										<input id="senha" name="senha" type="password" class="required form-control" minlength="3" maxlength="20" value="<?= @$item->senha ?>" />
+									</div>
+								</div>
+							</div>
+						</section>
+
+						<h3>Endereço</h3>
+
+						<section>
+							<div class="form-group clearfix">
+								<div class="row">
+									<div class="col-md-4">
+										<label class="control-label" for="cidade">
+											Cidade *
+										</label>
+
+										<input id="cidade" name="cidade" type="text" class="required form-control" value="<?= @$address->cidade ?>" />
+									</div>
+
+									<div class="col-md-4">
+										<label class="control-label" for="cep">
+											CEP *
+										</label>
+
+										<input id="cep" name="cep" type="text" class="required form-control" value="<?= @$address->cep ?>" />
+									</div>
+
+									<div class="col-md-4">
+										<label class="control-label" for="estado">
+											Estado *
+										</label>
+
+										<input id="estado" name="estado" type="text" minlength="2" maxlength="2" class="required form-control" style="text-transform: uppercase" value="<?= @$address->estado ?>" />
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<label class="control-label" for="rua">
+											Rua *
+										</label>
+
+										<input id="rua" name="rua" type="text" class="required form-control" value="<?= @$address->logradouro ?>" />
+									</div>
+
+									<div class="col-md-6">
+										<label class="control-label" for="bairro">
+											Bairro *
+										</label>
+
+										<input id="bairro" name="bairro" type="text" class="required form-control" value="<?= @$address->bairro ?>" />
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<label class="control-label" for="numero">
+											Número *
+										</label>
+
+										<input id="numero" name="numero" type="number" rangelength="[1,5]" class="required form-control" value="<?= @$address->numero ?>" />
+									</div>
+								</div>
+							</div>
+						</section>
+
+						<h3>Imagem</h3>
+
+						<section>
+							<div class="form-group clearfix">
+								<div class="row">
+									<div class="col-md-6 col-md-offset-3">
+										<div class="form-file">
+											<input id="avatar" name="avatar" type="file" class="input-file" />
+
+											<label for="avatar">
+												<strong>Selecione o Arquivo </strong>
+												<span class="drap">ou Arraste</span>.
+											</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div id="img-preview" class="col-md-6 col-md-offset-3 text-center"></div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="<?= base_url('assets/plugins/jquery-validation/js/jquery.validate.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/jquery-mask/jquery.mask.js') ?>"></script>
+
+<script src="<?= base_url('assets/pages/jquery.wizard-init.js') ?>"></script>
+
+<script type="text/javascript">
+jQuery(document).ready(function()
+{
+	$('.form-file .input-file').on('change',function(e)
+	{
+		$('label[for=file]').html(
+			'<strong>'+e.target.files[0].name+'</strong>'
+		);
+
+		imgPreview(this);
+	});
+});
+
+//=========
+
+function imgPreview(img)
+{
+	var reader = new FileReader();
+
+	reader.onload = function(e){
+		$('#img-preview').html(
+			'<img id="preview" class="img-circle" src="#" height="100" width="100" style="margin-top:20px" />'
+		);
+
+		$('#img-preview img').attr('src', e.target.result);
+	}
+		
+	reader.readAsDataURL(img.files[0]);
+}
+</script>

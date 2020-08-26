@@ -79,10 +79,16 @@ $routes->group('admin', function($routes)
 	$routes->add('permissoes/inserir', 'Admin\Permission::insert');
 	$routes->put('permissoes/atualizar/(:num)', 'Admin\Permission::update');
 
-	#=== [ SALE ]
+	#=== [ MONTHLY ]
 	$routes->get('mensalidades', 'Admin\Monthly::index');
 	$routes->add('mensalidades/inserir', 'Admin\Monthly::insert');
 	$routes->put('mensalidades/atualizar/(:num)', 'Admin\Monthly::update');
+
+	#=== [ INSTALLMENTS ]
+	$routes->get('installments', 'Admin\Installment::index');
+	$routes->add('installments/create', 'Admin\Installment::insert');
+	$routes->post('installments/store', 'Admin\Installment::store');
+	$routes->put('installments/update/(:num)', 'Admin\Installment::update');
 });
 
 #=========================
