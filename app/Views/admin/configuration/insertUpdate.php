@@ -2,14 +2,15 @@
 <link href="<?= base_url('assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') ?>" rel="stylesheet" />
 <link href="<?= base_url('assets/plugins/bootstrap-select/css/bootstrap-select.min.css') ?>" rel="stylesheet" />
 <link href="<?= base_url('assets/plugins/jquery.steps/css/jquery.steps.css') ?>" rel="stylesheet" />
+<link href="<?= base_url('assets/plugins/summernote/summernote.css') ?>" rel="stylesheet" />
 
 <div class="container-fluid reset hidden-xs">
 	<div class="row page-breadcrumb v-align">
 		<div class="col-md-5">
-		<?php if ($segments[2] == 'atualizar') { ?>
-			<h4>Modificar cliente</h4>
+		<?php if ($segments[2] == 'edit') { ?>
+			<h4>Modificar configurações</h4>
 		<?php } else { ?>
-			<h4>Cadastrar cliente</h4>
+			<h4>Cadastrar configurações</h4>
 		<?php } ?>
 		</div>
 
@@ -21,10 +22,10 @@
 					</li>
 
 					<li class="breadcrumb-item">
-						<a href="<?= base_url('clients') ?>">Clientes</a>
+						Configurações
 					</li>
 
-				<?php if ($segments[2] == 'atualizar') { ?>
+				<?php if ($segments[2] == 'edit') { ?>
 					<li class="breadcrumb-item active">
 						Atualizar
 					</li>
@@ -44,137 +45,53 @@
 		<div class="col-sm-12">
 			<div class="card-box">
 				<h4 class="m-b-30 header-title">
-				<?php if ($segments[2] == 'atualizar') { ?>
-					<b>Modificar Cliente</b>
+				<?php if ($segments[2] == 'edit') { ?>
+					<b>Modificar Configurações</b>
 				<?php } else { ?>
-					<b>Cadastrar Cliente</b>
+					<b>Cadastrar Configurações</b>
 				<?php } ?>
 				</h4>
 
 				<form id="wizard-validation-form" method="post" enctype="multipart/form-data">
 					<div>
 						<h3 class="">
-							<span class="hidden-xs hidden-sm">Dados Empresa</span>
+							<span class="hidden-xs hidden-sm">Aplicação</span>
 						</h3>
 
 						<section>
 							<div class="form-group clearfix">
 								<div class="row">
-									<div class="col-md-6">
-										<label class="control-label" for="razaoSocial">
-											Razão Social *
-										</label>
-
-										<input id="razaoSocial" name="razaoSocial" type="text" class="required form-control" value="<?= @$item->razaoSocial ?>" />
+									<div class="col-md-12">
+										<div class="alert alert-danger alert-dismissible" role="alert" style="text-align: justify;">
+											<strong style="color: #000">Observação:</strong> Responsável por alterar o título das páginas. Caso não queira atualizar, não modifique este campo!
+										</div>
 									</div>
 
-									<div class="col-md-3">
-										<label class="control-label" for="cnpj">
-											CNPJ *
-										</label>
-
-										<input id="cnpj" name="cnpj" type="text" class="required form-control" value="<?= @$item->cnpj ?>" />
-									</div>
-
-									<div class="col-md-3">
-										<label class="control-label" for="telefone">
-											Telefone *
-										</label>
-
-										<input id="telefone" name="telefone" type="text" class="required form-control" value="<?= @$item->telefone ?>" />
-									</div>
-								</div>
-
-								<div class="row">
-   									<div class="col-md-8">
-										<label class="control-label" for="email">
-											E-mail *
-										</label>
-
-										<input id="email" name="email" type="email" class="required form-control" value="<?= @$item->email ?>" />
-									</div>
-
-									<div class="col-md-4">
-										<label class="control-label" for="senha">
-									   		Senha *
-										</label>
-
-										<input id="senha" name="senha" type="password" class="required form-control" minlength="3" maxlength="20" value="<?= @$item->senha ?>" />
+									<div class="col-md-8 col-md-offset-2">
+										<input id="titulo" name="titulo" type="text" class="required form-control" value="<?= @$item->tituloPagina ?>" />
 									</div>
 								</div>
 							</div>
 						</section>
 
-						<h3>Endereço</h3>
+						<h3 class="">
+							<span class="hidden-xs hidden-sm">Logotipo App</span>
+						</h3>
 
 						<section>
 							<div class="form-group clearfix">
 								<div class="row">
-									<div class="col-md-4">
-										<label class="control-label" for="cidade">
-											Cidade *
-										</label>
-
-										<input id="cidade" name="cidade" type="text" class="required form-control" value="<?= @$address->cidade ?>" />
+									<div class="col-md-12">
+										<div class="alert alert-danger alert-dismissible" role="alert" style="text-align: justify;">
+											<strong style="color: #000">Observação:</strong> Responsável por alterar a logo presente no loading do aplicativo. Caso não queira atualizar, não insira nenhuma imagem neste campo!
+										</div>
 									</div>
 
-									<div class="col-md-4">
-										<label class="control-label" for="cep">
-											CEP *
-										</label>
-
-										<input id="cep" name="cep" type="text" class="required form-control" value="<?= @$address->cep ?>" />
-									</div>
-
-									<div class="col-md-4">
-										<label class="control-label" for="estado">
-											Estado *
-										</label>
-
-										<input id="estado" name="estado" type="text" minlength="2" maxlength="2" class="required form-control" style="text-transform: uppercase" value="<?= @$address->estado ?>" />
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-md-6">
-										<label class="control-label" for="rua">
-											Rua *
-										</label>
-
-										<input id="rua" name="rua" type="text" class="required form-control" value="<?= @$address->logradouro ?>" />
-									</div>
-
-									<div class="col-md-6">
-										<label class="control-label" for="bairro">
-											Bairro *
-										</label>
-
-										<input id="bairro" name="bairro" type="text" class="required form-control" value="<?= @$address->bairro ?>" />
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-md-6">
-										<label class="control-label" for="numero">
-											Número *
-										</label>
-
-										<input id="numero" name="numero" type="number" rangelength="[1,5]" class="required form-control" value="<?= @$address->numero ?>" />
-									</div>
-								</div>
-							</div>
-						</section>
-
-						<h3>Imagem</h3>
-
-						<section>
-							<div class="form-group clearfix">
-								<div class="row">
 									<div class="col-md-6 col-md-offset-3">
 										<div class="form-file">
-											<input id="avatar" name="avatar" type="file" class="input-file" />
+											<input id="app" name="app" type="file" class="input-file" data-location="app" />
 
-											<label for="avatar">
+											<label for="app">
 												<strong>Selecione o Arquivo </strong>
 												<span class="drap">ou Arraste</span>.
 											</label>
@@ -183,7 +100,60 @@
 								</div>
 
 								<div class="row">
-									<div id="img-preview" class="col-md-6 col-md-offset-3 text-center"></div>
+									<div id="img-preview-app" class="col-md-6 col-md-offset-3 text-center"></div>
+								</div>
+							</div>
+						</section>
+
+						<h3 class="">
+							<span class="hidden-xs hidden-sm">Logotipo Painel</span>
+						</h3>
+
+						<section>
+							<div class="form-group clearfix">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="alert alert-danger alert-dismissible" role="alert" style="text-align: justify;">
+											<strong style="color: #000">Observação:</strong> Responsável por alterar a logo presente no topo dos painéis. Caso não queira atualizar, não insira nenhuma imagem neste campo!
+										</div>
+									</div>
+
+									<div class="col-md-6 col-md-offset-3">
+										<div class="form-file">
+											<input id="panel" name="panel" type="file" class="input-file" data-location="panel" />
+
+											<label for="panel">
+												<strong>Selecione o Arquivo </strong>
+												<span class="drap">ou Arraste</span>.
+											</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div id="img-preview-panel" class="col-md-6 col-md-offset-3 text-center"></div>
+								</div>
+							</div>
+						</section>
+
+						<h3 class="">
+							<span class="hidden-xs hidden-sm">Termo & Confições</span>
+						</h3>
+
+						<section>
+							<div class="form-group clearfix">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="alert alert-danger alert-dismissible" role="alert" style="text-align: justify;">
+											<strong style="color: #000">Observação:</strong> Responsável por alterar a logo presente no topo dos painéis. Caso não queira atualizar, não modifique este campo!
+										</div>
+									</div>
+
+									<div class="col-md-12">
+										<textarea id="termos-conficoes" name="termos-conficoes" class="form-control summernote">
+											<?= @$item->termosCondicoes ?>
+										</textarea>
+									</div>
 								</div>
 							</div>
 						</section>
@@ -197,6 +167,7 @@
 <script src="<?= base_url('assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/jquery-validation/js/jquery.validate.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/jquery.steps/js/jquery.steps.min.js') ?>"></script>
+<script src="<?= base_url('assets/plugins/summernote/summernote.min.js') ?>"></script>
 <script src="<?= base_url('assets/plugins/jquery-mask/jquery.mask.js') ?>"></script>
 
 <script src="<?= base_url('assets/pages/jquery.wizard-init.js') ?>"></script>
@@ -204,28 +175,51 @@
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-	$('.form-file .input-file').on('change',function(e)
+	$('.summernote').summernote(
 	{
-		$('label[for=file]').html(
+		height: 300,
+		focus: false,
+		minHeight: null,
+		maxHeight: null,
+		fontSizes: [
+			'8', '9', '10', '11', '12', '14', '18', '24'
+		],
+		toolbar: [
+			['style', ['bold', 'italic', 'underline', 'clear']],
+			['fontsize', ['fontsize']],
+			['color', ['color']],
+			['para', ['ul', 'ol', 'paragraph']],
+			['table', ['table']],
+			['view', ['fullscreen']],
+		]
+	});
+
+	//=========
+
+	$('.form-file .input-file').on('change', function(e)
+	{
+		var location = $(this).data('location');
+
+		$('label[for='+location+']').html(
 			'<strong>'+e.target.files[0].name+'</strong>'
 		);
 
-		imgPreview(this);
+		imgPreview(this, location);
 	});
 });
 
 //=========
 
-function imgPreview(img)
+function imgPreview(img, location)
 {
 	var reader = new FileReader();
 
 	reader.onload = function(e){
-		$('#img-preview').html(
-			'<img id="preview" class="img-circle" src="#" height="100" width="100" style="margin-top:20px" />'
+		$('#img-preview-'+location+'').html(
+			'<img class="img-resonsive" src="#" height="150" width="300" style="margin-top:20px" />'
 		);
 
-		$('#img-preview img').attr('src', e.target.result);
+		$('#img-preview-'+location+' img').attr('src', e.target.result);
 	}
 		
 	reader.readAsDataURL(img.files[0]);

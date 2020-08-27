@@ -55,4 +55,58 @@ class Configuration extends \App\Controllers\BaseController
 			'item' => $configuration
 		]);
 	}
+
+	public function update()
+	{
+		$configuration = $this->model->getLast();
+
+		$data = [
+			'tituloPagina' => $this->request->getPost('titulo'),
+			'termosCondicoes' => $this->request->getPost('termos-conficoes')
+		];
+
+		if ($this->request->getFile('app')) {
+			$userPath = "uploads/logos/";
+			$app = $this->request->getFile('app');
+
+			if (in_array(
+				$app->getClientMimeType(),
+				['image/jpg','image/jpeg','image/gif','image/png']
+			)) {
+				$newName = $app->getRandomName();
+	            $app->move($userPath, $newName);
+
+	            $data['logoApp'] = $userPath . $newName;
+	        }
+		}
+
+		if ($this->request->getFile('panel')) {
+			$userPath = "uploads/logos/";
+			$panel = $this->request->getFile('panel');
+
+			if (in_array(
+				$panel->getClientMimeType(),
+				['image/jpg','image/jpeg','image/gif','image/png']
+			)) {
+				$newName = $panel->getRandomName();
+	            $panel->move($userPath, $newName);
+
+	            $data['logoPainel'] = $userPath . $newName;
+	        }
+		}
+
+		$result = $this->model->edit($data);
+
+		if ($result) {
+			$this->session->setFlashdata([
+				'success' => true
+			]);
+		} else {
+			$this->session->setFlashdata([
+				'success' => false
+			]);
+		}
+
+		return cRedirect('dashboard', 'a');
+	}
 }

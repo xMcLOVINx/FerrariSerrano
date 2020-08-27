@@ -50,7 +50,7 @@
 					<div class="text-center">
 						<a href="javascript:void(0);" class="logo">
 							<span>
-								<img src="<?= base_url('uploads/logo_2.gif') ?>" height="30" />
+								<img src="<?= base_url('uploads/logos/logo_2.gif') ?>" height="30" />
 							</span>
 						</a>
 					</div>

@@ -107,13 +107,13 @@ CREATE TABLE simulacoes_indices (
 CREATE TABLE configuracoes (
 	tituloPagina VARCHAR(100) NOT NULL,
 	valorServico DECIMAL(11,2) NOT NULL,
-	termosCompromissos LONGTEXT NULL,
+	termosCondicoes LONGTEXT NULL,
 	logoPainel CHAR(65) NULL,
 	logoApp CHAR(65) NULL
 );
 
-INSERT INTO configuracoes (tituloPagina, valorServico, termosCompromissos, logoPainel, logoApp) VALUES
-('FerrariSerrano', 1000, NULL, NULL, NULL);
+INSERT INTO configuracoes (tituloPagina, valorServico, termosCondicoes, logoPainel, logoApp) VALUES
+('FerrariSerrano', 1000, NULL, 'uploads/logos/logo_2.gif', 'uploads/logos/.gif');
 
 # ================
 # DOS PARCELAMENTOS
