@@ -23,14 +23,14 @@ class BiTModel extends \CodeIgniter\Model
 		}
 	}
 
-	public function getLast($data)
+	public function getLast($data = [])
 	{
 		if ($query = $this->getWhere($data)->getLastRow()) {
 			return $query;
 		}
 	}
 
-	public function edit($data, $where)
+	public function edit($data, $where = [])
 	{
 		if ($query = $this->set($data)->where($where)->update()) {
 			return $query;

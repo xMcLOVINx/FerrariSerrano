@@ -33,6 +33,8 @@
 		<script src="<?= base_url('assets/js/waves.js') ?>"></script>
 		<script src="<?= base_url('assets/js/modal.js') ?>"></script>
 
+		<script src="<?= base_url('assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js') ?>"></script>
+		<script src="<?= base_url('assets/plugins/bootstrap-select/js/bootstrap-select.min.js') ?>"></script>
 		<script src="<?= base_url('assets/plugins/custombox/js/custombox.min.js') ?>"></script>
 		<script src="<?= base_url('assets/plugins/custombox/js/legacy.min.js') ?>"></script>
 
@@ -109,7 +111,7 @@
 
 							<li class="has_sub">
 								<a href="javascript:void(0);" class="waves-effect">
-									<i class="fas fa-shopping-basket"></i>
+									<i class="fas fa-file-invoice-dollar"></i>
 
 									<span> Parcelamentos </span>
 									<span class="menu-arrow"></span>
@@ -128,7 +130,7 @@
 
 							<li class="has_sub">
 								<a href="javascript:void(0);" class="waves-effect">
-									<i class="fas fa-shopping-basket"></i>
+									<i class="fas fa-funnel-dollar"></i>
 
 									<span> Mensalidades </span>
 									<span class="menu-arrow"></span>
@@ -201,6 +203,27 @@
 									</li>
 								</ul>
 							</li>
+
+							<li class="text-muted menu-title">PANEL</li>
+
+							<li class="has_sub">
+								<a href="javascript:void(0);" class="waves-effect">
+									<i class="fas fa-cogs"></i>
+
+									<span> Atualizações </span>
+									<span class="menu-arrow"></span>
+								</a>
+
+								<ul class="list-unstyled">
+									<li>
+										<a href="#service-modal" class="waves-effect" data-animation="flash" data-plugin="custommodal" data-overlaySpeed="100" data-overlayColor="#36404a">Preço Serviço</a>
+									</li>
+
+									<li>
+										<a href="<?= base_url('admin/configurations/edit') ?>">Aplicação</a>
+									</li>
+								</ul>
+							</li>
 						</ul>
 
 						<div class="clearfix"></div>
@@ -232,39 +255,52 @@
 				</footer>
 			</div>
 		</div>
-
-		<div id="logical-modal" class="modal-demo">
+			
+		<div id="service-modal" class="modal-demo">
 			<div class="header">
 				<button type="button" class="close" onclick="Custombox.close()">
 					<i class="fas fa-times"></i>
 				</button>
 
-				<h4 class="custom-modal-title">Atualizar Lógica</h4>
+				<h4 class="custom-modal-title">Atualizar Preço Serviço</h4>
 			</div>
 
 			<div class="modal-form">
-				<form class="form" method="post" action="">
+				<form class="form" method="post" action="<?=base_url('admin/configurations/price/update')?>">
 					<div class="modal-body">
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-6">
 								<div class="form-group">
-									<label class="control-label" for="logical_foo">
-										Foo *
+									<label class="control-label" for="valor-servico-modal">
+										Valor Serviço *
 									</label>
 
-									<input id="logical_foo" name="cliente" type="text" class="required form-control"/>
+									<input id="valor-servico-modal" name="valor-servico-modal" type="text" class="required form-control price" value="0" />
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="control-label" for="confirmacao-modal">
+										Confirmação *
+									</label>
+
+									<select name="confirmacao-modal" id="confirmacao-modal" class="selectpicker required form-control" data-style="btn-white" data-size="3">
+									  	<option value="S">Confirmar Operação</option>
+									  	<option value="N" selected>Cancelar Operação</option>
+									</select>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div class="modal-footer">
+					<div class="modal-footer" style="position: relative; z-index: -1">
 						<button type="button" class="btn btn-default waves-effect waves-light" data-dismiss="modal" onclick="Custombox.close()">
 							<i class="fas fa-times"></i> Fechar
 						</button>
 
 						<button type="submit" class="btn btn-success waves-effect waves-light">
-							<i class="fas fa-check"></i> Atualuzar
+							<i class="fas fa-check"></i> Atualizar
 						</button>
 					</div>
 				</form>
@@ -392,6 +428,54 @@
 
 		<script type="text/javascript">
 		var resizefunc = [];
+
+		// ================
+
+		(function($)
+		{
+			$.fn.decimalFormat = function()
+			{
+				this.each( function(i)
+				{
+					$(this).change(function(e)
+					{
+						if(isNaN(parseFloat(this.value))) return;
+						
+						this.value = parseFloat(this.value).toFixed(2);
+					});
+				});
+
+				return this;
+			}
+		})(jQuery);
+
+		$('.price').TouchSpin({
+			min: 1,
+			step: 0.1,
+			boostat: 5,
+			decimals: 2,
+			prefix: 'R$',
+			max: 100000000,
+			maxboostedstep: 10,
+			forcestepdivisibility: 'none'
+		}).decimalFormat();
+
+		// ================
+
+		$('a[href="#service-modal"]').on('click', function()
+		{
+			$.ajax(
+			{
+				url: '<?= base_url('admin/configurations/get/price') ?>',
+				dataType: 'json',
+				success:function(data)
+				{
+					$('#valor-servico-modal').val(
+						data.success ? data.price : 1.00
+					);
+				}
+			});
+		})
 
 		// ================
 

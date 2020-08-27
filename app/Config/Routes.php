@@ -89,6 +89,11 @@ $routes->group('admin', function($routes)
 	$routes->add('installments/create', 'Admin\Installment::insert');
 	$routes->post('installments/store', 'Admin\Installment::store');
 	$routes->put('installments/update/(:num)', 'Admin\Installment::update');
+
+	#=== [ CONFIGURATIONS ]
+	$routes->get('configurations/get/price', 'Admin\Configuration::getPrice');
+	$routes->post('configurations/price/update', 'Admin\Configuration::priceUpdate');
+	$routes->get('configurations/edit', 'Admin\Configuration::edit');
 });
 
 #=========================
