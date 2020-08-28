@@ -18,7 +18,12 @@ class Home extends \App\Controllers\BaseController
 
 	public function index()
 	{
-		return view('admin/login/login');
+		$configuration = new \App\Models\Shared\Base;
+		$configuration->table = "configuracoes";
+
+		return view('admin/login/login', [
+			'configuration' => $configuration->getLast()
+		]);
 	}
 
 	public function attemptLogin()

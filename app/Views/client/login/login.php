@@ -39,7 +39,7 @@
 	<body>
 		<?php if (!session()->has('success')): ?>
 		<div class="loading">
-			<img src="<?= base_url('uploads/logo_2.gif') ?>" />
+			<img src="<?= convertImage($configuration->logoPainel) ?>" height="100" width="300" />
 		</div>
 		<?php endif; ?>
 
@@ -47,7 +47,7 @@
 			<div class="card-box">
 				<div class="panel-heading"> 
 					<h3 class="text-center">
-						<img src="<?= base_url('uploads/logo_2.gif') ?>" height="50" />
+						<img src="<?= convertImage($configuration->logoPainel) ?>" height="50" />
 					</h3>
 				</div>
 

@@ -44,11 +44,12 @@
 							<div class="form-group clearfix">
 								<div class="row">
 									<div class="col-md-8">
-										<label class="control-label" for="empresa">
+										<label class="control-label" for="cliente">
 											Cliente *
 										</label>
 
-										<input id="empresa" name="empresa" type="text" class="form-control" required />
+										<input id="cliente" name="cliente" type="text" class="form-control" required />
+										<input id="cliente-id" name="cliente-id" type="hidden" required />
 									</div>
 
 									<div class="col-md-4">
@@ -94,118 +95,118 @@
 							<div class="form-group clearfix">
 								<div class="row">
 									<div class="col-md-12 error_msg_parcela hidden">
-                                        <div class="alert alert-danger alert-dismissible" role="alert">
-                                            <strong style="color: #000">Error:</strong> Obrigatório preencher todos os campos.
-                                        </div>
-                                    </div>
+										<div class="alert alert-danger alert-dismissible" role="alert">
+											<strong style="color: #000">Error:</strong> Obrigatório preencher todos os campos.
+										</div>
+									</div>
 
 									<div class="col-md-12">
-							            <div class="portlet">
-							                <div class="portlet-heading">
-							                    <h3 class="portlet-title text-dark text-uppercase">
-							                        ADICIONAR PARCELA
-							                    </h3>
+										<div class="portlet">
+											<div class="portlet-heading">
+												<h3 class="portlet-title text-dark text-uppercase">
+													ADICIONAR PARCELA
+												</h3>
 
-							                    <div class="clearfix"></div>
-							                </div>
+												<div class="clearfix"></div>
+											</div>
 
-							                <div id="portlet2" class="panel-collapse collapse in">
-							                    <div class="portlet-body">
-							                        <div class="form-group clearfix">
-							                            <div class="row">
-									                        <div class="col-md-6">
-											                    <label class="control-label" for="parcelamento">
-									                                Parcelamento *
-									                            </label>
+											<div id="portlet2" class="panel-collapse collapse in">
+												<div class="portlet-body">
+													<div class="form-group clearfix">
+														<div class="row">
+															<div class="col-md-6">
+																<label class="control-label" for="parcelamento">
+																	Parcelamento *
+																</label>
 
-								                                <input id="parcelamento" type="text" class="form-control" placeholder="Autocomplete..." />
-									                        </div>
-
-									                        <div class="col-md-3">
-												                <label class="control-label" for="meses-parcelamento">
-												                    Mêses *
-												                </label>
-
-											                    <input id="meses-parcelamento" name="meses-parcelamento" type="text" class="form-control quantity" value="1" disabled />
+																<input id="parcelamento" type="text" class="form-control" placeholder="Autocomplete..." />
 															</div>
 
 															<div class="col-md-3">
-																<label class="control-label" for="desconto-parcelamento">
+																<label class="control-label" for="meses-parcelamento">
+																	Mêses *
+																</label>
+
+																<input id="meses-parcelamento" name="meses-parcelamento" type="text" class="form-control quantity" value="1" disabled />
+															</div>
+
+															<div class="col-md-3">
+																<label class="control-label" for="parcelamento-desconto">
 																	Desconto *
 																</label>
 
-																<input id="desconto-parcelamento" name="desconto-parcelamento" type="text" class="form-control discount" value="0" disabled />
+																<input id="parcelamento-desconto" name="parcelamento-desconto" type="text" class="form-control discount" value="0" disabled />
 															</div>
 														</div>
 
 														<div class="row">
 															<div class="col-md-3 col-md-offset-9">
-												                <label class="control-label">
-												                	&nbsp;
-												                </label>
+																<label class="control-label">
+																	&nbsp;
+																</label>
 
-											                    <button class="form-control col-sm-12 btn btn-success adicionar" type="button">
-									                                <i class="fas fa-plus"></i> ADICIONAR
-									                            </button>
+																<button class="form-control col-sm-12 btn btn-success adicionar" type="button">
+																	<i class="fas fa-plus"></i> ADICIONAR
+																</button>
 															</div>
-									                    </div>
-							                        </div>
-							                    </div>
-							                </div>
-							            </div>
-							        </div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 
 								<div class="row">
-	                        		<div class="col-md-12 parcelas">
-	                        			<table id="datatable" class="table table-striped table-bordered">
-						                    <thead>
-						                        <tr>
-						                        	<th></th>
-						                            <th>Data Vencimento</th>
-						                            <th>Valor Parcela</th>
-						                            <th class="text-center">Situação</th>
-						                            <th class="text-center">
-						                                <i class="fas fa-cog"></i>
-						                            </th>
-						                        </tr>
-						                    </thead>
+									<div class="col-md-12 parcelas">
+										<table id="datatable" class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th></th>
+													<th>Data Vencimento</th>
+													<th>Valor Parcela</th>
+													<th class="text-center">Situação</th>
+													<th class="text-center">
+														<i class="fas fa-cog"></i>
+													</th>
+												</tr>
+											</thead>
 
-						                    <tbody>
-						                        <tr>
-						                        	<td class="text-center" width="50">
-						                        		<div class="custom-checkbox">
-							                        		<input type="checkbox" id="checkbox_" name="faturar[]" value="" />
-														    <label for="checkbox_"></label>
+											<tbody>
+												<tr>
+													<td class="text-center" width="50">
+														<div class="custom-checkbox">
+															<input type="checkbox" id="checkbox_" name="faturar[]" value="" />
+															<label for="checkbox_"></label>
 														</div>
-						                        	</td>
+													</td>
 
-						                            <td></td>
+													<td></td>
 
-						                            <td>
-						                                R$ <span class="valor"></span>
-						                            </td>
+													<td>
+														R$ <span class="valor"></span>
+													</td>
 
-						                            <td class="text-center">
-						                            	<span class="label label-table label-success" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
-						                            		Pago
-						                                </span>
+													<td class="text-center">
+														<span class="label label-table label-success" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
+															Pago
+														</span>
 
-						                            	<span class="label label-table label-danger" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
-						                            		Pendente
-						                                </span>
-						                            </td>
+														<span class="label label-table label-danger" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
+															Pendente
+														</span>
+													</td>
 
-						                            <td class="text-center actions">
-						                                <a href="javascript:void(0);" data-id="" class="table-action-btn btn-remove-parcela" data-toggle="tooltip" data-placement="top" title="Deletar">
-													        <i class="md md-close"></i>
-													    </a>
-						                            </td>
-						                        </tr>
-						                    </tbody>
-						                </table>
-	                        		</div>
-	                        	</div>
+													<td class="text-center actions">
+														<a href="javascript:void(0);" data-id="" class="table-action-btn btn-remove-parcela" data-toggle="tooltip" data-placement="top" title="Deletar">
+															<i class="md md-close"></i>
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
 						</section>
 
@@ -214,43 +215,43 @@
 						<section>
 							<div class="form-group clearfix">
 								<div class="row">
-							        <div class="col-md-12">
-							            <div class="alert alert-danger alert-dismissible" role="alert">
-							                <strong style="color: #000">Observação:</strong> Caso deseje faturar as parcelas selecionadas, clique no botão abaixo e preencha corretamente os campos.
+									<div class="col-md-12">
+										<div class="alert alert-danger alert-dismissible" role="alert">
+											<strong style="color: #000">Observação:</strong> Caso deseje faturar as parcelas selecionadas, clique no botão abaixo e preencha corretamente os campos.
 
-							                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							                    <span aria-hidden="true">
-							                        <i class="fas fa-times" style="margin-top: 2px"></i>
-							                    </span>
-							                </button>
-							            </div>
-							        </div>
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">
+													<i class="fas fa-times" style="margin-top: 2px"></i>
+												</span>
+											</button>
+										</div>
+									</div>
 
-							        <div class="col-md-12 error_msg_selecionado hidden">
-                                        <div class="alert alert-danger alert-dismissible" role="alert">
-                                            <strong style="color: #000">Error:</strong> Obrigatório selecionar pelo menos uma parcela.
-                                        </div>
-                                    </div>
-							    </div>
+									<div class="col-md-12 error_msg_selecionado hidden">
+										<div class="alert alert-danger alert-dismissible" role="alert">
+											<strong style="color: #000">Error:</strong> Obrigatório selecionar pelo menos uma parcela.
+										</div>
+									</div>
+								</div>
 
-							    <div class="row">
-							        <div class="col-md-12" style="font-weight: bold">
-						        		<h2 class="text-center">ATENÇÃO</h2>
+								<div class="row">
+									<div class="col-md-12" style="font-weight: bold">
+										<h2 class="text-center">ATENÇÃO</h2>
 										<h4 class="text-center">
 											ESTÁ É UMA OPERAÇÃO IRREVERSÍVEL!
 										</h4>
-							        </div>
-							    </div>
+									</div>
+								</div>
 
-							    <br />
+								<br />
 
-							    <div class="row">
-	                                <div class="col-md-4 col-md-offset-4">
+								<div class="row">
+									<div class="col-md-4 col-md-offset-4">
 										<button id="faturar" type="button" class="btn btn-danger col-md-12" style="padding: 15px; font-weight: bold; border-radius: 0">
 											FATURAR
 										</button>
-	                                </div>
-							    </div>
+									</div>
+								</div>
 							</div>
 						</section>
 					</div>
@@ -406,13 +407,34 @@ jQuery(document).ready(function()
 
 	//=========
 
-	var availableTags = [
-		'Pernabucanas Pederneiras',
-		'Bauru Center LTDA'
-	];
+	$("#cliente").autocomplete(
+	{
+		source:function(request, response)
+		{
+			$.ajax ({
+				url: '<?= base_url('admin/clients/ajax') ?>',
+				type: 'post',
+				dataType: 'json',
+				data: {
+					search: request.term
+				},
+				success:function(data)
+				{
+					if (!data.success) {
+						return false;
+					}
 
-	$('#empresa').autocomplete({
-	  source: availableTags
+					response(data.results.slice(0, 3));
+				}
+			});
+		},
+		select:function(event, ui)
+		{
+			$("#cliente").val(ui.item.label);
+			$("#cliente-id").val(ui.item.value);
+
+			return false;
+		}
 	});
 
 	//=========
@@ -420,24 +442,24 @@ jQuery(document).ready(function()
 	$('#faturar').on('click', function(e)
 	{
 		Custombox.open({
-            target: '#bill-modal',
-            overlayColor: '#36404a',
-            overlaySpeed: '100',
-            effect: 'flash'
-        });
+			target: '#bill-modal',
+			overlayColor: '#36404a',
+			overlaySpeed: '100',
+			effect: 'flash'
+		});
 
-        e.preventDefault();
+		e.preventDefault();
 	});
 
 	$('#bill-modal #recebido').on('change', function(e)
 	{
-        if ($('#bill-modal #recebido option:selected').val() == 1) {
-            $('#bill-modal .billed').removeClass('hidden');
-        } else {
-            $('#bill-modal .billed').addClass('hidden');
-        }
+		if ($('#bill-modal #recebido option:selected').val() == 1) {
+			$('#bill-modal .billed').removeClass('hidden');
+		} else {
+			$('#bill-modal .billed').addClass('hidden');
+		}
 
-        e.preventDefault();
-    });
+		e.preventDefault();
+	});
 });
 </script>

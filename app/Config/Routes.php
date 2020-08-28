@@ -59,12 +59,13 @@ $routes->group('admin', function($routes)
 	$routes->get('logout', 'Admin\Logout::index');
 
 	#=== [ CLIENT ]
-	$routes->get('clientes', 'Admin\Client::index');
-	$routes->get('clientes/inserir', 'Admin\Client::insert');
-	$routes->add('clientes/inserir', 'Admin\Client::store');
-	$routes->get('clientes/atualizar/(:num)', 'Admin\Client::edit');
-	$routes->add('clientes/atualizar/(:num)', 'Admin\Client::update');
-	$routes->add('clientes/deletar/(:num)', 'Admin\Client::delete');
+	$routes->get('clients', 'Admin\Client::index');
+	$routes->post('clients/ajax', 'Admin\Client::getByAjax');
+	$routes->get('clients/inserir', 'Admin\Client::insert');
+	$routes->add('clients/inserir', 'Admin\Client::store');
+	$routes->get('clients/atualizar/(:num)', 'Admin\Client::edit');
+	$routes->add('clients/atualizar/(:num)', 'Admin\Client::update');
+	$routes->add('clients/deletar/(:num)', 'Admin\Client::delete');
 
 	#=== [ USER ]
 	$routes->get('administradores', 'Admin\User::index');

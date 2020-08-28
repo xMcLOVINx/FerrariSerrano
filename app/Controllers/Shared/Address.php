@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers\Admin;
+namespace App\Controllers\Shared;
 
 class Address extends \App\Controllers\BiTController
 {
@@ -10,7 +10,7 @@ class Address extends \App\Controllers\BiTController
 	{
 		parent::__construct();
 
-		$this->model = new \App\Models\Admin\Address;
+		$this->model = new \App\Models\Shared\Address;
 	}
 
 

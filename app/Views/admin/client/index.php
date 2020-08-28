@@ -71,11 +71,11 @@
 							</td>
 
 							<td class="actions" width="180">
-								<a href="<?= base_url('admin/clientes/atualizar/' . $item->idUsuario) ?>" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar">
+								<a href="<?= base_url('admin/clients/atualizar/' . $item->idUsuario) ?>" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar">
 									<i class="md md-edit"></i>
 								</a>
 
-								<a href="javascript:void(0)" data-href="<?= base_url('admin/clientes/deletar/' . $item->idUsuario) ?>" class="table-action-btn delete-action" data-toggle="tooltip" data-placement="top" title="Deletar">
+								<a href="javascript:void(0)" data-href="<?= base_url('admin/clients/deletar/' . $item->idUsuario) ?>" class="table-action-btn delete-action" data-toggle="tooltip" data-placement="top" title="Deletar">
 									<i class="md md-close"></i>
 								</a>
 							</td>

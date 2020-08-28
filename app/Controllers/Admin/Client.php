@@ -25,6 +25,32 @@ class Client extends \App\Controllers\BiTController
 		]);
 	}
 
+	public function getByAjax()
+	{
+		if (!$this->request->isAJAX()) {
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+		}
+
+		$clients = $this->model->getLike(
+			'razaoSocial', $this->request->getPost('search'), [
+				'deletado' => '0'
+			]
+		);
+
+		$results = [];
+		foreach ($clients as $key => $client) {
+			$results[] = [
+				'value' => $client->idUsuario,
+				'label' => $client->razaoSocial
+			];
+		}
+
+		return $this->response->setJSON([
+			'success' => true,
+			'results' => $results
+		]);
+	}
+
 	public function insert()
 	{
 		return vAdmin('client/insertUpdate');
@@ -32,7 +58,7 @@ class Client extends \App\Controllers\BiTController
 
 	public function store()
 	{
-		$address = new \App\Controllers\SShared\Address;
+		$address = new \App\Controllers\Shared\Address;
 
 		if ($this->request->getFile('avatar')) {
 			$clientPath = "uploads/clients/";
@@ -71,7 +97,7 @@ class Client extends \App\Controllers\BiTController
 			]);
 		}
 
-		return cRedirect('clientes', 'a');
+		return cRedirect('clients', 'a');
 	}
 
 	public function edit()
@@ -136,7 +162,7 @@ class Client extends \App\Controllers\BiTController
 			]);
 		}
 
-		return cRedirect('clientes', 'a');
+		return cRedirect('clients', 'a');
 	}
 
 	public function delete()
@@ -157,6 +183,6 @@ class Client extends \App\Controllers\BiTController
 			]);
 		}
 
-		return cRedirect('clientes', 'a');
+		return cRedirect('clients', 'a');
 	}
 }

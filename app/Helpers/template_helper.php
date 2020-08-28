@@ -11,12 +11,22 @@
  *
  */
 
+if (!function_exists('appConfigurations')) {
+	function appConfigurations() {
+		$configuration = new \App\Models\Shared\Base;
+		$configuration->table = "configuracoes";
+
+		return $configuration->getLast();
+	}
+}
+
 if (!function_exists('vClient')) {
 	function vClient(string $common, array $data = [])
 	{
 		$request = \Config\Services::request();
 
 		$data = [
+			'configuration' => appConfigurations(),
 			'common' => 'client/' . $common,
 			'data' => array_merge(
 				$data, array (
@@ -35,6 +45,7 @@ if (!function_exists('vAdmin')) {
 		$request = \Config\Services::request();
 
 		$data = [
+			'configuration' => appConfigurations(),
 			'common' => 'admin/' . $common,
 			'data' => array_merge(
 				$data, array (

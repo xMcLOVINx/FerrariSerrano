@@ -50,7 +50,7 @@
 					<div class="text-center">
 						<a href="javascript:void(0);" class="logo">
 							<span>
-								<img src="<?= base_url('uploads/logos/logo_2.gif') ?>" height="30" />
+								<img src="<?= convertImage($configuration->logoPainel) ?>" height="30" />
 							</span>
 						</a>
 					</div>
@@ -195,11 +195,11 @@
 
 								<ul class="list-unstyled">
 									<li>
-										<a href="<?= base_url('admin/clientes/inserir') ?>">Adicionar Novo</a>
+										<a href="<?= base_url('admin/clients/inserir') ?>">Adicionar Novo</a>
 									</li>
 
 									<li>
-										<a href="<?= base_url('admin/clientes') ?>">Listar Todos</a>
+										<a href="<?= base_url('admin/clients') ?>">Listar Todos</a>
 									</li>
 								</ul>
 							</li>
@@ -475,7 +475,7 @@
 					);
 				}
 			});
-		})
+		});
 
 		// ================
 

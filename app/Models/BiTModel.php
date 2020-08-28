@@ -30,6 +30,13 @@ class BiTModel extends \CodeIgniter\Model
 		}
 	}
 
+	public function getLike($field, $match, $data = [])
+	{
+		if ($query = $this->like($field, $match, 'both')->getWhere($data)->getResult()) {
+			return $query;
+		}
+	}
+
 	public function edit($data, $where = [])
 	{
 		if ($query = $this->set($data)->where($where)->update()) {
