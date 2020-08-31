@@ -107,13 +107,13 @@ CREATE TABLE simulacoes_indices (
 CREATE TABLE configuracoes (
 	tituloPagina VARCHAR(100) NOT NULL,
 	valorServico DECIMAL(11,2) NOT NULL,
-	termosCondicoes LONGTEXT NULL,
+	termosCompromissos LONGTEXT NULL,
 	logoPainel CHAR(65) NULL,
 	logoApp CHAR(65) NULL
 );
 
-INSERT INTO configuracoes (tituloPagina, valorServico, termosCondicoes, logoPainel, logoApp) VALUES
-('FerrariSerrano', 1000, NULL, 'uploads/logos/logo_2.gif', 'uploads/logos/.gif');
+INSERT INTO configuracoes (tituloPagina, valorServico, termosCompromissos, logoPainel, logoApp) VALUES
+('FerrariSerrano', 1000, NULL, NULL, NULL);
 
 # ================
 # DOS PARCELAMENTOS
@@ -122,8 +122,9 @@ CREATE TABLE parcelamentos (
 	titulo VARCHAR(45) NOT NULL,
 	parcelas INT(2) NOT NULL,
 	desconto DECIMAL(5,2) NOT NULL,
-	valorParcela DECIMAL(11,2) NOT NULL,
+	imagem CHAR(65) NULL,
 	dataCadastro DATE NOT NULL,
+	deletado ENUM('1','0') NOT NULL DEFAULT '0',
 	PRIMARY KEY(idParcelamento)
 );
 

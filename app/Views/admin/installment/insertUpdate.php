@@ -72,7 +72,7 @@
 											Valor Serviço *
 										</label>
 
-										<input id="valor-servico" name="valor-servico" type="text" class="required form-control price" value="1" disabled />
+										<input id="valor-servico" ;name="valor-servico" ;type="text" class="required form-control price" value="<?= $configurations->valorServico ?>" disabled />
 									</div>
 								</div>
 
@@ -90,7 +90,7 @@
 											Desconto *
 										</label>
 
-										<input id="desconto" name="desconto" type="text" class="required form-control discount" value="1" />
+										<input id="desconto" name="desconto" type="text" class="required form-control discount" value="0.00" />
 									</div>
 
 									<div class="col-md-4">
@@ -98,7 +98,7 @@
 											Valor Parcela *
 										</label>
 
-										<input id="valor-parcela" name="valor-parcela" type="text" class="required form-control price" value="1" disabled />
+										<input id="valor-parcela" name="valor-parcela" type="text" class="required form-control price" value="0.00" disabled />
 									</div>
 								</div>
 							</div>
@@ -111,9 +111,9 @@
 								<div class="row">
 									<div class="col-md-6 col-md-offset-3">
 										<div class="form-file">
-											<input id="avatar" name="avatar" type="file" class="input-file" />
+											<input id="image" name="image" type="file" class="input-file" />
 
-											<label for="avatar">
+											<label for="image">
 												<strong>Selecione o Arquivo </strong>
 												<span class="drap">ou Arraste</span>.
 											</label>
@@ -163,58 +163,17 @@ jQuery(document).ready(function()
 	})(jQuery);
 
 	$('.discount').TouchSpin({
-		min: 1,
+		min: 0,
 		max: 100,
-		step: 0.1,
 		boostat: 5,
 		postfix: '%',
 		maxboostedstep: 10,
 		forcestepdivisibility: 'none'
     }).decimalFormat();
 
-    $('.price').TouchSpin({
-		min: 1,
-		step: 0.1,
-		boostat: 5,
-		decimals: 2,
-		prefix: 'R$',
-		max: 100000000,
-		maxboostedstep: 10,
-		forcestepdivisibility: 'none'
-	}).decimalFormat();
-
 	$('.quantity').TouchSpin({
 		min: 1,
 		boostat: 5
-	});
-
-	//=========
-
-	$('#fornecedor').autocomplete(
-	{
-		source:function(request, response)
-		{
-			$.ajax(
-			{
-				url: '<?=base_url('ajax/fornecedores')?>',
-				type: 'post',
-				dataType: 'json',
-				data: {
-					search: request.term
-				},
-				success:function(data)
-				{
-					response(data.slice(0, 4));
-				}
-			});
-		},
-		select:function(event, ui)
-		{
-			$('#fornecedor').val(ui.item.label);
-			$('#id_fornecedor').val(ui.item.value);
-
-			return false;
-		}
 	});
 
 	//=========
@@ -226,6 +185,20 @@ jQuery(document).ready(function()
 		);
 
 		imgPreview(this);
+	});
+
+	//=========
+
+	$('#parcelas, #desconto').on('change', function()
+	{
+		let serviceValue = Number($('#valor-servico').val());
+		let installment = Number($('#parcelas').val());
+		let discount = Number($('#desconto').val());
+
+		$('#valor-parcela').val((
+			(serviceValue - ((serviceValue * discount) / 100)) /
+			installment
+		).toFixed(2));
 	});
 });
 
