@@ -82,7 +82,7 @@
 											Quantidade Parcelas *
 										</label>
 
-										<input id="parcelas" name="parcelas" type="text" class="required form-control quantity" value="1" />
+										<input id="parcelas" name="parcelas" type="text" class="required form-control quantity" value="<?= @$item->parcelas ?? "1" ?>" />
 									</div>
 
 									<div class="col-md-4">
@@ -90,7 +90,7 @@
 											Desconto *
 										</label>
 
-										<input id="desconto" name="desconto" type="text" class="required form-control discount" value="0.00" />
+										<input id="desconto" name="desconto" type="text" class="required form-control discount" value="<?= @$item->desconto ?? "0.00" ?>" />
 									</div>
 
 									<div class="col-md-4">
@@ -191,16 +191,23 @@ jQuery(document).ready(function()
 
 	$('#parcelas, #desconto').on('change', function()
 	{
-		let serviceValue = Number($('#valor-servico').val());
-		let installment = Number($('#parcelas').val());
-		let discount = Number($('#desconto').val());
-
-		$('#valor-parcela').val((
-			(serviceValue - ((serviceValue * discount) / 100)) /
-			installment
-		).toFixed(2));
+		setInstallmentPrice();
 	});
 });
+
+//=========
+
+function setInstallmentPrice()
+{
+	let serviceValue = Number($('#valor-servico').val());
+	let installment = Number($('#parcelas').val());
+	let discount = Number($('#desconto').val());
+
+	$('#valor-parcela').val((
+		(serviceValue - ((serviceValue * discount) / 100)) /
+		installment
+	).toFixed(2));
+}
 
 //=========
 
@@ -218,4 +225,8 @@ function imgPreview(img)
 		
 	reader.readAsDataURL(img.files[0]);
 }
+
+<?php if ($segments[2] == 'update'): ?>
+	setInstallmentPrice();
+<?php endif; ?>
 </script>

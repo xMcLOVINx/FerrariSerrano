@@ -45,7 +45,7 @@ CREATE TABLE usuarios (
 	telefone VARCHAR(19) NOT NULL,
 	email VARCHAR(255) NOT NULL,
 	senha CHAR(60) NOT NULL, # definir
-	avatar CHAR(65) NULL, # definir
+	avatar VARCHAR(65) NULL, # definir
 	dataCadastro DATE NOT NULL,
 	deletado ENUM('1','0') NOT NULL DEFAULT '0',
 	PRIMARY KEY(idUsuario)
@@ -108,8 +108,8 @@ CREATE TABLE configuracoes (
 	tituloPagina VARCHAR(100) NOT NULL,
 	valorServico DECIMAL(11,2) NOT NULL,
 	termosCompromissos LONGTEXT NULL,
-	logoPainel CHAR(65) NULL,
-	logoApp CHAR(65) NULL
+	logoPainel VARCHAR(65) NULL,
+	logoApp VARCHAR(65) NULL
 );
 
 INSERT INTO configuracoes (tituloPagina, valorServico, termosCompromissos, logoPainel, logoApp) VALUES
@@ -122,11 +122,31 @@ CREATE TABLE parcelamentos (
 	titulo VARCHAR(45) NOT NULL,
 	parcelas INT(2) NOT NULL,
 	desconto DECIMAL(5,2) NOT NULL,
-	imagem CHAR(65) NULL,
+	imagem VARCHAR(65) NULL,
 	dataCadastro DATE NOT NULL,
 	deletado ENUM('1','0') NOT NULL DEFAULT '0',
 	PRIMARY KEY(idParcelamento)
 );
 
 # ================
-# DAS TRIGGERS
+# DAS MENSALIDADES
+CREATE TABLE mensalidades (
+	idMensalidade INT NOT NULL AUTO_INCREMENT,
+	idParcelamento INT NOT NULL,
+	idUsuario INT NOT NULL,
+	dataCadastro DATE NOT NULL,
+	PRIMARY KEY(idMensalidade),
+	FOREIGN KEY(idParcelamento) REFERENCES parcelamentos (idParcelamento),
+	FOREIGN KEY(idUsuario) REFERENCES usuarios (idUsuario)
+);
+
+CREATE TABLE mensalidades_parcelas (
+	idMensalidadeParcela INT NOT NULL AUTO_INCREMENT,
+	idMensalidade INT NOT NULL,
+	valorParcela DECIMAL(11,2) NOT NULL,
+	dataVencimento DATE NOT NULL,
+	dataPagamento DATE NOT NULL,
+	pago ENUM('1','0') NOT NULL DEFAULT '0',
+	PRIMARY KEY(idMensalidadeParcela),
+	FOREIGN KEY(idMensalidade) REFERENCES mensalidades (idMensalidade)
+);

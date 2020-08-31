@@ -89,13 +89,14 @@ $routes->group('admin', function($routes)
 	$routes->get('installments', 'Admin\Installment::index');
 	$routes->add('installments/create', 'Admin\Installment::insert');
 	$routes->post('installments/create', 'Admin\Installment::store');
-	$routes->put('installments/update/(:num)', 'Admin\Installment::update');
+	$routes->get('installments/update/(:num)', 'Admin\Installment::edit');
+	$routes->post('installments/update/(:num)', 'Admin\Installment::update');
 
 	#=== [ CONFIGURATIONS ]
 	$routes->get('configurations/get/price', 'Admin\Configuration::getPrice');
 	$routes->post('configurations/price/update', 'Admin\Configuration::priceUpdate');
-	$routes->get('configurations/edit', 'Admin\Configuration::edit');
-	$routes->post('configurations/edit', 'Admin\Configuration::update');
+	$routes->get('configurations/update', 'Admin\Configuration::edit');
+	$routes->put('configurations/update', 'Admin\Configuration::update');
 });
 
 #=========================

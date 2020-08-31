@@ -214,7 +214,7 @@
 											<?=
 												(
 													$key->idPermissao == 
-													$item->idPermissao
+													@$item->idPermissao
 												) ? 'selected' : '' 
 											?>>
 												<?= $key->titulo ?>

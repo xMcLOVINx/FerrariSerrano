@@ -10,6 +10,31 @@ class Installment extends \App\Models\BiTModel
 		'parcelas',
 		'desconto',
 		'valorParcela',
+		'imagem',
 		'dataCadastro'
 	];
+
+
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
+
+	public function getInstallments($where = [])
+	{
+		if (
+			$builder = $this->select(
+				'
+					parcelamentos.*,
+					IFNULL(COUNT(mensalidades.idMensalidade), 0) AS itens
+				'
+			)->join(
+				'mensalidades', 'parcelamentos.idParcelamento = mensalidades.idParcelamento'
+			)->where($where)
+		) {
+			var_dump( $builder->get());die;
+			return $builder->get();
+		}
+	}
 }

@@ -43,6 +43,7 @@
 							<th>Titulo</th>
 							<th class="actions">Parcelas</th>
 							<th class="actions">Desconto</th>
+							<th class="actions">Itens</th>
 							<th class="actions">
 								<i class="fas fa-cog"></i>
 							</th>
@@ -59,23 +60,29 @@
 							<td><?= $item->titulo ?></td>
 
 							<td class="text-center">
-								<span class="label label-table label-danger">
+								<span class="label label-table label-primary">
 									<?= $item->parcelas ?>
 								</span>
 							</td>
 
 							<td class="text-center">
 								<span class="label label-table label-danger">
-									<?= $item->desconto ?>
+									<?= $item->desconto ?> %
 								</span>
 							</td>
 
-							<td class="actions" width="180">
-								<a href="<?= base_url('admin/administradores/atualizar/' . $item->idUsuario) ?>" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar">
+							<td class="text-center">
+								<span class="label label-table label-danger">
+									<?= $item->itens ?> %
+								</span>
+							</td>
+
+							<td class="actions" width="80">
+								<a href="<?= base_url('admin/installments/update/' . $item->idParcelamento) ?>" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar">
 									<i class="md md-edit"></i>
 								</a>
 
-								<a href="javascript:void(0)" data-href="<?= base_url('admin/administradores/deletar/' . $item->idUsuario) ?>" class="table-action-btn delete-action" data-toggle="tooltip" data-placement="top" title="Deletar">
+								<a href="javascript:void(0)" data-href="<?= base_url('admin/installments/delete/' . $item->idParcelamento) ?>" class="table-action-btn delete-action" data-toggle="tooltip" data-placement="top" title="Deletar">
                                     <i class="md md-close"></i>
                                 </a>
 							</td>

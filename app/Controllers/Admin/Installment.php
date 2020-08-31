@@ -17,7 +17,7 @@ class Installment extends \App\Controllers\BiTController
 	public function index()
 	{
 		return vAdmin('installment/index', [
-			'installments' => $this->model->get([
+			'installments' => $this->model->getInstallments([
 				'deletado' => '0'
 			])
 		]);
@@ -35,7 +35,7 @@ class Installment extends \App\Controllers\BiTController
 	public function store()
 	{
 		if ($this->request->getFile('image')) {
-			$imagePath = "uploads/clients/";
+			$imagePath = "uploads/installments/";
 			$image = $this->request->getFile('image');
 
 			if (in_array(
@@ -49,7 +49,7 @@ class Installment extends \App\Controllers\BiTController
 	        }
 		}
 
-		$clientResult = $this->model->add([
+		$result = $this->model->add([
 			'titulo' => $this->request->getPost('titulo'),
 			'parcelas' => $this->request->getPost('parcelas'),
 			'desconto' => $this->request->getPost('desconto'),
@@ -57,7 +57,81 @@ class Installment extends \App\Controllers\BiTController
 			'dataCadastro' => date('Y-m-d')
 		]);
 
-		if ($clientResult) {
+		if ($result) {
+			$this->session->setFlashdata([
+				'success' => true
+			]);
+		} else {
+			$this->session->setFlashdata([
+				'success' => false
+			]);
+		}
+
+		return cRedirect('installments', 'a');
+	}
+
+	public function edit()
+	{
+		$configurations = new \App\Models\Admin\Configuration;
+
+		$installment = $this->model->getLast(
+			['idParcelamento' => $this->request->uri->getSegment(4)]
+		);
+
+		return vAdmin('installment/insertUpdate', [
+			'configurations' => $configurations->getLast(),
+			'item' => $installment
+		]);
+	}
+
+	public function update()
+	{
+		$imagePath = null;
+
+		if ($this->request->getFile('image')) {
+			$imagePath = "uploads/installments/";
+			$image = $this->request->getFile('image');
+
+			if (in_array(
+				$image->getClientMimeType(),
+				['image/jpg','image/jpeg','image/gif','image/png']
+			)) {
+				$newName = $image->getRandomName();
+	            $image->move($imagePath, $newName);
+
+	            $imagePath = $imagePath . $newName;
+	        }
+		}
+
+		$result = $this->model->edit([
+			'titulo' => $this->request->getPost('titulo'),
+			'parcelas' => $this->request->getPost('parcelas'),
+			'desconto' => $this->request->getPost('desconto'),
+			'imagem' => $imagePath
+		],
+			['idParcelamento' => $this->request->uri->getSegment(4)]
+		);
+
+		if ($result) {
+			$this->session->setFlashdata([
+				'success' => true
+			]);
+		} else {
+			$this->session->setFlashdata([
+				'success' => false
+			]);
+		}
+
+		return cRedirect('installments', 'a');
+	}
+
+	public function delete()
+	{
+		$result = $this->model->disable([
+			'idParcelamento' => $this->request->uri->getSegment(4)
+		]);
+
+		if ($result) {
 			$this->session->setFlashdata([
 				'success' => true
 			]);

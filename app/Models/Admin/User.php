@@ -3,7 +3,7 @@ namespace App\Models\Admin;
 
 class User extends \App\Models\BiTModel
 {
-	protected $table = 'usuarios u';
+	protected $table = 'usuarios';
 
 	protected $allowedFields = [
 		'idPermissao',
@@ -28,7 +28,9 @@ class User extends \App\Models\BiTModel
 	public function getUsers()
 	{
 		if (
-			$builder = $this->select()->join('permissoes p', 'u.idPermissao = p.idPermissao')
+			$builder = $this->select()->join(
+				'permissoes', 'usuarios.idPermissao = permissoes.idPermissao'
+			)
 		) {
 			return $builder->get();
 		}
