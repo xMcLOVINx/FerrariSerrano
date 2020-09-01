@@ -7,7 +7,7 @@
 <div class="container-fluid reset hidden-xs">
 	<div class="row page-breadcrumb v-align">
 		<div class="col-md-5">
-		<?php if ($segments[2] == 'edit') { ?>
+		<?php if ($segments[2] == 'update') { ?>
 			<h4>Modificar configurações</h4>
 		<?php } else { ?>
 			<h4>Cadastrar configurações</h4>
@@ -25,7 +25,7 @@
 						Configurações
 					</li>
 
-				<?php if ($segments[2] == 'edit') { ?>
+				<?php if ($segments[2] == 'update') { ?>
 					<li class="breadcrumb-item active">
 						Atualizar
 					</li>
@@ -45,7 +45,7 @@
 		<div class="col-sm-12">
 			<div class="card-box">
 				<h4 class="m-b-30 header-title">
-				<?php if ($segments[2] == 'edit') { ?>
+				<?php if ($segments[2] == 'update') { ?>
 					<b>Modificar Configurações</b>
 				<?php } else { ?>
 					<b>Cadastrar Configurações</b>
@@ -150,8 +150,8 @@
 									</div>
 
 									<div class="col-md-12">
-										<textarea id="termos-conficoes" name="termos-conficoes" class="form-control summernote">
-											<?= @$item->termosCondicoes ?>
+										<textarea id="termos-compromissos" name="termos-compromissos" class="form-control summernote">
+											<?= @$item->termosCompromissos ?>
 										</textarea>
 									</div>
 								</div>

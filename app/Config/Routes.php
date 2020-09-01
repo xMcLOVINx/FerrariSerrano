@@ -96,7 +96,7 @@ $routes->group('admin', function($routes)
 	$routes->get('configurations/get/price', 'Admin\Configuration::getPrice');
 	$routes->post('configurations/price/update', 'Admin\Configuration::priceUpdate');
 	$routes->get('configurations/update', 'Admin\Configuration::edit');
-	$routes->put('configurations/update', 'Admin\Configuration::update');
+	$routes->post('configurations/update', 'Admin\Configuration::update');
 });
 
 #=========================

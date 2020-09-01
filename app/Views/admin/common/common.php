@@ -220,7 +220,7 @@
 									</li>
 
 									<li>
-										<a href="<?= base_url('admin/configurations/edit') ?>">Aplicação</a>
+										<a href="<?= base_url('admin/configurations/update') ?>">Aplicação</a>
 									</li>
 								</ul>
 							</li>

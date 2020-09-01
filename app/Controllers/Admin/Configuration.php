@@ -40,7 +40,8 @@ class Configuration extends \App\Controllers\BaseController
 			]);
 		} else {
 			$this->session->setFlashdata([
-				'success' => false
+				'success' => false,
+				'message' => 'Operação cancelada pelo usuário.'
 			]);
 		}
 
@@ -62,7 +63,7 @@ class Configuration extends \App\Controllers\BaseController
 
 		$data = [
 			'tituloPagina' => $this->request->getPost('titulo'),
-			'termosCondicoes' => $this->request->getPost('termos-conficoes')
+			'termosCompromissos' => $this->request->getPost('termos-compromissos')
 		];
 
 		if ($this->request->getFile('app')) {
@@ -107,6 +108,6 @@ class Configuration extends \App\Controllers\BaseController
 			]);
 		}
 
-		return cRedirect('dashboard', 'a');
+		return cRedirect('', 'a');
 	}
 }
