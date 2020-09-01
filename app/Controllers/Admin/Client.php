@@ -178,7 +178,12 @@ class Client extends \App\Controllers\BiTController
 			foreach ($clients as $key => $client) {
 				$results[] = [
 					'value' => $client->idUsuario,
-					'label' => $client->razaoSocial
+					'label' => $client->razaoSocial,
+					'extras' => [
+						'cnpj' => $client->cnpj,
+						'phone' => $client->telefone,
+						'registerDate' => date('d/m/Y', strtotime($client->dataCadastro))
+					]
 				];
 			}
 		}

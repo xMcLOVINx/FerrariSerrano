@@ -49,7 +49,6 @@
 										</label>
 
 										<input id="cliente" name="cliente" type="text" class="form-control" required />
-										<input id="cliente-id" name="cliente-id" type="hidden" required />
 									</div>
 
 									<div class="col-md-4">
@@ -61,29 +60,37 @@
 									</div>
 								</div>
 
-								<div class="row hidden">
-									<div class="col-md-4">
-										<label class="control-label" for="id">
+								<div id="client-details" class="row hidden">
+									<div class="col-md-3">
+										<label class="control-label" for="cliente-id">
 											ID *
 										</label>
 
-										<input id="id" name="id" type="text" class="form-control" required />
+										<input id="cliente-id" name="cliente-id" type="text" class="form-control" disabled />
 									</div>
 
-									<div class="col-md-4">
-										<label class="control-label" for="cnpj">
+									<div class="col-md-3">
+										<label class="control-label" for="cliente-cnpj">
 											CNPJ *
 										</label>
 
-										<input id="cnpj" name="cnpj" type="text" class="form-control" required />
+										<input id="cliente-cnpj" name="cliente-cnpj" type="text" class="form-control" disabled />
 									</div>
 
-									<div class="col-md-4">
-										<label class="control-label" for="telefone">
+									<div class="col-md-3">
+										<label class="control-label" for="cliente-telefone">
 											Telefone *
 										</label>
 
-										<input id="telefone" name="telefone" type="text" class="form-control" required />
+										<input id="cliente-telefone" name="cliente-telefone" type="text" class="form-control" disabled />
+									</div>
+
+									<div class="col-md-3">
+										<label class="control-label" for="cliente-cadastro">
+											Data Cadastro *
+										</label>
+
+										<input id="cliente-cadastro" name="cliente-cadastro" type="text" class="form-control" disabled />
 									</div>
 								</div>
 							</div>
@@ -407,7 +414,7 @@ jQuery(document).ready(function()
 
 	//=========
 
-	$("#cliente").autocomplete(
+	$('#cliente').autocomplete(
 	{
 		source:function(request, response)
 		{
@@ -420,7 +427,6 @@ jQuery(document).ready(function()
 				},
 				success:function(data)
 				{
-					console.log(data);
 					if (!data.success) {
 						return false;
 					}
@@ -431,8 +437,22 @@ jQuery(document).ready(function()
 		},
 		select:function(event, ui)
 		{
-			$("#cliente").val(ui.item.label);
-			$("#cliente-id").val(ui.item.value);
+			$('#client-details').removeClass('hidden');
+			$('#cliente-id').val(ui.item.value);
+			$('#cliente').val(ui.item.label);
+
+			$('#cliente-cnpj').val(ui.item.extras.cnpj);
+			$('#cliente-telefone').val(ui.item.extras.phone);
+			$('#cliente-cadastro').val(ui.item.extras.registerDate);
+
+			return false;
+		},
+		change:function(event, ui)
+		{
+			if (ui.item === null) {
+				$('#client-details').addClass('hidden');
+				$('#client-details input').val('');
+			}
 
 			return false;
 		}
