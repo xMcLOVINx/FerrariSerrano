@@ -60,7 +60,7 @@ $routes->group('admin', function($routes)
 
 	#=== [ CLIENT ]
 	$routes->get('clients', 'Admin\Client::index');
-	$routes->post('clients/ajax', 'Admin\Client::getByAjax');
+	$routes->post('clients/search', 'Admin\Client::search');
 	$routes->get('clients/inserir', 'Admin\Client::insert');
 	$routes->add('clients/inserir', 'Admin\Client::store');
 	$routes->get('clients/atualizar/(:num)', 'Admin\Client::edit');

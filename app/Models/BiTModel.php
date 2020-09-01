@@ -32,7 +32,11 @@ class BiTModel extends \CodeIgniter\Model
 
 	public function getLike($field, $match, $data = [])
 	{
-		if ($query = $this->like($field, $match, 'both')->getWhere($data)->getResult()) {
+		if (
+			$query = $this->like(
+				$field, $match, 'both'
+			)->getWhere($data)->getResult()
+		) {
 			return $query;
 		}
 	}

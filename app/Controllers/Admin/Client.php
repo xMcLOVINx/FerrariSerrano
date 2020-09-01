@@ -25,32 +25,6 @@ class Client extends \App\Controllers\BiTController
 		]);
 	}
 
-	public function getByAjax()
-	{
-		if (!$this->request->isAJAX()) {
-			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-		}
-
-		$clients = $this->model->getLike(
-			'razaoSocial', $this->request->getPost('search'), [
-				'deletado' => '0'
-			]
-		);
-
-		$results = [];
-		foreach ($clients as $key => $client) {
-			$results[] = [
-				'value' => $client->idUsuario,
-				'label' => $client->razaoSocial
-			];
-		}
-
-		return $this->response->setJSON([
-			'success' => true,
-			'results' => $results
-		]);
-	}
-
 	public function insert()
 	{
 		return vAdmin('client/insertUpdate');
@@ -184,5 +158,34 @@ class Client extends \App\Controllers\BiTController
 		}
 
 		return cRedirect('clients', 'a');
+	}
+
+	public function search()
+	{
+		if (!$this->request->isAJAX()) {
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+		}
+
+		$clients = $this->model->getLike(
+			'razaoSocial', $this->request->getPost('search'), [
+				'deletado' => '0'
+			]
+		);
+
+		$results = [];
+
+		if ($clients) {
+			foreach ($clients as $key => $client) {
+				$results[] = [
+					'value' => $client->idUsuario,
+					'label' => $client->razaoSocial
+				];
+			}
+		}
+
+		return $this->response->setJSON([
+			'success' => true,
+			'results' => $results
+		]);
 	}
 }

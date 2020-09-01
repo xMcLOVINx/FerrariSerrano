@@ -51,8 +51,8 @@ CREATE TABLE usuarios (
 	PRIMARY KEY(idUsuario)
 );
 
-INSERT INTO usuarios (idPermissao, idEndereco, nomeCompleto, cpf, cnpj, telefone, email, senha, avatar, dataCadastro) VALUES
-(1, 1, 'Matheus Vinicius', '111.111.111-11', '11.111.111/1111-11', '+55 (55) 5555-55555', 'admin@admin.com', '123456', NULL, CURRENT_DATE);
+INSERT INTO usuarios (idPermissao, idEndereco, nomeCompleto, razaoSocial, cpf, cnpj, telefone, email, senha, avatar, dataCadastro) VALUES
+(1, 1, 'Matheus Vinicius', 'Matheus Vinicius LTDA', '111.111.111-11', '11.111.111/1111-11', '+55 (55) 5555-55555', 'admin@admin.com', '123456', NULL, CURRENT_DATE);
 
 # ================
 # DAS CONFIG

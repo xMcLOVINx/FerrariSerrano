@@ -412,7 +412,7 @@ jQuery(document).ready(function()
 		source:function(request, response)
 		{
 			$.ajax ({
-				url: '<?= base_url('admin/clients/ajax') ?>',
+				url: '<?= base_url('admin/clients/search') ?>',
 				type: 'post',
 				dataType: 'json',
 				data: {
@@ -420,6 +420,7 @@ jQuery(document).ready(function()
 				},
 				success:function(data)
 				{
+					console.log(data);
 					if (!data.success) {
 						return false;
 					}
