@@ -143,4 +143,37 @@ class Installment extends \App\Controllers\BiTController
 
 		return cRedirect('installments', 'a');
 	}
+
+	public function search()
+	{
+		if (!$this->request->isAJAX()) {
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+		}
+
+		$installments = $this->model->getLike(
+			'titulo', $this->request->getPost('search'), [
+				'deletado' => '0'
+			]
+		);
+
+		$results = [];
+
+		if ($installments) {
+			foreach ($installments as $key => $installment) {
+				$results[] = [
+					'value' => $installment->idParcelamento,
+					'label' => $installment->titulo,
+					'extras' => [
+						'installment' => $installment->parcelas,
+						'discount' => $installment->desconto
+					]
+				];
+			}
+		}
+
+		return $this->response->setJSON([
+			'success' => true,
+			'results' => $results
+		]);
+	}
 }

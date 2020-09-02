@@ -205,7 +205,7 @@ function setInstallmentPrice()
 
 	$('#valor-parcela').val((
 		(serviceValue - ((serviceValue * discount) / 100)) /
-		installment
+		(installment)
 	).toFixed(2));
 }
 

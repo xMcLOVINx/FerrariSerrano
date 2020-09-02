@@ -87,6 +87,7 @@ $routes->group('admin', function($routes)
 
 	#=== [ INSTALLMENTS ]
 	$routes->get('installments', 'Admin\Installment::index');
+	$routes->post('installments/search', 'Admin\Installment::search');
 	$routes->add('installments/create', 'Admin\Installment::insert');
 	$routes->post('installments/create', 'Admin\Installment::store');
 	$routes->get('installments/update/(:num)', 'Admin\Installment::edit');

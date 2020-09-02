@@ -101,7 +101,7 @@
 						<section>
 							<div class="form-group clearfix">
 								<div class="row">
-									<div class="col-md-12 error_msg_parcela hidden">
+									<div class="col-md-12 installment-error hidden">
 										<div class="alert alert-danger alert-dismissible" role="alert">
 											<strong style="color: #000">Error:</strong> Obrigatório preencher todos os campos.
 										</div>
@@ -121,38 +121,73 @@
 												<div class="portlet-body">
 													<div class="form-group clearfix">
 														<div class="row">
-															<div class="col-md-6">
+															<div class="col-md-12 error_msg_parcela hidden">
+																<div class="alert alert-danger alert-dismissible" role="alert">
+																	<strong style="color: #000">Error:</strong> Obrigatório selecionar o parcelamento.
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-md-8">
 																<label class="control-label" for="parcelamento">
 																	Parcelamento *
 																</label>
 
 																<input id="parcelamento" type="text" class="form-control" placeholder="Autocomplete..." />
+																<input id="parcelamento-id" type="hidden" />
 															</div>
 
-															<div class="col-md-3">
-																<label class="control-label" for="meses-parcelamento">
+															<div class="col-md-4">
+																<label class="control-label" for="valor-servico">
+																	Valor Serviço *
+																</label>
+
+																<input id="valor-servico" type="text" class="form-control price" disabled />
+															</div>
+
+															<div class="col-md-4">
+																<label class="control-label" for="parcelamento-parcelas">
 																	Mêses *
 																</label>
 
-																<input id="meses-parcelamento" name="meses-parcelamento" type="text" class="form-control quantity" value="1" disabled />
+																<input id="parcelamento-parcelas" type="text" class="form-control quantity" value="1" disabled />
 															</div>
 
-															<div class="col-md-3">
+															<div class="col-md-4">
 																<label class="control-label" for="parcelamento-desconto">
 																	Desconto *
 																</label>
 
-																<input id="parcelamento-desconto" name="parcelamento-desconto" type="text" class="form-control discount" value="0" disabled />
+																<input id="parcelamento-desconto" type="text" class="form-control discount" value="0.00" disabled />
+															</div>
+
+															<div class="col-md-4">
+																<label class="control-label" for="parcelamento-valor">
+																	Valor Parcelas *
+																</label>
+
+																<input id="parcelamento-valor" type="text" class="form-control price" value="1.00" disabled />
 															</div>
 														</div>
 
 														<div class="row">
-															<div class="col-md-3 col-md-offset-9">
+															<div class="col-md-3 col-md-offset-6">
 																<label class="control-label">
 																	&nbsp;
 																</label>
 
-																<button class="form-control col-sm-12 btn btn-success adicionar" type="button">
+																<button type="button" class="form-control col-sm-12 btn btn-danger delete">
+																	<i class="fas fa-trash"></i> DELETAR
+																</button>
+															</div>
+
+															<div class="col-md-3">
+																<label class="control-label">
+																	&nbsp;
+																</label>
+
+																<button type="button" class="form-control col-sm-12 btn btn-success insert">
 																	<i class="fas fa-plus"></i> ADICIONAR
 																</button>
 															</div>
@@ -179,7 +214,7 @@
 												</tr>
 											</thead>
 
-											<tbody>
+											<tbody class="parcelas">
 												<tr>
 													<td class="text-center" width="50">
 														<div class="custom-checkbox">
@@ -403,13 +438,30 @@ jQuery(document).ready(function()
 		step: 1,
 		max: 100,
 		boostat: 5,
-		suffix: '%',
+		postfix: '%',
 		maxboostedstep: 10
 	});
 
 	$('.quantity').TouchSpin({
 		min: 1,
 		boostat: 5
+	});
+
+	//=========
+
+	$(document).ready(function()
+	{
+		$.ajax(
+		{
+			url: '<?= base_url('admin/configurations/get/price') ?>',
+			dataType: 'json',
+			success:function(data)
+			{
+				$('#valor-servico').val(
+					data.success ? data.price : 1.00
+				);
+			}
+		});
 	});
 
 	//=========
@@ -457,6 +509,104 @@ jQuery(document).ready(function()
 			return false;
 		}
 	});
+
+	//=========
+
+	$('#parcelamento').autocomplete(
+	{
+		source:function(request, response)
+		{
+			$.ajax ({
+				url: '<?= base_url('admin/installments/search') ?>',
+				type: 'post',
+				dataType: 'json',
+				data: {
+					search: request.term
+				},
+				success:function(data)
+				{
+					console.log(data);
+					if (!data.success) {
+						return false;
+					}
+
+					response(data.results.slice(0, 3));
+				}
+			});
+		},
+		select:function(event, ui)
+		{
+			let serviceValue = $("#valor-servico").val();
+
+			$('#parcelamento-id').val(ui.item.value);
+			$('#parcelamento').val(ui.item.label);
+
+			$('#parcelamento-parcelas').val(ui.item.extras.installment);
+			$('#parcelamento-desconto').val(ui.item.extras.discount);
+
+			$('#parcelamento-valor').val((
+				(serviceValue - ((serviceValue * ui.item.extras.discount) / 100)) /
+				(ui.item.extras.installment)
+			).toFixed(2));
+
+			return false;
+		},
+		change:function(event, ui)
+		{
+			if (ui.item === null) {
+				$('#parcelamento').val('');
+				$('#parcelamento-id').val('');
+
+				$('#parcelamento-parcelas').val('1');
+				$('#parcelamento-desconto').val('0.00');
+				$('#parcelamento-valor').val('1.00');
+			}
+
+			return false;
+		}
+	});
+
+	//=========
+
+	$('.btn.insert').on('click', function()
+    {
+    	var installment = $('#parcelamento-id');
+
+        if(installment.val() == '')
+        {
+            $('.installment-error')
+               .removeClass('hidden')
+               .delay(8000)
+               .queue(function(n)
+           	{
+                $(this).addClass('hidden');
+                n();
+            });
+
+            return false;
+        }
+
+        $.ajax ({
+            url: '<?=base_url('movimentacoes/adicionar-parcela')?>',
+            type: 'post',
+            data: {
+            	vencimento: vencimento.val(),
+            	valor: valor.val()
+            },
+            dataType: 'json',
+            success:function(data)
+            {
+            	if(data.success == true)
+                {
+                    $('tbody.parcelas').append(
+
+                    );
+                }
+
+                return false;
+            }
+        });
+    });
 
 	//=========
 

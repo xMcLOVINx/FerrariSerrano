@@ -33,7 +33,7 @@ class Installment extends \App\Models\BiTModel
 				'mensalidades',
 				'parcelamentos.idParcelamento = mensalidades.idParcelamento',
 				'left'
-			)->where($where)
+			)->where($where)->groupBy('parcelamentos.idParcelamento')
 		) {
 			return $builder->get();
 		}
