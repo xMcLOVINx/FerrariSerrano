@@ -8,7 +8,7 @@ class Configuration extends \App\Models\BiTModel
 	protected $allowedFields = [
 		'tituloPagina',
 		'valorServico',
-		'termosCompromissos',
+		'termosConficoes',
 		'logoPainel',
 		'logoApp'
 	];

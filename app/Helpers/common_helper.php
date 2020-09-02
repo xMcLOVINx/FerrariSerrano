@@ -38,7 +38,7 @@ if (!function_exists('convertDate')) {
 if (!function_exists('convertImage')) {
 	function convertImage($image)
 	{
-		if (is_null($image) || !file_exists($image)) {
+		if (is_dir($image) || is_null($image) || !file_exists($image)) {
 			return base_url('uploads/default.png');
 		}
 

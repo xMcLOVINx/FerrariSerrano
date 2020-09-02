@@ -30,10 +30,11 @@ class Installment extends \App\Models\BiTModel
 					IFNULL(COUNT(mensalidades.idMensalidade), 0) AS itens
 				'
 			)->join(
-				'mensalidades', 'parcelamentos.idParcelamento = mensalidades.idParcelamento'
+				'mensalidades',
+				'parcelamentos.idParcelamento = mensalidades.idParcelamento',
+				'left'
 			)->where($where)
 		) {
-			var_dump( $builder->get());die;
 			return $builder->get();
 		}
 	}

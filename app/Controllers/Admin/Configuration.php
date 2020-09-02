@@ -63,7 +63,7 @@ class Configuration extends \App\Controllers\BaseController
 
 		$data = [
 			'tituloPagina' => $this->request->getPost('titulo'),
-			'termosCompromissos' => $this->request->getPost('termos-compromissos')
+			'termosCondicoes' => $this->request->getPost('termos-condicoes')
 		];
 
 		if ($this->request->getFile('app')) {

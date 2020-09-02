@@ -60,7 +60,7 @@
 							<td><?= $item->titulo ?></td>
 
 							<td class="text-center">
-								<span class="label label-table label-primary">
+								<span class="label label-table label-default">
 									<?= $item->parcelas ?>
 								</span>
 							</td>
@@ -72,8 +72,8 @@
 							</td>
 
 							<td class="text-center">
-								<span class="label label-table label-danger">
-									<?= $item->itens ?> %
+								<span class="label label-table label-success" data-toggle="tooltip" data-placement="top" title="Quantidade de Itens Atrelados ao Parcelamento">
+									<?= $item->itens ?>
 								</span>
 							</td>
 

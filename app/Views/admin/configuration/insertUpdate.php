@@ -137,7 +137,7 @@
 						</section>
 
 						<h3 class="">
-							<span class="hidden-xs hidden-sm">Termo & Confições</span>
+							<span class="hidden-xs hidden-sm">Termo & Condições</span>
 						</h3>
 
 						<section>
@@ -150,8 +150,8 @@
 									</div>
 
 									<div class="col-md-12">
-										<textarea id="termos-compromissos" name="termos-compromissos" class="form-control summernote">
-											<?= @$item->termosCompromissos ?>
+										<textarea id="termos-condicoes" name="termos-condicoes" class="form-control summernote">
+											<?= @$item->termosCondicoes ?>
 										</textarea>
 									</div>
 								</div>

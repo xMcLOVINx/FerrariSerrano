@@ -107,12 +107,12 @@ CREATE TABLE simulacoes_indices (
 CREATE TABLE configuracoes (
 	tituloPagina VARCHAR(100) NOT NULL,
 	valorServico DECIMAL(11,2) NOT NULL,
-	termosCompromissos LONGTEXT NULL,
+	termosConficoes LONGTEXT NULL,
 	logoPainel VARCHAR(65) NULL,
 	logoApp VARCHAR(65) NULL
 );
 
-INSERT INTO configuracoes (tituloPagina, valorServico, termosCompromissos, logoPainel, logoApp) VALUES
+INSERT INTO configuracoes (tituloPagina, valorServico, termosConficoes, logoPainel, logoApp) VALUES
 ('FerrariSerrano', 1000, NULL, NULL, NULL);
 
 # ================
