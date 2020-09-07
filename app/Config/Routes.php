@@ -61,29 +61,28 @@ $routes->group('admin', function($routes)
 	#=== [ CLIENT ]
 	$routes->get('clients', 'Admin\Client::index');
 	$routes->post('clients/search', 'Admin\Client::search');
-	$routes->get('clients/inserir', 'Admin\Client::insert');
-	$routes->add('clients/inserir', 'Admin\Client::store');
-	$routes->get('clients/atualizar/(:num)', 'Admin\Client::edit');
-	$routes->add('clients/atualizar/(:num)', 'Admin\Client::update');
-	$routes->add('clients/deletar/(:num)', 'Admin\Client::delete');
+	$routes->get('clients/create', 'Admin\Client::insert');
+	$routes->add('clients/create', 'Admin\Client::store');
+	$routes->get('clients/update/(:num)', 'Admin\Client::edit');
+	$routes->add('clients/update/(:num)', 'Admin\Client::update');
+	$routes->add('clients/delete/(:num)', 'Admin\Client::delete');
 
 	#=== [ USER ]
-	$routes->get('administradores', 'Admin\User::index');
-	$routes->get('administradores/inserir', 'Admin\User::insert');
-	$routes->add('administradores/inserir', 'Admin\User::store');
-	$routes->get('administradores/atualizar/(:num)', 'Admin\User::edit');
-	$routes->add('administradores/atualizar/(:num)', 'Admin\User::update');
-	$routes->add('administradores/deletar/(:num)', 'Admin\User::delete');
-
-	#=== [ PERMISSION ]
-	$routes->get('permissoes', 'Admin\Permission::index');
-	$routes->add('permissoes/inserir', 'Admin\Permission::insert');
-	$routes->put('permissoes/atualizar/(:num)', 'Admin\Permission::update');
+	$routes->get('users', 'Admin\User::index');
+	$routes->get('users/create', 'Admin\User::insert');
+	$routes->add('users/create', 'Admin\User::store');
+	$routes->get('users/update/(:num)', 'Admin\User::edit');
+	$routes->add('users/update/(:num)', 'Admin\User::update');
+	$routes->add('users/delete/(:num)', 'Admin\User::delete');
 
 	#=== [ MONTHLY ]
-	$routes->get('mensalidades', 'Admin\Monthly::index');
-	$routes->add('mensalidades/inserir', 'Admin\Monthly::insert');
-	$routes->put('mensalidades/atualizar/(:num)', 'Admin\Monthly::update');
+	$routes->get('monthly', 'Admin\Monthly::index');
+	$routes->add('monthly/create', 'Admin\Monthly::insert');
+	$routes->post('monthly/create', 'Admin\Monthly::store');
+	$routes->get('monthly/update/(:num)', 'Admin\Monthly::edit');
+	$routes->post('monthly/update/(:num)', 'Admin\Monthly::update');
+	$routes->post('monthly/pay/(:num)', 'Admin\Monthly::payInvoice');
+	$routes->get('monthly/finalize', 'Admin\Monthly::finalize');
 
 	#=== [ INSTALLMENTS ]
 	$routes->get('installments', 'Admin\Installment::index');

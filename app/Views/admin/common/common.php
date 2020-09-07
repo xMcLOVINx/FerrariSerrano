@@ -138,11 +138,11 @@
 
 								<ul class="list-unstyled">
 									<li>
-										<a href="<?= base_url('admin/mensalidades/inserir') ?>">Adicionar Novo</a>
+										<a href="<?= base_url('admin/monthly/create') ?>">Adicionar Novo</a>
 									</li>
 
 									<li>
-										<a href="<?= base_url('admin/mensalidades') ?>">Listar Todos</a>
+										<a href="<?= base_url('admin/monthly') ?>">Listar Todos</a>
 									</li>
 								</ul>
 							</li>
@@ -159,28 +159,11 @@
 
 								<ul class="list-unstyled">
 									<li>
-										<a href="<?=base_url('admin/administradores/inserir') ?>">Adicionar Novo</a>
+										<a href="<?=base_url('admin/users/create') ?>">Adicionar Novo</a>
 									</li>
 
 									<li>
-										<a href="<?=base_url('admin/administradores') ?>">Listar Todos</a>
-									</li>
-
-									<li class="has_sub">
-										<a href="javascript:void(0);" class="waves-effect">
-											<span>Permissões</span>
-											<span class="menu-arrow"></span>
-										</a>
-
-										<ul class="list-unstyled">
-											<li>
-												<a href="<?=base_url('admin/permissoes/inserir') ?>">Adicionar Novo</a>
-											</li>
-
-											<li>
-												<a href="<?=base_url('admin/permissoes') ?>">Listar Todos</a>
-											</li>
-										</ul>
+										<a href="<?=base_url('admin/users') ?>">Listar Todos</a>
 									</li>
 								</ul>
 							</li>
@@ -195,7 +178,7 @@
 
 								<ul class="list-unstyled">
 									<li>
-										<a href="<?= base_url('admin/clients/inserir') ?>">Adicionar Novo</a>
+										<a href="<?= base_url('admin/clients/create') ?>">Adicionar Novo</a>
 									</li>
 
 									<li>

@@ -7,7 +7,7 @@
 <div class="container-fluid reset hidden-xs">
 	<div class="row page-breadcrumb v-align">
 		<div class="col-md-5">
-			<h4>Listagem de vendas</h4>
+			<h4>Listagem de mensalidades</h4>
 		</div>
 
 		<div class="col-md-7 text-right">
@@ -18,7 +18,7 @@
 					</li>
 
 					<li class="breadcrumb-item active">
-						Vendas
+						Mensalidades
 					</li>
 
 					<li class="breadcrumb-item active">
@@ -32,90 +32,10 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-12">
-			<div class="alert alert-danger alert-dismissible" role="alert" style="text-align: justify">
-				<strong style="color: #000">Observação:</strong> Quando uma venda não foi faturada, alguns campos do mesmo possuirá o valor N/A (Not Applicable).
-
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">
-						<i class="fas fa-times" style="margin-top: 2px"></i>
-					</span>
-				</button>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-md-12">
-			<div class="portlet">
-				<div class="portlet-heading">
-					<h3 class="portlet-title text-dark text-uppercase">
-						Pesquisa Avançada
-					</h3>
-
-					<div class="portlet-widgets">
-						<a data-toggle="collapse" data-parent="#accordion1" href="#portlet2">
-							<i class="ion-minus-round"></i>
-						</a>
-
-						<span class="divider"></span>
-
-						<a href="#" data-toggle="remove">
-							<i class="ion-close-round"></i>
-						</a>
-					</div>
-
-					<div class="clearfix"></div>
-				</div>
-
-				<div id="portlet2" class="panel-collapse collapse in">
-					<div class="portlet-body">
-						<form action="#" method="POST" class="p-l-r-5">
-							<div class="form-group">
-								<div class="row">
-									<div class="col-md-6">
-										<label class="control-label" for="cliente">
-											Cliente *
-										</label>
-
-										<input id="cliente" name="cliente" type="text" class="required form-control" />
-									</div>
-
-									<div class="col-md-3">
-										<label class="control-label" for="data_minima">
-											De *
-										</label>
-
-										<input id="data_minima" name="data_minima" type="text" class="required form-control datepicker" placeholder="dia/mes/ano" />
-									</div>
-
-									<div class="col-md-3">
-										<label class="control-label" for="data_limite">
-											Até *
-										</label>
-
-										<input id="data_limite" name="data_limite" type="text" class="required form-control datepicker" placeholder="dia/mes/ano" />
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group text-right m-b-0">
-								<button class="btn btn-success" type="submit">
-									<i class="fas fa-search"></i> FILTRAR
-								</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row">
 		<div class="col-sm-12">
 			<div class="card-box table-responsive">
 				<h4 class="m-b-30 header-title">
-					<b>Listagem de Vendas</b>
+					<b>Listagem de Mensalidades</b>
 				</h4>
 
 				<table id="datatable" class="table table-striped table-bordered">
@@ -123,8 +43,7 @@
 						<tr>
 							<th># ID</th>
 							<th>Cliente</th>
-							<th>Valor</th>
-							<th>Data Cadastro</th>
+							<th>Data Lançamento</th>
 							<th class="actions">Parcelas</th>
 							<th class="actions">Situação</th>
 							<th class="actions">
@@ -134,89 +53,56 @@
 					</thead>
 
 					<tbody>
+					<?php foreach ($monthly as $item) : ?>
 						<tr>
-							<td width="60">1</td>
+							<td width="60"><?= $item->idMensalidade ?></td>
 
-							<td>Antônio Roberto Castro</td>
+							<td><?= $item->nomeCompleto ?></td>
 
-							<td>R$ 1,00</td>
-
-							<td>16/01/2020</td>
-
-							<td></td>
+							<td><?= convertDate($item->dataLancamento) ?></td>
 
 							<td class="text-center">
-								<span class="label label-table label-primary" data-toggle="tooltip" data-placement="top" title="Novo Item">
-									Novo
-								</span>
+								<span class="label label-table label-default" data-toggle="tooltip" data-placement="top" title="Parcelas Pendentes">
+                                    <?= $item->parcelasTotal ?>
+                                </span>
+
+                                <span class="label label-table label-success" data-toggle="tooltip" data-placement="top" title="Parcelas Pagas">
+                                    <?= $item->parcelasPagas ?>
+                                </span>
 							</td>
-
-							<td class="actions" width="180">
-								<a href="<?= base_url('vendas/atualizar/1') ?>" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar">
-									<i class="md md-edit"></i>
-								</a>
-
-								<a href="javascript:void(0)" class="table-action-btn btn-view" data-toggle="tooltip" data-placement="top" title="Visualizar">
-									<i class="md md-remove-red-eye"></i>
-								</a>
-							</td>
-						</tr>
-
-						<tr>
-							<td width="60">3</td>
-
-							<td></td>
-
-							<td>R$ 4000,00</td>
-
-							<td>12/01/2020</td>
-
-							<td></td>
 
 							<td class="text-center">
+							<?php if ($item->parcelasAtrasadas > 0) { ?>
 								<span class="label label-table label-danger" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
+									Atrasado
+								</span>
+							<?php
+								} else if (
+									$item->parcelasTotal > 0 &&
+									$item->parcelasPagas < $item->parcelasTotal
+								) {
+							?>
+								<span class="label label-table label-primary" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
 									Pendente
 								</span>
-							</td>
-
-							<td class="actions" width="180">
-								<a href="<?= base_url('vendas/atualizar/1') ?>" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar">
-									<i class="md md-edit"></i>
-								</a>
-
-								<a href="javascript:void(0)" class="table-action-btn btn-view" data-toggle="tooltip" data-placement="top" title="Visualizar">
-									<i class="md md-remove-red-eye"></i>
-								</a>
-							</td>
-						</tr>
-
-						<tr>
-							<td width="60">11</td>
-
-							<td></td>
-
-							<td>R$ 3000,00</td>
-
-							<td>12/01/2020</td>
-
-							<td></td>
-
-							<td class="text-center">
+							<?php } else { ?>
 								<span class="label label-table label-success" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
-									Pago
+									Concluído
 								</span>
+							<?php } ?>
 							</td>
 
-							<td class="actions" width="180">
-								<a href="<?= base_url('vendas/atualizar/1') ?>" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar">
+							<td class="actions" width="80">
+								<a href="<?= base_url('admin/monthly/update/' . $item->idMensalidade) ?>" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar">
 									<i class="md md-edit"></i>
 								</a>
 
-								<a href="javascript:void(0)" class="table-action-btn btn-view" data-toggle="tooltip" data-placement="top" title="Visualizar">
-									<i class="md md-remove-red-eye"></i>
-								</a>
+								<a href="javascript:void(0)" data-href="<?= base_url('admin/monthly/delete/' . $item->idMensalidade) ?>" class="table-action-btn delete-action" data-toggle="tooltip" data-placement="top" title="Cancelar">
+                                    <i class="md md-close"></i>
+                                </a>
 							</td>
 						</tr>
+					<?php endforeach ?>
 					</tbody>
 				</table>
 			</div>
@@ -375,38 +261,6 @@
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-	$('.datepicker').datepicker({
-		format: "dd/mm/yyyy"
-	});
-
-	//=========
-
-	$('#datatable').dataTable({
-		"order": [[0, "desc"]]
-	});
-
-	//=========
-
-	var availableTags = [
-		"João Silva Gomes",
-		"José Roberto Marinho",
-		"Olavo de Carvalho"
-	];
-
-	$("#cliente").autocomplete({
-	  source: availableTags
-	});
-
-	//=========
-
-	$('.btn-view').on('click', function()
-	{
-		Custombox.open({
-			target: '#view-modal',
-			overlayColor: '#36404a',
-			overlaySpeed: '100',
-			effect: 'flash'
-		});
-	});
+	$('#datatable').dataTable();
 });
 </script>

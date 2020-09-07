@@ -106,7 +106,11 @@
 									<br />
 
 									<span class="label label-danger">
-										12/12/2020
+										<?=
+											convertDate(
+												session()->dataVencimento
+											)
+										?>
 									</span>
 								</a>
 							</li>

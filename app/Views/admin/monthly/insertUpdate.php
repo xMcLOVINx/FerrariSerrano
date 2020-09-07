@@ -5,7 +5,11 @@
 <div class="container-fluid reset hidden-xs">
 	<div class="row page-breadcrumb v-align">
 		<div class="col-md-5">
-			<h4>Adicionar venda</h4>
+		<?php if ($segments[2] == 'update') { ?>
+			<h4>Modificar mensalidade</h4>
+		<?php } else { ?>
+			<h4>Cadastrar mensalidade</h4>
+		<?php } ?>
 		</div>
 
 		<div class="col-md-7 text-right">
@@ -19,9 +23,15 @@
 						<a href="<?= base_url('mensalidades') ?>">Mensalidades</a>
 					</li>
 
+				<?php if ($segments[2] == 'update') { ?>
+					<li class="breadcrumb-item active">
+						Atualizar
+					</li>
+				<?php } else { ?>
 					<li class="breadcrumb-item active">
 						Adicionar
 					</li>
+				<?php } ?>
 				</ol>
 			</div>
 		</div>
@@ -33,7 +43,11 @@
 		<div class="col-sm-12">
 			<div class="card-box">
 				<h4 class="m-b-30 header-title">
-					<b>Atualizar Mensalidade</b>
+				<?php if ($segments[2] == 'update') { ?>
+					<b>Modificar Mensalidade</b>
+				<?php } else { ?>
+					<b>Cadastrar Mensalidade</b>
+				<?php } ?>
 				</h4>
 
 				<form id="wizard-validation-form" method="post">
@@ -48,7 +62,7 @@
 											Cliente *
 										</label>
 
-										<input id="cliente" name="cliente" type="text" class="form-control" required />
+										<input id="cliente" name="cliente" type="text" class="form-control" value="<?= @$client->nomeCompleto ?>" <?= ($segments[2] !== 'update') ?: "readonly" ?> required />
 									</div>
 
 									<div class="col-md-4">
@@ -56,17 +70,17 @@
 											Data Lançamento *
 										</label>
 
-										<input id="lancamento" name="lancamento" type="text" class="required form-control datepicker" placeholder="dia/mes/ano" value="<?= date('d/m/Y') ?>" />
+										<input id="lancamento" name="lancamento" type="text" class="required form-control datepicker" placeholder="dia/mes/ano" value="<?= ($segments[2] == 'update') ? convertDate($item->dataLancamento) : date('d/m/Y') ?>" <?= ($segments[2] !== 'update') ?: "readonly" ?> />
 									</div>
 								</div>
 
-								<div id="client-details" class="row hidden">
+								<div id="client-details" class="row <?= ($segments[2] == 'update') ?: "hidden" ?>">
 									<div class="col-md-3">
 										<label class="control-label" for="cliente-id">
 											ID *
 										</label>
 
-										<input id="cliente-id" name="cliente-id" type="text" class="form-control" disabled />
+										<input id="cliente-id" name="cliente-id" type="text" class="form-control" value="<?= @$client->idUsuario ?>" readonly />
 									</div>
 
 									<div class="col-md-3">
@@ -74,7 +88,7 @@
 											CNPJ *
 										</label>
 
-										<input id="cliente-cnpj" name="cliente-cnpj" type="text" class="form-control" disabled />
+										<input id="cliente-cnpj" name="cliente-cnpj" type="text" class="form-control" value="<?= @$client->cnpj ?>" readonly />
 									</div>
 
 									<div class="col-md-3">
@@ -82,7 +96,7 @@
 											Telefone *
 										</label>
 
-										<input id="cliente-telefone" name="cliente-telefone" type="text" class="form-control" disabled />
+										<input id="cliente-telefone" name="cliente-telefone" type="text" class="form-control" value="<?= @$client->telefone ?>" readonly />
 									</div>
 
 									<div class="col-md-3">
@@ -90,7 +104,7 @@
 											Data Cadastro *
 										</label>
 
-										<input id="cliente-cadastro" name="cliente-cadastro" type="text" class="form-control" disabled />
+										<input id="cliente-cadastro" name="cliente-cadastro" type="text" class="form-control" value="<?= @convertDate($client->dataCadastro) ?>" readonly />
 									</div>
 								</div>
 							</div>
@@ -100,6 +114,7 @@
 
 						<section>
 							<div class="form-group clearfix">
+							<?php if ($segments[2] !== 'update') : ?>
 								<div class="row">
 									<div class="col-md-12 installment-error hidden">
 										<div class="alert alert-danger alert-dismissible" role="alert">
@@ -134,8 +149,8 @@
 																	Parcelamento *
 																</label>
 
-																<input id="parcelamento" type="text" class="form-control" placeholder="Autocomplete..." />
-																<input id="parcelamento-id" type="hidden" />
+																<input id="parcelamento" name="parcelamento" type="text" class="form-control" placeholder="Autocomplete..." />
+																<input id="parcelamento-id" name="parcelamento-id" type="hidden" />
 															</div>
 
 															<div class="col-md-4">
@@ -143,7 +158,7 @@
 																	Valor Serviço *
 																</label>
 
-																<input id="valor-servico" type="text" class="form-control price" disabled />
+																<input id="valor-servico" name="valor-servico" type="text" class="form-control price" readonly />
 															</div>
 
 															<div class="col-md-4">
@@ -151,7 +166,7 @@
 																	Mêses *
 																</label>
 
-																<input id="parcelamento-parcelas" type="text" class="form-control quantity" value="1" disabled />
+																<input id="parcelamento-parcelas" name="parcelamento-parcelas" type="text" class="form-control quantity" value="1" readonly />
 															</div>
 
 															<div class="col-md-4">
@@ -159,7 +174,7 @@
 																	Desconto *
 																</label>
 
-																<input id="parcelamento-desconto" type="text" class="form-control discount" value="0.00" disabled />
+																<input id="parcelamento-desconto" name="parcelamento-desconto" type="text" class="form-control discount" value="0.00" readonly />
 															</div>
 
 															<div class="col-md-4">
@@ -167,22 +182,12 @@
 																	Valor Parcelas *
 																</label>
 
-																<input id="parcelamento-valor" type="text" class="form-control price" value="1.00" disabled />
+																<input id="parcelamento-valor" name="parcelamento-valor" type="text" class="form-control price" value="1.00" readonly />
 															</div>
 														</div>
 
 														<div class="row">
-															<div class="col-md-3 col-md-offset-6">
-																<label class="control-label">
-																	&nbsp;
-																</label>
-
-																<button type="button" class="form-control col-sm-12 btn btn-danger delete">
-																	<i class="fas fa-trash"></i> DELETAR
-																</button>
-															</div>
-
-															<div class="col-md-3">
+															<div class="col-md-3 col-md-offset-9">
 																<label class="control-label">
 																	&nbsp;
 																</label>
@@ -198,7 +203,9 @@
 										</div>
 									</div>
 								</div>
+							<?php endif ?>
 
+							<?php if (isset($invoices)) : ?>
 								<div class="row">
 									<div class="col-md-12 parcelas">
 										<table id="datatable" class="table table-striped table-bordered">
@@ -208,50 +215,59 @@
 													<th>Data Vencimento</th>
 													<th>Valor Parcela</th>
 													<th class="text-center">Situação</th>
-													<th class="text-center">
-														<i class="fas fa-cog"></i>
-													</th>
 												</tr>
 											</thead>
 
 											<tbody class="parcelas">
+											<?php foreach ($invoices as $item) : ?>
 												<tr>
 													<td class="text-center" width="50">
 														<div class="custom-checkbox">
-															<input type="checkbox" id="checkbox_" name="faturar[]" value="" />
-															<label for="checkbox_"></label>
+															<input type="checkbox" id="checkbox_<?= $item->idMensalidadeParcela ?>" name="parcela[]" value="<?= $item->idMensalidadeParcela ?>" <?= ($item->pago == 0) ?: "checked disabled" ?> />
+															<label for="checkbox_<?= $item->idMensalidadeParcela ?>"></label>
 														</div>
 													</td>
 
-													<td></td>
+													<td>
+														<?= date('d/m/Y', strtotime($item->dataVencimento)) ?>
+													</td>
 
 													<td>
-														R$ <span class="valor"></span>
+														R$ <span class="valor"><?= number_format($item->valorParcela, 2, ',', '.') ?></span>
 													</td>
 
 													<td class="text-center">
-														<span class="label label-table label-success" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
-															Pago
-														</span>
-
+													<?php
+														if (
+															$item->pago == 0 &&
+															date('Y-m-d') >
+															strtotime($item->dataVencimento)
+														) {
+													?>
 														<span class="label label-table label-danger" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
+															Atrasado
+														</span>
+													<?php } else if ($item->pago == 0) { ?>
+														<span class="label label-table label-primary" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
 															Pendente
 														</span>
-													</td>
-
-													<td class="text-center actions">
-														<a href="javascript:void(0);" data-id="" class="table-action-btn btn-remove-parcela" data-toggle="tooltip" data-placement="top" title="Deletar">
-															<i class="md md-close"></i>
-														</a>
+													<?php } else { ?>
+														<span class="label label-table label-success" data-toggle="tooltip" data-placement="top" title="Situação do Pagamento">
+															Concluído
+														</span>
+													<?php } ?>
 													</td>
 												</tr>
+											<?php endforeach ?>
 											</tbody>
 										</table>
 									</div>
 								</div>
+							<?php endif ?>
 							</div>
 						</section>
 
+					<?php if ($segments[2] == 'update') : ?>
 						<h3>Faturar</h3>
 
 						<section>
@@ -269,7 +285,7 @@
 										</div>
 									</div>
 
-									<div class="col-md-12 error_msg_selecionado hidden">
+									<div class="col-md-12 payment-error hidden">
 										<div class="alert alert-danger alert-dismissible" role="alert">
 											<strong style="color: #000">Error:</strong> Obrigatório selecionar pelo menos uma parcela.
 										</div>
@@ -296,6 +312,7 @@
 								</div>
 							</div>
 						</section>
+					<?php endif ?>
 					</div>
 				</form>
 			</div>
@@ -309,91 +326,48 @@
 			<i class="fas fa-times"></i>
 		</button>
 
-		<h4 class="custom-modal-title">Faturar Venda</h4>
+		<h4 class="custom-modal-title">Faturar Parcela</h4>
 	</div>
 
 	<div class="modal-form">
-		<form class="form">
+		<form id="faturar-parcela" class="form">
 			<div class="modal-body">
 				<div class="row">
 					<h4 class="col-md-12 header-title text-left">
 						<b>Informações da Fatura</b>
 					</h4>
-
-					<div class="col-md-8">
-						<div class="form-group">
-							<label class="control-label" for="descricao">
-								Descrição
-							</label>
-
-							<input id="descricao" name="descricao" type="text" class="required form-control" />
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="form-group">
-							<label class="control-label" for="vencimento">
-								Data Vencimento *
-							</label>
-
-							<input id="vencimento" name="vencimento" type="text" class="required form-control picker" placeholder="dia/mes/ano" disabled />
-						</div>
-					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
 							<label class="control-label" for="valor">
-								Valor *
+								Valor Total *
 							</label>
 
-							<input id="valor" name="valor" type="text" class="form-control price" value="1" />
+							<input id="valor" name="valor" type="text" class="form-control price" value="1" disabled />
 						</div>
 					</div>
 
 					<div class="col-md-6">
-						<div class="form-group">
-							<label class="control-label" for="desconto">
-								Desconto *
-							</label>
-
-							<input id="desconto" name="desconto" type="text" class="form-control discount" value="0" />
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group" style="position: relative; z-index: 1">
-							<label class="control-label" for="recebido">
-								Recebido *
-							</label>
-
-							<select name="recebido" id="recebido" class="selectpicker required form-control" data-style="btn-white" data-size="3">
-								<option value="1">Sim</option>
-								<option value="0" selected>Não</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="col-md-6 billed hidden">
 						<div class="form-group">
 							<label class="control-label" for="recebimento">
 								Data Recebimento *
 							</label>
 
-							<input id="recebimento" name="recebimento" type="text" class="required form-control picker" placeholder="dia/mes/ano" />
+							<input id="recebimento" name="recebimento" type="text" class="required form-control datepicker" placeholder="dia/mes/ano" value="<?= date('d/m/Y') ?>" />
 						</div>
 					</div>
+				</div>
 
-					<div class="col-md-6 billed hidden" style="position: relative; z-index: -1">
+				<div class="row">
+					<div class="col-md-6" style="position: relative; z-index: -1">
 						<div class="form-group">
 							<label class="control-label" for="metodo">
 								Método Pagamento *
 							</label>
 
-							<select name="metodo" id="metodo" class="selectpicker required form-control" data-style="btn-white" data-size="3">
+							<select id="metodo" name="metodo" class="selectpicker required form-control" data-style="btn-white" data-size="3">
 								<option value="1">Cartão</option>
 								<option value="0" selected>Dinheiro</option>
 							</select>
@@ -434,7 +408,7 @@ jQuery(document).ready(function()
 	//=========
 
 	$('.discount').TouchSpin({
-		min: 1,
+		min: 0,
 		step: 1,
 		max: 100,
 		boostat: 5,
@@ -525,7 +499,6 @@ jQuery(document).ready(function()
 				},
 				success:function(data)
 				{
-					console.log(data);
 					if (!data.success) {
 						return false;
 					}
@@ -569,68 +542,96 @@ jQuery(document).ready(function()
 	//=========
 
 	$('.btn.insert').on('click', function()
-    {
-    	var installment = $('#parcelamento-id');
+	{
+		var installment = $('#parcelamento-id');
 
-        if(installment.val() == '')
-        {
-            $('.installment-error')
-               .removeClass('hidden')
-               .delay(8000)
-               .queue(function(n)
-           	{
-                $(this).addClass('hidden');
-                n();
-            });
+		if (installment.val() == '') {
+			$('.installment-error')
+			   .removeClass('hidden')
+			   .delay(8000)
+			   .queue(function(n)
+		   	{
+				$(this).addClass('hidden');
+				n();
+			});
 
-            return false;
-        }
+			return false;
+		}
 
-        $.ajax ({
-            url: '<?=base_url('movimentacoes/adicionar-parcela')?>',
-            type: 'post',
-            data: {
-            	vencimento: vencimento.val(),
-            	valor: valor.val()
-            },
-            dataType: 'json',
-            success:function(data)
-            {
-            	if(data.success == true)
-                {
-                    $('tbody.parcelas').append(
-
-                    );
-                }
-
-                return false;
-            }
-        });
-    });
+		return $('form#wizard-validation-form').submit();
+	});
 
 	//=========
 
-	$('#faturar').on('click', function(e)
+	$('#faturar').on('click', function()
 	{
+		var totalSelecionado = 0;
+
+		$.each($('.parcelas input'), function(index)
+		{
+			if (this.checked && !this.disabled) {
+				totalSelecionado += (Number(
+					$('.parcelas span.valor')
+						.eq(index)
+						.text()
+						.replace('.', '')
+						.replace(',', '.')
+				));
+			}
+		});
+
+		if(totalSelecionado <= 0)
+		{
+			$('.payment-error')
+			   .removeClass('hidden')
+			   .delay(8000)
+			   .queue(function(n)
+		   	{
+				$(this).addClass('hidden');
+				n();
+			});
+
+			return;
+		}
+
+		$('#valor').val(totalSelecionado.toFixed(2));
+
 		Custombox.open({
 			target: '#bill-modal',
 			overlayColor: '#36404a',
 			overlaySpeed: '100',
 			effect: 'flash'
 		});
-
-		e.preventDefault();
 	});
 
-	$('#bill-modal #recebido').on('change', function(e)
+	//=========
+
+<?php if ($segments[2] == 'update') : ?>
+	$('form#faturar-parcela').on('submit', function(e)
 	{
-		if ($('#bill-modal #recebido option:selected').val() == 1) {
-			$('#bill-modal .billed').removeClass('hidden');
-		} else {
-			$('#bill-modal .billed').addClass('hidden');
+		e.preventDefault();
+
+		if (!$('form#faturar-parcela').valid()) {
+			return false;
 		}
 
-		e.preventDefault();
+		$.ajax ({
+			url: '<?= base_url('admin/monthly/pay/' . $segments[3]) ?>',
+			type: 'post',
+			dataType: 'json',
+			data: {
+				parcelas: $('input[name="parcela[]"]').serialize(),
+				dataRecebimento: $('#recebimento').val(),
+				metodoPgd: $('#metodo').val()
+			},
+			success:function(data)
+			{
+				if (data.success == true) {
+					location.reload();
+				}
+			}
+		});
 	});
+<?php endif ?>
 });
 </script>

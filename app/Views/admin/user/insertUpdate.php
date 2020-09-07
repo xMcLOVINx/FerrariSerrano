@@ -209,17 +209,9 @@
 								<div class="row">
 									<div class="col-md-6 col-md-offset-3">
 										<select name="permissao" id="permissao" class="selectpicker required form-control" data-style="btn-white" data-size="3">
-										<?php foreach ($permissions as $key) : ?>
-											<option value="<?= $key->idPermissao ?>"
-											<?=
-												(
-													$key->idPermissao == 
-													@$item->idPermissao
-												) ? 'selected' : '' 
-											?>>
-												<?= $key->titulo ?>
+											<option value="1">
+												Administrador
 									   		</option>
-									   	<?php endforeach ?>
 									 	</select>
 									</div>
 								</div>

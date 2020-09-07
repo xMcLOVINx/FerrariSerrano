@@ -17,10 +17,9 @@ class Client extends \App\Controllers\BiTController
 	public function index()
 	{
 		return vAdmin('client/index', [
-			'clients' => $this->model->get([
+			'clients' => $this->model->getClient([
 				'cnpj !=' => null,
-				'deletado' => '0',
-				'idUsuario !=' => $this->session->idUsuario
+				'deletado' => '0'
 			])
 		]);
 	}

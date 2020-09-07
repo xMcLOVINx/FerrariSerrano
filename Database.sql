@@ -134,7 +134,10 @@ CREATE TABLE mensalidades (
 	idMensalidade INT NOT NULL AUTO_INCREMENT,
 	idParcelamento INT NOT NULL,
 	idUsuario INT NOT NULL,
+	dataLancamento DATE NOT NULL,
 	dataCadastro DATE NOT NULL,
+	finalizado ENUM('1','0') NOT NULL DEFAULT '0',
+	deletado ENUM('1','0') NOT NULL DEFAULT '0',
 	PRIMARY KEY(idMensalidade),
 	FOREIGN KEY(idParcelamento) REFERENCES parcelamentos (idParcelamento),
 	FOREIGN KEY(idUsuario) REFERENCES usuarios (idUsuario)
@@ -147,6 +150,7 @@ CREATE TABLE mensalidades_parcelas (
 	dataVencimento DATE NOT NULL,
 	dataPagamento DATE NOT NULL,
 	pago ENUM('1','0') NOT NULL DEFAULT '0',
+	metodoPagamento ENUM('1','0') NULL,
 	PRIMARY KEY(idMensalidadeParcela),
 	FOREIGN KEY(idMensalidade) REFERENCES mensalidades (idMensalidade)
 );

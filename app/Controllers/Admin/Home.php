@@ -30,7 +30,8 @@ class Home extends \App\Controllers\BaseController
 	{
 		$result = $this->model->get([
 			'cpf' => $this->request->getPost('cpf'),
-			'senha' => $this->request->getPost('senha')
+			'senha' => $this->request->getPost('senha'),
+			'deletado' => '0'
 		]);
 
 		if ($result == false) {

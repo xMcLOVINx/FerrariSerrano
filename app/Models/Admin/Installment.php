@@ -9,9 +9,9 @@ class Installment extends \App\Models\BiTModel
 		'titulo',
 		'parcelas',
 		'desconto',
-		'valorParcela',
 		'imagem',
-		'dataCadastro'
+		'dataCadastro',
+		'deletado'
 	];
 
 
@@ -26,11 +26,25 @@ class Installment extends \App\Models\BiTModel
 		if (
 			$builder = $this->select(
 				'
-					parcelamentos.*,
+					parcelamentos.idParcelamento,
+					parcelamentos.titulo,
+					parcelamentos.parcelas,
+					parcelamentos.desconto,
+					parcelamentos.imagem,
+					parcelamentos.dataCadastro,
+					parcelamentos.deletado,
 					IFNULL(COUNT(mensalidades.idMensalidade), 0) AS itens
 				'
 			)->join(
-				'mensalidades',
+				'
+					(
+						SELECT
+							mensalidades.idMensalidade,
+							mensalidades.idParcelamento
+						FROM
+							mensalidades
+					) mensalidades
+				',
 				'parcelamentos.idParcelamento = mensalidades.idParcelamento',
 				'left'
 			)->where($where)->groupBy('parcelamentos.idParcelamento')

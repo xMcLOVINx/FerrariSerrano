@@ -16,15 +16,21 @@ class Configuration extends \App\Controllers\BaseController
 	}
 
 
-	public function getPrice()
+	public function getPrice($direct = false)
 	{
+		$price = $this->model->getLast()->valorServico;
+
+		if ($direct) {
+			return $price;
+		}
+
 		if (!$this->request->isAJAX()) {
 			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 		}
 
 		return $this->response->setJSON([
 			'success' => true,
-			'price' => $this->model->getLast()->valorServico
+			'price' => $price
 		]);
 	}
 

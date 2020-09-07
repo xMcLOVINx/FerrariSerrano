@@ -16,16 +16,16 @@ class BiTModel extends \CodeIgniter\Model
 		}
 	}
 
-	public function get($data = [])
+	public function get($where = [])
 	{
-		if ($query = $this->getWhere($data)) {
+		if ($query = $this->getWhere($where)) {
 			return $query->getResult();
 		}
 	}
 
-	public function getLast($data = [])
+	public function getLast($where = [])
 	{
-		if ($query = $this->getWhere($data)->getLastRow()) {
+		if ($query = $this->getWhere($where)->getLastRow()) {
 			return $query;
 		}
 	}

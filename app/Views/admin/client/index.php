@@ -61,13 +61,20 @@
 							<td><?= $item->telefone ?></td>
 
 							<td class="text-center">
+							<?php
+								if (
+									convertDate($item->dataVencimento) <= 
+									date('d/m/Y')
+								) {
+							?>
 								<span class="label label-table label-success" data-toggle="tooltip" data-placement="top" title="Mensalidade em Dia">
-									12/12/2020
+									<?= convertDate($item->dataVencimento) ?>
 								</span>
-
+							<?php } else { ?>
 								<span class="label label-table label-danger" data-toggle="tooltip" data-placement="top" title="Mensalidade Atrasada">
-									12/12/2020
+									<?= convertDate($item->dataVencimento) ?>
 								</span>
+							<?php } ?>
 							</td>
 
 							<td class="actions" width="180">

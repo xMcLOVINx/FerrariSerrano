@@ -25,12 +25,22 @@ class User extends \App\Models\BiTModel
 	}
 
 
-	public function getUsers()
+	public function getUsers($where = [])
 	{
 		if (
 			$builder = $this->select()->join(
-				'permissoes', 'usuarios.idPermissao = permissoes.idPermissao'
-			)
+				'
+					(
+						SELECT
+							permissoes.idPermissao,
+							permissoes.titulo
+						FROM
+							permissoes
+					) permissoes
+				',
+				'usuarios.idPermissao = permissoes.idPermissao',
+				'inner'
+			)->where($where)
 		) {
 			return $builder->get();
 		}

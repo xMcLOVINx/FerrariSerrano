@@ -5,6 +5,7 @@ class Date
 {
 	protected $format = "Y-m-d H:i:s";
 	protected $array = false;
+	protected $timezone;
 	protected $days;
 
 	protected $retriveDiffType;
@@ -17,9 +18,22 @@ class Date
 
 	public function __construct($time = 'now')
 	{
+		$this->timeZone();
+
 		$this->current = new \DateTime($time);
 	}
 
+
+	// ==============================
+
+	public function timeZone($timezone = '')
+	{
+		if (empty($timezone)) {
+			$timezone = \CodeIgniter\I18n\Time::now()->timezone->getName();
+		}
+
+		$this->timezone = $timezone;
+	}
 
 	// ==============================
 
@@ -82,9 +96,7 @@ class Date
 				return $this->compileDiff();
 			
 			default:
-				throw new \InvalidArgumentException('
-					Error, operation not found.
-				');
+				return $this->current->format($this->format);
 		}
 	}
 
@@ -98,14 +110,14 @@ class Date
 			for ($i = 0; $i < $this->days; $i++) {
 				$array[] = ($this->current->{$this->operation}(
 					new \DateInterval(sprintf('P1D'))
-				))->format('Y-m-d H:i:s');
+				))->format($this->format);
 			}
 
 			$this->storage = $array;
 		} else {
 			$this->storage = $this->current->{$this->operation}(
 				new \DateInterval(sprintf('P%dD', $this->days))
-			);
+			)->format($this->format);
 		}
 
 		return $this->storage;

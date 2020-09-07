@@ -18,22 +18,15 @@ class User extends \App\Controllers\BiTController
 	{
 		return vAdmin('user/index', [
 			'users' => $this->model->getUsers([
-				'u.cpf !=' => null,
-				'u.deletado' => '0',
-				'u.idUsuario !=' => $this->session->idUsuario
+				'cpf !=' => null,
+				'deletado' => '0'
 			])
 		]);
 	}
 
 	public function insert()
 	{
-		$permissions = new \App\Models\Admin\Permission;
-
-		return vAdmin('user/insertUpdate', [
-			'permissions' => $permissions->get([
-				'deletado' => '0'
-			])
-		]);
+		return vAdmin('user/insertUpdate');
 	}
 
 	public function store()
@@ -69,17 +62,15 @@ class User extends \App\Controllers\BiTController
 
 		if ($userResult) {
 			$this->session->setFlashdata([
-				'success' => true,
-				'message' => 'Operação executada com sucesso.'
+				'success' => true
 			]);
 		} else {
 			$this->session->setFlashdata([
-				'success' => false,
-				'message' => 'Falha ao executar a operação.'
+				'success' => false
 			]);
 		}
 
-		return cRedirect('administradores', 'a');
+		return cRedirect('users', 'a');
 	}
 
 	public function edit()
@@ -137,37 +128,36 @@ class User extends \App\Controllers\BiTController
 
 		if ($result) {
 			$this->session->setFlashdata([
-				'success' => true,
-				'message' => 'Operação executada com sucesso.'
+				'success' => true
 			]);
 		} else {
 			$this->session->setFlashdata([
-				'success' => false,
-				'message' => 'Falha ao executar a operação.'
+				'success' => false
 			]);
 		}
 
-		return cRedirect('administradores', 'a');
+		return cRedirect('users', 'a');
 	}
 
 	public function delete()
 	{
-		$result = $this->model->disable([
+		$result = $this->model->edit(
+		[
+			'deletado' => '1'
+		], [
 			'idUsuario' => $this->request->uri->getSegment(4)
 		]);
 
 		if ($result) {
 			$this->session->setFlashdata([
-				'success' => true,
-				'message' => 'Operação executada com sucesso.'
+				'success' => true
 			]);
 		} else {
 			$this->session->setFlashdata([
-				'success' => false,
-				'message' => 'Falha ao executar a operação.'
+				'success' => false
 			]);
 		}
 
-		return cRedirect('administradores', 'a');
+		return cRedirect('users', 'a');
 	}
 }

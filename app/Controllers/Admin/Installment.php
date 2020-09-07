@@ -176,4 +176,11 @@ class Installment extends \App\Controllers\BiTController
 			'results' => $results
 		]);
 	}
+
+	public function getLast($id)
+	{
+		return $this->model->getLast([
+			'idParcelamento' => $id
+		]);
+	}
 }

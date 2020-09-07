@@ -42,10 +42,29 @@ class Home extends \App\Controllers\BaseController
 			return redirect()->to(base_url());
 		}
 
+		$client = new \App\Models\Shared\Client;
+
+		$result = $client->getClient([
+			'usuarios.idUsuario' => $result[0]->idUsuario
+		]);
+
+		if ($result[0]->dataVencimento < date('Y-m-d')) {
+			$this->session->setFlashdata([
+				'success' => false,
+				'message' =>
+					'Acesso negado! Sua mensalidade venceu no dia: ' . 
+					convertDate($result[0]->dataVencimento) . 
+					' . Caso queira voltar a ter acesso, pague a mensalidade.'
+			]);
+
+			return redirect()->to(base_url());
+		}
+
 		$this->session->set([
 			'id' => $result[0]->idUsuario,
 			'nome' => $result[0]->nomeCompleto,
-			'avatar' => $result[0]->avatar
+			'avatar' => $result[0]->avatar,
+			'dataVencimento' => $result[0]->dataVencimento
 		]);
 
 		return cRedirect('simulation/create');
