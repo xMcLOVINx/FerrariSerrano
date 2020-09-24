@@ -32,8 +32,7 @@ var
 
 	sIsTheFirst		= true,
 	sTiePriceO 		= 0,
-	sSalePriceO 	= 0,
-	sProfitPO 		= 0
+	sSalePriceO 	= 0
 
 // ===========================================
 // CONTEXT
@@ -244,10 +243,6 @@ jQuery(document).ready(function()
 	// ===========================================
 	$('#simular').on('click', function ()
 	{
-		if (unmask(sProfitP) <= 0 || sProfitP.val() == "") {
-			sProfitP.val('0.00').trigger('input');
-		}
-
 		if (!$('form#simulacao').valid()) {
 			return false;
 		}
@@ -321,7 +316,6 @@ jQuery(document).ready(function()
 
 					sSalePriceO = unmask(sSalePrice);
 					sTiePriceO = unmask(sTiePrice);
-					sProfitPO = unmask(sProfitP);
 
 					break;
 				}
@@ -501,6 +495,8 @@ function execStep2(update = false, id = 0) {
 	m_id = id;
 
 	if (!update) {
+		$('.step-3').addClass('hidden');
+
 		sCommissionP.val(commissionP.val());
 		sCommissionR.val(commissionR.val());
 
@@ -508,6 +504,7 @@ function execStep2(update = false, id = 0) {
 		sProfitP.val(unmask(profitP).toFixed(2));
 
 		sPurchasePrice.val('');
+		sSalePrice.val('');
 		sTiePrice.val('');
 
 		return;

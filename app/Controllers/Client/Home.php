@@ -28,7 +28,7 @@ class Home extends \App\Controllers\BaseController
 
 	public function attemptLogin()
 	{
-		$result = $this->model->get([
+		$result = $this->model->getLast([
 			'cnpj' => $this->request->getPost('cnpj'),
 			'senha' => $this->request->getPost('senha')
 		]);
@@ -45,10 +45,13 @@ class Home extends \App\Controllers\BaseController
 		$client = new \App\Models\Shared\Client;
 
 		$result = $client->getClient([
-			'usuarios.idUsuario' => $result[0]->idUsuario
+			'usuarios.idUsuario' => $result->idUsuario
 		]);
 
-		if ($result[0]->dataVencimento < date('Y-m-d')) {
+		if (
+			($result[0]->dataVencimento < date('Y-m-d')) &&
+			(empty($result[0]->nomeCompleto))
+		) {
 			$this->session->setFlashdata([
 				'success' => false,
 				'message' =>
