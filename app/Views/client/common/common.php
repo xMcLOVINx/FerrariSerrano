@@ -107,9 +107,10 @@
 
 									<span class="label label-danger">
 										<?=
-											convertDate(
-												session()->dataVencimento
-											)
+											(!session()->admin)
+												? convertDate(session()->dataVencimento)
+												: "ILIMITADO"
+											;
 										?>
 									</span>
 								</a>

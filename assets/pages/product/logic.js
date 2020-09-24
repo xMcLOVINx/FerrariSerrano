@@ -326,6 +326,8 @@ jQuery(document).ready(function()
 			console.log('calc 2');
 			sMarkup.val(calcMarkup());
 
+			console.log(sMarkup.val());
+
 			if (unmask(sSalePrice) == 0 || sSalePrice.val() == "") {
 				sSalePrice.val(calcSalePrice());
 			}

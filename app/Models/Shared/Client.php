@@ -38,7 +38,7 @@ class Client extends \App\Models\BiTModel
 					mensalidades.finalizado != 0 AND 
 					mensalidades.idUsuario = usuarios.idUsuario
 				',
-				'inner'
+				'left'
 			)->join(
 				'
 					(

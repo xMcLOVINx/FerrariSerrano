@@ -84,11 +84,11 @@
 							</div>
 
 							<div class="form-group col-md-6 col-xs-6">
-								<label class="control-label" for="s-i-comissao-percent">
+								<label class="control-label" for="i-comissao-percent">
 									Comissão (%)
 								</label>
 
-								<input id="i-comissao-percent" name="i-comissaos--percent" type="text" inpus-tmode="numeric" pattern="[0-9]+" class="form-control percents" maxlength="5" data-similar="money" value="<?= @$index->comissaoP ?>" />
+								<input id="i-comissao-percent" name="i-comissao-percent" type="text" inpus-tmode="numeric" pattern="[0-9]+" class="form-control percents" maxlength="5" data-similar="money" value="<?= @$index->comissaoP ?>" />
 							</div>
 						</div>
 

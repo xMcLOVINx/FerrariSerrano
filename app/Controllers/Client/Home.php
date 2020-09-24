@@ -42,21 +42,19 @@ class Home extends \App\Controllers\BaseController
 			return redirect()->to(base_url());
 		}
 
-		$client = new \App\Models\Shared\Client;
-
-		$result = $client->getClient([
+		$clientResult = (new \App\Models\Shared\Client)->getClient([
 			'usuarios.idUsuario' => $result->idUsuario
 		]);
 
 		if (
-			($result[0]->dataVencimento < date('Y-m-d')) &&
-			(empty($result[0]->nomeCompleto))
+			($clientResult[0]->dataVencimento < date('Y-m-d')) &&
+			(empty($clientResult[0]->nomeCompleto))
 		) {
 			$this->session->setFlashdata([
 				'success' => false,
 				'message' =>
 					'Acesso negado! Sua mensalidade venceu no dia: ' . 
-					convertDate($result[0]->dataVencimento) . 
+					convertDate($clientResult[0]->dataVencimento) . 
 					' . Caso queira voltar a ter acesso, pague a mensalidade.'
 			]);
 
@@ -64,10 +62,11 @@ class Home extends \App\Controllers\BaseController
 		}
 
 		$this->session->set([
-			'id' => $result[0]->idUsuario,
-			'nome' => $result[0]->nomeCompleto,
-			'avatar' => $result[0]->avatar,
-			'dataVencimento' => $result[0]->dataVencimento
+			'id' => $result->idUsuario,
+			'nome' => $clientResult[0]->nomeCompleto,
+			'avatar' => $clientResult[0]->avatar,
+			'dataVencimento' => $clientResult[0]->dataVencimento,
+			'admin' => (!empty($clientResult[0]->nomeCompleto))
 		]);
 
 		return cRedirect('simulation/create');
