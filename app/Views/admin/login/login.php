@@ -6,7 +6,7 @@
 
 		<link rel="shortcut icon" href="<?= base_url('assets/images/favicon_1.ico') ?>"/>
 
-		<title>FerrariSerrano | Àrea de Login</title>
+		<title><?= $configuration->tituloPagina ?> | Àrea de Login</title>
 
 		<link href="<?= base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css"/>
 		<link href="<?= base_url('assets/css/core.css') ?>" rel="stylesheet" type="text/css"/>

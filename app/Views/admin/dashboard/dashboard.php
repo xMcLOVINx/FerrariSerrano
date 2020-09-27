@@ -37,7 +37,7 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="widget-bg-color-icon card-box">
 				<div class="bg-icon bg-icon-info pull-left">
 					<i class="fas fa-handshake text-info"></i>
@@ -48,14 +48,14 @@
 						<b class="counter">321</b>
 					</h3>
 
-					<p class="text-muted">Vendas Concluídas</p>
+					<p class="text-muted">Mensalidades Pagas</p>
 				</div>
 
 				<div class="clearfix"></div>
 			</div>
 		</div>
 
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="widget-bg-color-icon card-box">
 				<div class="bg-icon bg-icon-info pull-left">
 					<i class="fas fa-hourglass-half text-info"></i>
@@ -66,32 +66,14 @@
 						<b class="counter">23</b>
 					</h3>
 
-					<p class="text-muted">Vendas Pendentes</p>
+					<p class="text-muted">Mensalidades Vencendo</p>
 				</div>
 
 				<div class="clearfix"></div>
 			</div>
 		</div>
 
-		<div class="col-md-6">
-			<div class="widget-bg-color-icon card-box">
-				<div class="bg-icon bg-icon-info pull-left">
-					<i class="fas fa-boxes text-info"></i>
-				</div>
-
-				<div class="text-right">
-					<h3 class="text-dark">
-						<b class="counter">22</b>
-					</h3>
-
-					<p class="text-muted">Total de Pacotes</p>
-				</div>
-
-				<div class="clearfix"></div>
-			</div>
-		</div>
-
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="widget-bg-color-icon card-box">
 				<div class="bg-icon bg-icon-info pull-left">
 					<i class="fas fa-users text-info"></i>
@@ -99,7 +81,7 @@
 
 				<div class="text-right">
 					<h3 class="text-dark">
-						<b class="counter">13321</b>
+						<b class="counter"><?= $count['clients'] ?></b>
 					</h3>
 
 					<p class="text-muted">Total de Clientes</p>
@@ -115,7 +97,7 @@
 			<div class="portlet">
 				<div class="portlet-heading">
 					<h3 class="portlet-title text-dark text-uppercase">
-						Vendas Vencendo
+						Mensalidades Vencendo
 					</h3>
 
 					<div class="clearfix"></div>
@@ -177,7 +159,7 @@
 							<ul class="list-inline chart-detail-list">
 								<li>
 									<h5>
-										<i class="fa fa-circle m-r-5" style="color: #1e88e5"></i>Dollar
+										<i class="fa fa-circle m-r-5" style="color: #1e88e5"></i>Dólar
 									</h5>
 								</li>
 
@@ -197,107 +179,47 @@
 			<script type="text/javascript">
 			jQuery(document).ready(function()
 			{
-				window.areaChart = Morris.Line({
-					element: 'morris-currency-flag',
-					data: [
-						{ y: '20/03', a: 3.45, b: 4.10 },
-						{ y: '21/03', a: 3.60, b: 4.15 },
-						{ y: '22/03', a: 3.20, b: 4.00 },
-						{ y: '23/03', a: 4.10, b: 4.30 },
-						{ y: '24/03', a: 4.33, b: 4.60 },
-						{ y: '25/03', a: 4.56, b: 5.06 },
-						{ y: '26/03', a: 4.80, b: 4.83 }
-					],
-					xkey: 'y',
-					ykeys: ['a', 'b'],
+				window.onload = async () => {
+					const dollarResponse = await fetch(
+						'https://economia.awesomeapi.com.br/json/daily/USD-BRL/7'
+					);
+					const euroResponse = await fetch(
+						'https://economia.awesomeapi.com.br/json/daily/EUR-BRL/7'
+					);
+					const dollar = await dollarResponse.json();
+					const euro = await euroResponse.json();
 
-					lineColors: ['#1e88e5','#ff3321'],
-					labels: ['Dollar', 'Euro'],
-					hideHover: 'auto',
-					parseTime: false,
-					lineWidth: '3px',
-					resize: true,
-					redraw: true
-				});
-			});
-			</script>
-		</div>
-	</div>
+					let chartValues = [];
+					let day = new Date();
 
-	<div class="row">
-		<div class="col-sm-6">
-			<div class="portlet">
-				<div class="portlet-heading">
-					<h3 class="portlet-title text-dark">Vendas Nos Últimos 7 Dias</h3>
+					for(let i = 0; i < 7; i++) {
+						chartValues.push({
+							y: await day.toLocaleString('pt-BR', {
+								day: 'numeric',
+								month: 'numeric'
+							}).split(' ').join('/'),
+							a: dollar[i].bid,
+							b: euro[i].bid
+						});
 
-					<div class="clearfix"></div>
-				</div>
+						day.setDate(day.getDate() - 1);
+					}
 
-				<div id="bg-default2" class="panel-collapse collapse in">
-					<div class="portlet-body">
-						<div id="morris-sales" style="height: 300px"></div>
-					</div>
-				</div>
-			</div>
+					let graph = window.areaChart = Morris.Line({
+						element: 'morris-currency-flag',
+						data: chartValues.sort().reverse(),
+						xkey: 'y',
+						ykeys: ['a', 'b'],
 
-			<script type="text/javascript">
-			jQuery(document).ready(function()
-			{
-				window.areaChart = Morris.Line({
-					element: 'morris-sales',
-					data: [
-						{ y: '20/03', a: 1 },
-						{ y: '21/03', a: 75 },
-						{ y: '22/03', a: 50 },
-						{ y: '23/03', a: 75 },
-						{ y: '24/03', a: 50 },
-						{ y: '25/03', a: 75 },
-						{ y: '26/03', a: 100 }
-					],
-					xkey: 'y',
-					ykeys: ['a'],
-
-					lineColors: ['#1e88e5'],
-					labels: ['Quantidade'],
-					hideHover: 'auto',
-					parseTime: false,
-					lineWidth: '3px',
-					resize: true,
-					redraw: true
-				});
-			});
-			</script>
-		</div>
-
-		<div class="col-sm-6">
-			<div class="portlet">
-				<div class="portlet-heading">
-					<h3 class="portlet-title text-dark">Situação das Vendas</h3>
-
-					<div class="clearfix"></div>
-				</div>
-
-				<div id="bg-default2" class="panel-collapse collapse in">
-					<div class="portlet-body">
-						<div id="morris-my-sales-percent" style="height: 300px"></div>
-					</div>
-				</div>
-			</div>
-
-			<script type="text/javascript">
-			jQuery(document).ready(function()
-			{
-				window.areaChart = Morris.Donut({
-					element: 'morris-my-sales-percent',
-					data: [
-						{label: "Concluídas", value: 70},
-						{label: "Pendentes", value: 30}
-					],
-					formatter: function (x) { return x + "%"},
-
-					colors: ['#1e88e5','#ff3321'],
-					resize: true,
-				});
+						lineColors: ['#1e88e5','#ff3321'],
+						labels: ['Dólar', 'Euro'],
+						hideHover: 'auto',
+						parseTime: false,
+						lineWidth: '3px',
+						resize: true,
+						redraw: true
+					});
+				};
 			});
 			</script>
 		</div>

@@ -189,3 +189,13 @@ File: Responsive
     font-size: 13px;
   }  
 }
+
+/**
+ * SIDEBAR
+*/
+.fixed-left-void .access .icon {
+  font-size: 20px;
+}
+.fixed-left-void .access a {
+  display: none !important;
+}

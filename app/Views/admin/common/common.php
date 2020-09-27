@@ -6,7 +6,7 @@
 
 		<link rel="shortcut icon" href="<?= base_url('assets/images/favicon_1.ico') ?>" />
 
-		<title>FerrariSerrano | Foo</title>
+		<title><?= $configuration->tituloPagina ?> | Foo</title>
 
 		<link href="<?= base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet" />
 		<link href="<?= base_url('assets/css/components.css') ?>" rel="stylesheet" />

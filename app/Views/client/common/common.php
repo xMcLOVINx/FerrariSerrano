@@ -6,7 +6,7 @@
 
 		<link rel="shortcut icon" href="<?= base_url('assets/images/favicon_1.ico') ?>" />
 
-		<title>FerrariSerrano | Dashboard do Cliente</title>
+		<title><?= $configuration->tituloPagina ?> | Dashboard do Cliente</title>
 
 		<link href="<?= base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet" />
 		<link href="<?= base_url('assets/css/components.css') ?>" rel="stylesheet" />
@@ -97,7 +97,11 @@
 				<div class="sidebar-inner slimscrollleft">
 					<div id="sidebar-menu">
 						<ul>
-							<li class="text-center">
+							<li class="text-center access">
+								<span class="icon" style="font-size: 3em">
+									<i class="far fa-clock"></i>
+								</span>
+
 								<a href="javascript:void(0)" class="waves-effect">
 									<span style="text-transform: uppercase; font-weight: bold">
 										Válido até

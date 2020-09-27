@@ -341,16 +341,20 @@ jQuery(document).ready(function()
 				var _comissionR = calcCommissionR();
 			}
 
-			var _profitR = excelRound(Number(
+			sProfitR.val(excelRound(Number(
 				unmask(sSalePrice) - Number(
-					(unmask(sPurchasePrice)) + 
-					(Number(_taxesR)) + (Number(_costsR)) + 
-					(Number(_comissionR))
+					(unmask(sTiePrice))
 				)
-			));
-
-			sProfitR.val(_profitR.toFixed(2));
-			sProfitP.val(calcProfitP(_profitR).toFixed(2));
+			)).toFixed(2));
+			sProfitP.val(excelRound(
+				(
+					Number(
+						unmask(sSalePrice) / Number(
+							(unmask(sTiePrice))
+						)
+					) - 1
+				) * 100
+			).toFixed(2));
 			sType.val('2');
 		}
 
