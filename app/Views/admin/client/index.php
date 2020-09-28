@@ -70,6 +70,10 @@
 								<span class="label label-table label-success" data-toggle="tooltip" data-placement="top" title="Mensalidade em Dia">
 									<?= convertDate($item->dataVencimento) ?>
 								</span>
+							<?php } else if ($item->dataVencimento < '01/01/2000') { ?>
+								<span class="label label-table label-default">
+									SEM ACESSO
+								</span>
 							<?php } else { ?>
 								<span class="label label-table label-danger" data-toggle="tooltip" data-placement="top" title="Mensalidade Atrasada">
 									<?= convertDate($item->dataVencimento) ?>

@@ -62,7 +62,7 @@
 											Cliente *
 										</label>
 
-										<input id="cliente" name="cliente" type="text" class="form-control" value="<?= @$client->nomeCompleto ?>" <?= ($segments[2] !== 'update') ?: "readonly" ?> required />
+										<input id="cliente" name="cliente" type="text" class="form-control" value="<?= @$client->razaoSocial ?>" <?= ($segments[2] !== 'update') ?: "readonly" ?> required />
 									</div>
 
 									<div class="col-md-4">

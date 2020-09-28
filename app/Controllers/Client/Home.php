@@ -50,12 +50,21 @@ class Home extends \App\Controllers\BaseController
 			($clientResult[0]->dataVencimento < date('Y-m-d')) &&
 			(empty($clientResult[0]->nomeCompleto))
 		) {
+			if (is_null($clientResult[0]->dataVencimento)) {
+				$message = "
+					Acesso negado! O sistema não conseguiu detectar 
+					mensalidades cadastradas, ou pagas, em sua conta!
+				";
+			} else {
+				$message = "
+					Acesso negado! Sua mensalidade venceu no dia: " .
+					convertDate($clientResult[0]->dataVencimento)
+				;
+			}
+
 			$this->session->setFlashdata([
 				'success' => false,
-				'message' =>
-					'Acesso negado! Sua mensalidade venceu no dia: ' . 
-					convertDate($clientResult[0]->dataVencimento) . 
-					' . Caso queira voltar a ter acesso, pague a mensalidade.'
+				'message' => $message
 			]);
 
 			return redirect()->to(base_url());

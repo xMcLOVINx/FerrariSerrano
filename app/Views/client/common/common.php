@@ -48,7 +48,7 @@
 					<div class="text-center">
 						<a href="javascript:void(0);" class="logo">
 							<span>
-								<img src="<?= convertImage($configuration->logoPainel) ?>" height="30" />
+								<img src="<?= convertImage($configuration->logoApp) ?>" height="30" />
 							</span>
 						</a>
 					</div>

@@ -13,4 +13,17 @@ class Invoice extends \App\Models\BiTModel
 		'pago',
 		'metodoPagamento'
 	];
+
+
+	public function count($where = [], $retrieveType = 'simple') {
+		if (
+			$this->select()->join(
+				'mensalidades',
+				'mensalidades.idMensalidade = mensalidades_parcelas.idMensalidade',
+				'inner'
+			)->where($where)
+		) {
+			return $this->countAllResults();
+		}
+	}
 }

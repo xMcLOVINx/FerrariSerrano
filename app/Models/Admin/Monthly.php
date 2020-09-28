@@ -15,7 +15,7 @@ class Monthly extends \App\Models\BiTModel
 	];
 
 
-	public function getMonthly($where = [])
+	public function getMonthly($where = [], $limit = null)
 	{
 		if (
 			$builder = $this->select()->join(
@@ -29,7 +29,13 @@ class Monthly extends \App\Models\BiTModel
 							) \'parcelasAtrasadas\', 
 							SUM(
 								IF(mp.pago = 1, 1, 0)
-							) \'parcelasPagas\' 
+							) \'parcelasPagas\', 
+							SUM(
+								IF(mp.dataVencimento = CURRENT_DATE, 1, 0)
+							) \'parcelasVencendo\', 
+							SUM(
+								IF(mp.dataVencimento = CURRENT_DATE, mp.valorParcela, 0)
+							) \'valorTotalVencendo\' 
 						FROM 
 							mensalidades_parcelas mp 
 						GROUP BY 
@@ -43,9 +49,10 @@ class Monthly extends \App\Models\BiTModel
 					(
 						SELECT
 							idUsuario,
-							nomeCompleto,
+							razaoSocial,
 							cnpj,
 							telefone,
+							avatar,
 							dataCadastro
 						FROM
 							usuarios
@@ -53,9 +60,9 @@ class Monthly extends \App\Models\BiTModel
 				',
 				'mensalidades.idUsuario = usuarios.idUsuario',
 				'inner'
-			)->where($where)
+			)->where($where)->groupBy('mensalidades.idUsuario')
 		) {
-			return $builder->get();
+			return $builder->limit($limit)->get();
 		}
 	}
 }

@@ -22,20 +22,8 @@ class Client extends \App\Models\BiTModel
 	{
 		if (
 			$builder = $this->select()->join(
+				'mensalidades',
 				'
-					(
-						SELECT
-							mensalidades.idMensalidade,
-							mensalidades.idUsuario,
-							mensalidades.finalizado
-						FROM
-							mensalidades
-						LIMIT
-							1
-					) mensalidades
-				',
-				'
-					mensalidades.finalizado != 0 AND 
 					mensalidades.idUsuario = usuarios.idUsuario
 				',
 				'left'
@@ -43,23 +31,26 @@ class Client extends \App\Models\BiTModel
 				'
 					(
 						SELECT
-							mensalidades_parcelas.idMensalidade,
-							mensalidades_parcelas.dataVencimento
+							idMensalidadeParcela,
+							idMensalidade,
+							dataVencimento,
+							pago
 						FROM
 							mensalidades_parcelas
 						WHERE
-							mensalidades_parcelas.pago = 1
+							pago = 1 AND
+							dataVencimento >= CURRENT_DATE
 						ORDER BY
-							mensalidades_parcelas.idMensalidadeParcela DESC
-						LIMIT
-							1
+							idMensalidadeParcela DESC
 					) mensalidades_parcelas
 				',
 				'mensalidades.idMensalidade = mensalidades_parcelas.idMensalidade',
 				'left'
-			)->where($where)
+			)->where($where)->orderBy(
+				'idMensalidadeParcela'
+			)->limit(1)
 		) {
-			return $builder->get();
+			return $builder->limit(1)->get();
 		}
 	}
 }

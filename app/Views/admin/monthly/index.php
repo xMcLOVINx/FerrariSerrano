@@ -57,7 +57,7 @@
 						<tr>
 							<td width="60"><?= $item->idMensalidade ?></td>
 
-							<td><?= $item->nomeCompleto ?></td>
+							<td><?= $item->razaoSocial ?></td>
 
 							<td><?= convertDate($item->dataLancamento) ?></td>
 

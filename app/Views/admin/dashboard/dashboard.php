@@ -45,7 +45,9 @@
 
 				<div class="text-right">
 					<h3 class="text-dark">
-						<b class="counter">321</b>
+						<b class="counter">
+							<?= $count['invoices']['payed'] ?>
+						</b>
 					</h3>
 
 					<p class="text-muted">Mensalidades Pagas</p>
@@ -63,7 +65,9 @@
 
 				<div class="text-right">
 					<h3 class="text-dark">
-						<b class="counter">23</b>
+						<b class="counter">
+							<?= $count['invoices']['pendent'] ?>
+						</b>
 					</h3>
 
 					<p class="text-muted">Mensalidades Vencendo</p>
@@ -81,7 +85,9 @@
 
 				<div class="text-right">
 					<h3 class="text-dark">
-						<b class="counter"><?= $count['clients'] ?></b>
+						<b class="counter">
+							<?= $count['clients'] ?>
+						</b>
 					</h3>
 
 					<p class="text-muted">Total de Clientes</p>
@@ -97,7 +103,7 @@
 			<div class="portlet">
 				<div class="portlet-heading">
 					<h3 class="portlet-title text-dark text-uppercase">
-						Mensalidades Vencendo
+						Mensalidades Vencendo Hoje
 					</h3>
 
 					<div class="clearfix"></div>
@@ -109,9 +115,9 @@
 							<table class="table table-striped table-bordered datatable">
 								<thead>
 									<tr>
-										<th>#</th>
+										<th></th>
 										<th>Cliente</th>
-										<th>Data Vencimento</th>
+										<th class="text-center">Parcelas</th>
 										<th>Valor</th>
 										<th class="actions">
 											<i class="fas fa-cog"></i>
@@ -120,21 +126,35 @@
 								</thead>
 
 								<tbody>
+								<?php foreach ($monthly as $item) : ?>
 									<tr>
-										<td>1</td>
+										<td width="60" style="text-align: center">
+											<img src="<?= convertImage($item->avatar) ?>" alt="thumb" title="thumb" class="img-circle thumb-sm" />
+										</td>
 
-										<td>Henrique Maquinas de Lavar LTDA</td>
+										<td><?= $item->razaoSocial ?></td>
 
-										<td>01/01/2015</td>
+										<td class="text-center">
+											<span class="label label-table label-danger" data-toggle="tooltip" data-placement="top" title="Quantidade de Parcelas Vencendo">
+												<?= $item->parcelasVencendo ?>
+											</span>
+										</td>
 
-										<td>R$ 300,00</td>
+										<td>
+											R$ <?=
+												convertPrice(
+													$item->valorTotalVencendo
+												)
+											?>
+										</td>
 
 										<td class="actions" width="100">
-											<a href="<?= base_url('assetstas/viagem/1') ?>" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Visualizar">
+											<a href="<?= base_url('admin/monthly/update/' . $item->idMensalidade) ?>" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Visualizar">
 												<i class="md md-remove-red-eye"></i>
 											</a>
 										</td>
 									</tr>
+								<?php endforeach ?>
 								</tbody>
 							</table>
 						</div>
