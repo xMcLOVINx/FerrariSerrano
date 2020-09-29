@@ -187,6 +187,7 @@ jQuery(document).ready(function()
 	// ===========================================
 	// LISTEN SIMILAR INDICES AND VALIDATE THEM
 	// ===========================================
+	/*
 	$('.s-comission').on('keyup', function() {
 		var field = ".s-comission";
 
@@ -223,6 +224,7 @@ jQuery(document).ready(function()
 
 		element.trigger('input').valid();
 	});
+	*/
 
 	// ===========================================
 	// ADD VALIDATION IN SIMULATION FORM
