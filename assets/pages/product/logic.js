@@ -19,20 +19,21 @@ var
 // DEFINE SIMULATION FIELDs
 // ===========================================
 var
-	sProduct 		= $('#produto'),
-	sPurchasePrice 	= $('#precoCompra'),
-	sTiePrice 		= $('#precoEmpate'),
-	sCommissionR 	= $('#comissaoReal'),
-	sCommissionP 	= $('#comissaoPercent'),
-	sSalePrice 		= $('#precoVenda'),
-	sProfitR 		= $('#lucroReal'),
-	sProfitP 		= $('#lucroPercent'),
-	sMarkup 		= $('#markup'),
-	sType 			= $('#tipo'),
+	sProduct 				= $('#produto'),
+	sPurchasePrice 			= $('#precoCompra'),
+	sTiePrice 				= $('#precoEmpate'),
+	sCommissionR 			= $('#comissaoReal'),
+	sCommissionP 			= $('#comissaoPercent'),
+	sSalePrice 				= $('#precoVenda'),
+	sProfitR 				= $('#lucroReal'),
+	sProfitP 				= $('#lucroPercent'),
+	sMarkup 				= $('#markup'),
+	sType 					= $('#tipo'),
 
-	sIsTheFirst		= true,
-	sTiePriceO 		= 0,
-	sSalePriceO 	= 0
+	automaticallyCalculated = false,
+	sIsTheFirst				= true,
+	sTiePriceO 				= 0,
+	sSalePriceO 			= 0
 
 // ===========================================
 // CONTEXT
@@ -187,9 +188,10 @@ jQuery(document).ready(function()
 	// ===========================================
 	// LISTEN SIMILAR INDICES AND VALIDATE THEM
 	// ===========================================
-	/*
-	$('.s-comission').on('keyup', function() {
-		var field = ".s-comission";
+	$('.s-comission, .s-profit').on('keyup', function() {
+		var field = $(this).hasClass('s-comission')
+		? '.s-comission' : '.s-profit'
+		;
 
 		if (sPurchasePrice.val().length <= 0) {
 			showError('O campo preço de compra deve ser maior que zero!');
@@ -224,7 +226,6 @@ jQuery(document).ready(function()
 
 		element.trigger('input').valid();
 	});
-	*/
 
 	// ===========================================
 	// ADD VALIDATION IN SIMULATION FORM
@@ -306,6 +307,7 @@ jQuery(document).ready(function()
 					console.log('calc 1');
 					sTiePrice.val(calcTiePrice());
 					sMarkup.val(calcMarkup());
+					console.log(sMarkup.val());
 					sSalePrice.val(
 						excelRound(Number(
 							calcSalePrice()) +
@@ -471,7 +473,9 @@ function calcTiePrice() {
 function calcMarkup() {
 	return Number(1 - (
 		(unmask(taxesP) / 100) + (unmask(costsP) / 100) +
-		(unmask(sCommissionR) <= 0 ? (unmask(sCommissionP) / 100) : 0) +
+		// DESATIVADO PARA MANTER O VALOR DOS INDICES NO MARKUP
+		// (unmask(sCommissionR) <= 0 ? (unmask(sCommissionP) / 100) : 0) +
+		(unmask(commissionR) <= 0 ? (unmask(commissionP) / 100) : 0) +
 		(unmask(sProfitR) <= 0 ? (unmask(sProfitP) / 100) : 0)
 	));
 }

@@ -208,7 +208,7 @@
 									Lucro/Prejuízo (%)
 								</label>
 
-								<input id="lucroPercent" name="lucroPercent" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control percents" maxlength="5" value="<?= @$simulationIndex->lucroDesejadoP ?>" />
+								<input id="lucroPercent" name="lucroPercent" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control percents s-profit" data-similar="money" maxlength="6" value="<?= @$simulationIndex->lucroDesejadoP ?>" />
 							</div>
 
 							<div class="form-group col-md-6 col-xs-6">
@@ -216,7 +216,7 @@
 									Lucro/Prejuízo (R$)
 								</label>
 
-								<input id="lucroReal" name="lucroReal" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money" value="<?= @$simulationIndex->lucroDesejadoR ?>" />
+								<input id="lucroReal" name="lucroReal" inputmode="numeric" pattern="[0-9]+" type="text" class="form-control money s-profit" data-similar="percents" value="<?= @$simulationIndex->lucroDesejadoR ?>" />
 							</div>
 						</div>
 
